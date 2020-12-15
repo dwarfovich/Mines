@@ -81,7 +81,7 @@ std::list<Edge> Triangulator::getBoundaryPolygon(std::list<Triangle>& bad_triang
     std::list<Edge> polygon;
     size_t c1 = 0;
     for (const auto& bad_triangle : bad_triangles) {
-        const auto& edges {bad_triangle.edges()};
+        const auto& edges = bad_triangle.edges() ;
         for (const auto& edge : edges) {
             is_shared_edge = false;
             size_t c2 = 0;
