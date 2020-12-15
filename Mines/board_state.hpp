@@ -5,9 +5,8 @@
 
 struct BoardState
 {
-    int mines = 0;
-    int empty_cells = 0;
-    int flags = 0;
+    size_t mines = 0;
+    size_t empty_cells = 0;
     bool first_cell_opened = false;
     GameState game_state = GameState::Playing;
 };

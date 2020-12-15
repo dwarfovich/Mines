@@ -45,6 +45,7 @@ void GraphBoard::generate(QWidget *parameters_widget)
         board_state_.mines = widget->minesCount();
         size_t cells_counter = widget->nodesCount();
         board_state_.empty_cells = cells_counter - board_state_.mines;
+        grid_step_ = widget->gridStep();
 
         initialize(cells_counter);
         randomize();
@@ -70,7 +71,7 @@ void GraphBoard::generatePoints()
     auto side = std::sqrt(double(cells_.size()));
     // Note: multiplier is for increasing area to sparse points
     const double multiplier = 10.;
-    double bound_size = grid_step_ * std::sqrt(double(side)) * multiplier;
+    double bound_size = grid_step_ * std::sqrt(double(side));
     std::random_device device;
     std::mt19937 generator(device());
     std::uniform_real_distribution<> distribution (0, bound_size);
@@ -89,7 +90,7 @@ void GraphBoard::drawNodes(BoardScene *scene) const
 
     const int node_z_value = 2;
     for (size_t id = 0; id < cells_.size(); ++id) {
-            auto node_item = new StandardCellItem {cellById(id)};
+            auto* node_item = new StandardCellItem {cellById(id)};
             node_item->setZValue(node_z_value);
             const auto& location = points_[id];
             node_item->setPos(location.x() - sprite_size/2., location.y() - sprite_size/2.);

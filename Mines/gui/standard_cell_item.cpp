@@ -55,6 +55,9 @@ QRectF StandardCellItem::boundingRect() const
 
 void StandardCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
     Q_ASSERT(cell_);
 
     auto spriteType = spriteTypeForCurrentCell();
@@ -77,17 +80,17 @@ void StandardCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 CellItem::SpriteType StandardCellItem::spriteTypeForCurrentCell() const
 {
     if(cell_->is_closed) {
-        if (cell_->hasFlag) {
+        if (cell_->has_flag) {
             return SpriteType::ClosedWithFlag;
         } else {
             return SpriteType::Closed;
         }
     } else {
-        if (cell_->hasFlag && cell_->hasMine) {
+        if (cell_->has_flag && cell_->has_mine) {
             return SpriteType::OpenedMine;
-        } else if (cell_->hasFlag && !cell_->hasMine) {
+        } else if (cell_->has_flag && !cell_->has_mine) {
             return SpriteType::MissedFlag;
-        } else if (!cell_->hasFlag && cell_->hasMine) {
+        } else if (!cell_->has_flag && cell_->has_mine) {
             return SpriteType::MissedMine;
         } else {
             return SpriteType::Opened;

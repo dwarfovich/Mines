@@ -6,35 +6,35 @@
 #include <QDebug>
 #define DEB qDebug()
 
-int StandardBoard::flags() const
+size_t StandardBoard::flags() const
 {
     return flags_;
 }
 
-const Cell *StandardBoard::cellById(int id) const
+const Cell *StandardBoard::cellById(size_t id) const
 {
-    if (id >= 0 && id < static_cast<int>(cells_.size())) {
+    if (id >= 0 && id < cells_.size()) {
         return &cells_[id];
     } else {
         return nullptr;
     }
 }
 
-void StandardBoard::openCell(int id)
+void StandardBoard::openCell(size_t id)
 {
     auto cell = cellById(id);
     Q_ASSERT(cell);
 
-    if (board_state_.game_state != GameState::Playing || cell->hasFlag){
+    if (board_state_.game_state != GameState::Playing || cell->has_flag){
         return;
     }
 
-    if (!board_state_.first_cell_opened && cell->hasMine){
+    if (!board_state_.first_cell_opened && cell->has_mine){
         relocateMine(cell);
     }
     board_state_.first_cell_opened = true;
 
-    if (cell->hasMine) {
+    if (cell->has_mine) {
         board_state_.game_state = GameState::Loose;
         reveal();
     } else {
@@ -51,11 +51,11 @@ void StandardBoard::openCell(int id)
     }
 }
 
-void StandardBoard::toggleFlag(int id)
+void StandardBoard::toggleFlag(size_t id)
 {
     auto cell = cellById(id);
-    cell->hasFlag = !cell->hasFlag;
-    if (cell->hasFlag) {
+    cell->has_flag = !cell->has_flag;
+    if (cell->has_flag) {
         ++flags_;
     } else {
         --flags_;
@@ -81,10 +81,8 @@ void StandardBoard::generate(QWidget *parameters_widget)
         height_ = widget->boardHeight();
         board_state_ = {};
         flags_ = 0;
-        Q_ASSERT(width_ * height_ < size_t(std::numeric_limits<int>::max()));
         board_state_.mines = widget->mines();
         board_state_.empty_cells = width_ * height_ - board_state_.mines;
-        board_state_.flags = board_state_.mines;
 
         initialize(width_ * height_);
         randomize();
@@ -93,7 +91,7 @@ void StandardBoard::generate(QWidget *parameters_widget)
     }
 }
 
-Cell *StandardBoard::cellById(int id)
+Cell *StandardBoard::cellById(size_t id)
 {
     DEB << "cells:" << cells_.size();
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
@@ -108,9 +106,9 @@ void StandardBoard::relocateMine(Cell *cell)
     Q_ASSERT(cell);
 
     for (int i = 0; i < static_cast<int>(cells_.size()); ++i) {
-        if (cell->id != i && !cellById(i)->hasMine && cellById(i)->is_closed) {
-            cell->hasMine = false;
-            cellById(i)->hasMine = true;
+        if (cell->id != i && !cellById(i)->has_mine && cellById(i)->is_closed) {
+            cell->has_mine = false;
+            cellById(i)->has_mine = true;
             return;
         }
     }
@@ -120,24 +118,24 @@ void StandardBoard::reveal()
 {
     for (size_t i = 0; i < cells_.size(); ++i) {
         if (cells_[i].is_closed) {
-            if (!cells_[i].hasMine) {
+            if (!cells_[i].has_mine) {
                 cells_[i].neighbor_mines = countNeighborMines(i);
                 cellChanged(&cells_[i]);
             } else if (board_state_.game_state == GameState::Win) {
-                cells_[i].hasFlag = true;
+                cells_[i].has_flag = true;
             }
             cells_[i].is_closed = false;
         }
     }
 }
 
-int StandardBoard::countNeighborMines(int id) const
+size_t StandardBoard::countNeighborMines(size_t id) const
 {
     const auto& ids = neighborIds(id);
     int mines = 0;
     for (const auto& neighborId : ids) {
         const auto* cell = cellById(neighborId);
-        if (cell->hasMine) {
+        if (cell->has_mine) {
             ++mines;
         }
     }
@@ -150,7 +148,7 @@ void StandardBoard::openAdjacentCells(Cell *cell)
     auto neighbors {neighborIds(cell->id)};
     for (auto neighborId : neighbors) {
         auto neighborCell = cellById( neighborId );
-        if (neighborCell->is_closed && !neighborCell->hasMine&& !neighborCell->hasFlag){
+        if (neighborCell->is_closed && !neighborCell->has_mine && !neighborCell->has_flag){
             openCell(neighborId);
         }
     }
@@ -159,11 +157,11 @@ void StandardBoard::openAdjacentCells(Cell *cell)
 void StandardBoard::initialize(size_t cells_counter)
 {
     cells_.resize(cells_counter);
-    int mines_counter = 0;
+    size_t mines_counter = 0;
     for (size_t i = 0; i < cells_.size(); ++i) {
         cells_[i] = {};
         if (mines_counter < board_state_.mines) {
-            cells_[i].hasMine = true;
+            cells_[i].has_mine = true;
             ++mines_counter;
         }
     }

@@ -28,11 +28,11 @@ public:
     virtual const QString& id() const = 0;
     virtual const QString& name() const = 0;
     virtual QWidget* createParametersWidget() const = 0;
-    virtual int flags() const = 0;
+    virtual size_t flags() const = 0;
     virtual void generate(QWidget* parameters_widget) = 0;
-    virtual const Cell* cellById(int id) const = 0;
-    virtual void openCell(int id) = 0;
-    virtual void toggleFlag(int id) = 0;
+    virtual const Cell* cellById(size_t id) const = 0;
+    virtual void openCell(size_t id) = 0;
+    virtual void toggleFlag(size_t id) = 0;
     virtual void drawBoard(BoardScene* scene) = 0;
     virtual const BoardState &boardState() const = 0;
 

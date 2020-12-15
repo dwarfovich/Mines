@@ -5,10 +5,10 @@ class Cell
 {
 public:
     bool is_closed : 1 = true;
-    bool hasFlag   : 1 = false;
-    bool hasMine   : 1 = false;
-    int  neighbor_mines = 0;
-    int id = -1;
+    bool has_flag   : 1 = false;
+    bool has_mine   : 1 = false;
+    size_t  neighbor_mines = 0;
+    size_t id = 0;
 };
 
 #endif // CELL_HPP

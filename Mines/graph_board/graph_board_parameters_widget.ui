@@ -79,30 +79,10 @@
         <number>1</number>
        </property>
        <property name="maximum">
-        <number>999</number>
+        <number>99999</number>
        </property>
        <property name="value">
-        <number>64</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Sparse multiplier</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="sparseMultiplierSpinBox">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>999</number>
-       </property>
-       <property name="value">
-        <number>10</number>
+        <number>640</number>
        </property>
       </widget>
      </item>

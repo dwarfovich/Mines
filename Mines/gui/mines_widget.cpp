@@ -81,5 +81,5 @@ void MinesWidget::processCellItemClick(CellItem *cell_item, QGraphicsSceneMouseE
 
 void MinesWidget::updateFlagsCount()
 {
-    ui_->minesSpinBox->setValue(board_->flags());
+    ui_->minesSpinBox->setValue(static_cast<int>(board_->flags()));
 }

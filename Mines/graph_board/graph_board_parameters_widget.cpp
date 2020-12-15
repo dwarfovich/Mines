@@ -31,11 +31,6 @@ size_t GraphBoardParametersWidget::gridStep() const
     return static_cast<size_t>(ui_->gridStepSpinBox->value());
 }
 
-size_t GraphBoardParametersWidget::sparseMultiplier() const
-{
-    return static_cast<size_t>(ui_->sparseMultiplierSpinBox->value());
-}
-
 void GraphBoardParametersWidget::onNodesCountChanged(int new_value)
 {
     ui_->minesSpinBox->setMaximum(new_value - 1);

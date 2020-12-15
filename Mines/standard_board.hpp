@@ -9,19 +9,19 @@ class StandardBoard : public IBoard
     Q_OBJECT
 
 public:
-    int flags() const override;
-    const Cell* cellById(int id) const override;
-    void openCell(int id) override;
-    void toggleFlag(int id) override;
+    size_t flags() const override;
+    const Cell* cellById(size_t id) const override;
+    void openCell(size_t id) override;
+    void toggleFlag(size_t id) override;
     const BoardState &boardState() const override;
     QWidget *createParametersWidget() const override;
     void generate(QWidget *parameters_widget) override;
 
 protected: // methods
-    virtual Cell* cellById(int id);
+    virtual Cell* cellById(size_t id);
     virtual void relocateMine(Cell* cell);
     virtual void reveal();
-    virtual int countNeighborMines(int id) const;
+    virtual size_t countNeighborMines(size_t id) const;
     virtual std::vector<size_t> neighborIds(size_t id) const = 0;
     virtual void openAdjacentCells(Cell* cell);
     virtual void initialize(size_t cells_counter);
@@ -30,7 +30,7 @@ protected: // methods
 protected: // data
     size_t height_ = 0;
     size_t width_ = 0;
-    int flags_ = 0;
+    size_t flags_ = 0;
     std::vector<Cell> cells_;
     BoardState board_state_;
 };
