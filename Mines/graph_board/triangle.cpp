@@ -14,7 +14,6 @@ bool Triangle::operator== (const Triangle &t) const
 
 const QPointF &Triangle::operator[](int number) const
 {
-    // TODO: Store vertices in array
     if (number == 0) return p1_;
     else if (number == 1) return p2_;
     else return p3_;

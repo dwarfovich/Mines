@@ -11,9 +11,7 @@ void BoardFactory::registerBoard(std::unique_ptr<IBoard> board)
     auto iter = boards_.find(name);
     if (iter == boards_.cend()) {
         boards_.insert(iter, {name, std::move(board)});
-    } else {
-        // TODO: handle error
-      }
+    }
 }
 
 std::unique_ptr<IBoard> BoardFactory::create(const QString &boardName)

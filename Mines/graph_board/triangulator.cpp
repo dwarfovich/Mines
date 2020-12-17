@@ -72,7 +72,6 @@ void Triangulator::clear()
 
 std::list<Edge> Triangulator::getBoundaryPolygon(std::list<Triangle>& bad_triangles)
 {
-    // TODO: Reimplement this function
     bool is_shared_edge;
     std::list<Edge> polygon;
     size_t counter1 = 0;
