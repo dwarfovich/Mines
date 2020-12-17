@@ -1,2 +1,2 @@
 # Mines
-Hello
+Minesweeper clone with a few board types.
