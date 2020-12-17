@@ -77,3 +77,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     sprites.qrc
+
+DISTFILES += \
+    gfx/app_icon.ico
