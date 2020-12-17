@@ -50,10 +50,10 @@ void GraphBoard::generate(QWidget *parameters_widget)
         initialize(cells_counter);
         randomize();
 
-        board_state_.game_state = GameState::Playing;
         generatePoints();
         triangulator_.triangulate(points_);
         neighbors_ = triangulator_.getEdges();
+        board_state_.game_state = GameState::Playing;
     } else {
         Q_ASSERT(false);
     }
@@ -68,12 +68,10 @@ void GraphBoard::drawBoard(BoardScene *scene)
 void GraphBoard::generatePoints()
 {
     points_.resize(cells_.size());
-    auto side = std::sqrt(double(cells_.size()));
-    // Note: multiplier is for increasing area to sparse points
-    const double multiplier = 10.;
-    double bound_size = grid_step_ * std::sqrt(double(side));
+    double side = std::sqrt(double(cells_.size()));
+    double bound_size = grid_step_ * std::sqrt(side);
     std::random_device device;
-    std::mt19937 generator(device());
+    std::mt19937 generator {device()};
     std::uniform_real_distribution<> distribution (0, bound_size);
     for (auto& point : points_) {
         point = {distribution(generator), distribution(generator)};

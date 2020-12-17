@@ -10,9 +10,6 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-#include <QDebug>
-#define DEB qDebug()
-
 MinesWidget::MinesWidget(QWidget* parent)
     : QWidget{parent}
     , ui_{new Ui::MinesWidget}
@@ -38,7 +35,6 @@ void MinesWidget::setBoard(IBoard *board)
     board_ = board;
     scene_->clear();
     board->drawBoard(scene_);
-//    connect(board_->toQObject(), SIGNAL(cellChanged(Cell*)), this, SLOT(onCellChanged(Cell*)));
     connect(board_, &IBoard::cellChanged, this, &MinesWidget::onCellChanged);
 }
 
@@ -60,7 +56,6 @@ void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEven
 
 void MinesWidget::onCellChanged(Cell *cell)
 {
-    DEB << "cell item changed";
     scene_->updateCellItemForCell(cell);
 }
 

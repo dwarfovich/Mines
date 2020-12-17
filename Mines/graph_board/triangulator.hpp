@@ -12,8 +12,6 @@ using EdgeVector = std::vector<std::vector<size_t>>;
 class Triangulator
 {
 public:
-
-
     virtual void triangulate (const std::vector<QPointF>& points);
     virtual Triangle superTriangle(const std::vector<QPointF>& points) const;
     virtual EdgeVector getEdges ();
