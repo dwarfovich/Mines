@@ -25,11 +25,11 @@ void StandardBoard::openCell(size_t id)
     auto cell = cellById(id);
     Q_ASSERT(cell);
 
-    if (board_state_.game_state != GameState::Playing || cell->has_flag){
+    if (board_state_.game_state != GameState::Playing || cell->has_flag) {
         return;
     }
 
-    if (!board_state_.first_cell_opened && cell->has_mine){
+    if (!board_state_.first_cell_opened && cell->has_mine) {
         relocateMine(cell);
     }
     board_state_.first_cell_opened = true;
@@ -53,7 +53,7 @@ void StandardBoard::openCell(size_t id)
 
 void StandardBoard::toggleFlag(size_t id)
 {
-    auto cell = cellById(id);
+    auto cell      = cellById(id);
     cell->has_flag = !cell->has_flag;
     if (cell->has_flag) {
         ++flags_;
@@ -75,13 +75,13 @@ QWidget *StandardBoard::createParametersWidget() const
 
 void StandardBoard::generate(QWidget *parameters_widget)
 {
-    auto widget = qobject_cast<RectangleBoardParametersWidget*>(parameters_widget);
+    auto widget = qobject_cast<RectangleBoardParametersWidget *>(parameters_widget);
     if (widget) {
-        width_ = widget->boardWidth();
-        height_ = widget->boardHeight();
-        board_state_ = {};
-        flags_ = 0;
-        board_state_.mines = widget->mines();
+        width_                   = widget->boardWidth();
+        height_                  = widget->boardHeight();
+        board_state_             = {};
+        flags_                   = 0;
+        board_state_.mines       = widget->mines();
         board_state_.empty_cells = width_ * height_ - board_state_.mines;
 
         initialize(width_ * height_);
@@ -93,7 +93,6 @@ void StandardBoard::generate(QWidget *parameters_widget)
 
 Cell *StandardBoard::cellById(size_t id)
 {
-    DEB << "cells:" << cells_.size();
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
         return &cells_[id];
     } else {
@@ -107,7 +106,7 @@ void StandardBoard::relocateMine(Cell *cell)
 
     for (int i = 0; i < static_cast<int>(cells_.size()); ++i) {
         if (cell->id != i && !cellById(i)->has_mine && cellById(i)->is_closed) {
-            cell->has_mine = false;
+            cell->has_mine        = false;
             cellById(i)->has_mine = true;
             return;
         }
@@ -131,10 +130,10 @@ void StandardBoard::reveal()
 
 size_t StandardBoard::countNeighborMines(size_t id) const
 {
-    const auto& ids = neighborIds(id);
-    int mines = 0;
-    for (const auto& neighborId : ids) {
-        const auto* cell = cellById(neighborId);
+    const auto &ids   = neighborIds(id);
+    int         mines = 0;
+    for (const auto &neighborId : ids) {
+        const auto *cell = cellById(neighborId);
         if (cell->has_mine) {
             ++mines;
         }
@@ -145,10 +144,10 @@ size_t StandardBoard::countNeighborMines(size_t id) const
 
 void StandardBoard::openAdjacentCells(Cell *cell)
 {
-    auto neighbors {neighborIds(cell->id)};
+    auto neighbors { neighborIds(cell->id) };
     for (auto neighborId : neighbors) {
-        auto neighborCell = cellById( neighborId );
-        if (neighborCell->is_closed && !neighborCell->has_mine && !neighborCell->has_flag){
+        auto neighborCell = cellById(neighborId);
+        if (neighborCell->is_closed && !neighborCell->has_mine && !neighborCell->has_flag) {
             openCell(neighborId);
         }
     }
@@ -170,7 +169,7 @@ void StandardBoard::initialize(size_t cells_counter)
 void StandardBoard::randomize()
 {
     std::random_device random_device;
-    std::mt19937 generator {random_device()};
+    std::mt19937       generator { random_device() };
     std::shuffle(cells_.begin(), cells_.end(), generator);
     for (size_t i = 0; i < cells_.size(); ++i) {
         cells_[i].id = i;
