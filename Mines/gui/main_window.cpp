@@ -6,14 +6,15 @@
 
 #include <QVBoxLayout>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui_(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui_(new Ui::MainWindow)
 {
     ui_->setupUi(this);
 
-    new_game_dialog_ = new NewGameDialog {this};;
-    mines_widget_ = new MinesWidget {this};
+    setWindowTitle(QStringLiteral("Mines"));
+
+    new_game_dialog_ = new NewGameDialog { this };
+    ;
+    mines_widget_ = new MinesWidget { this };
     setCentralWidget(mines_widget_);
     connect(mines_widget_, &MinesWidget::gameOver, this, &MainWindow::onGameOver);
     connect(ui_->actionNewGame, &QAction::triggered, this, &MainWindow::showNewGameDialog);
@@ -34,10 +35,10 @@ void MainWindow::onGameOver(GameOverDialogAnswer answer)
     } else if (answer == GameOverDialogAnswer::NewGame) {
         int result = new_game_dialog_->exec();
         if (result == QDialog::Accepted) {
-             auto boardName = new_game_dialog_->selectedBoard();
-             board_ = BoardFactory::create(boardName);
-             board_->generate(new_game_dialog_->parametersWidget());
-             mines_widget_->setBoard(board_.get());
+            auto boardName = new_game_dialog_->selectedBoard();
+            board_         = BoardFactory::create(boardName);
+            board_->generate(new_game_dialog_->parametersWidget());
+            mines_widget_->setBoard(board_.get());
         }
     } else {
         close();
@@ -48,9 +49,9 @@ void MainWindow::showNewGameDialog()
 {
     int result = new_game_dialog_->exec();
     if (result == QDialog::Accepted) {
-         auto boardName = new_game_dialog_->selectedBoard();
-         board_ = BoardFactory::create(boardName);
-         board_->generate(new_game_dialog_->parametersWidget());
-         mines_widget_->setBoard(board_.get());
+        auto boardName = new_game_dialog_->selectedBoard();
+        board_         = BoardFactory::create(boardName);
+        board_->generate(new_game_dialog_->parametersWidget());
+        mines_widget_->setBoard(board_.get());
     }
 }
