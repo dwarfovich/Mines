@@ -1,4 +1,8 @@
 <RCC>
-    <qresource prefix="MainWindow">
+    <qresource prefix="/gfx"/>
+    <qresource prefix="/">
+        <file>gfx/cells_square.png</file>
+        <file>gfx/cells_hex.png</file>
+        <file>gfx/cells_round.png</file>
     </qresource>
 </RCC>

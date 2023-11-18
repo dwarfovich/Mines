@@ -71,7 +71,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <LanguageStandard>$(Qt_STDCPP_)</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(Qt_INCLUDEPATH_)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -99,11 +105,63 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graph_board\edge.cpp" />
+    <ClCompile Include="graph_board\graph_board.cpp" />
+    <ClCompile Include="graph_board\graph_board_parameters_widget.cpp" />
+    <ClCompile Include="graph_board\qpointf_hasher.cpp" />
+    <ClCompile Include="graph_board\triangle.cpp" />
+    <ClCompile Include="graph_board\triangulator.cpp" />
+    <ClCompile Include="gui\board_scene.cpp" />
+    <ClCompile Include="gui\board_view.cpp" />
+    <ClCompile Include="gui\cell_item.cpp" />
+    <ClCompile Include="gui\game_over_dialog.cpp" />
+    <ClCompile Include="gui\main_window.cpp" />
+    <ClCompile Include="gui\mines_widget.cpp" />
+    <ClCompile Include="gui\new_game_dialog.cpp" />
+    <ClCompile Include="gui\rectangle_board_parameters_widget.cpp" />
+    <ClCompile Include="gui\standard_cell_item.cpp" />
+    <ClCompile Include="hex_board.cpp" />
+    <ClCompile Include="rectangle_board.cpp" />
+    <ClCompile Include="standard_board.cpp" />
+    <ClCompile Include="utils.cpp" />
     <QtRcc Include="mines.qrc" />
-    <QtUic Include="main_window.ui" />
-    <QtMoc Include="main_window.h" />
-    <ClCompile Include="main_window.cpp" />
+    <QtUic Include="graph_board\graph_board_parameters_widget.ui" />
+    <QtUic Include="gui\game_over_dialog.ui" />
+    <QtUic Include="gui\main_window.ui" />
+    <QtUic Include="gui\mines_widget.ui" />
+    <QtUic Include="gui\new_game_dialog.ui" />
+    <QtUic Include="gui\rectangle_board_parameters_widget.ui" />
+    <ClCompile Include="board_factory.cpp" />
+    <ClCompile Include="board_state.cpp" />
+    <ClCompile Include="cell.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="board_factory.hpp" />
+    <ClInclude Include="board_state.hpp" />
+    <ClInclude Include="cell.hpp" />
+    <ClInclude Include="game_state.hpp" />
+    <ClInclude Include="graph_board\edge.hpp" />
+    <ClInclude Include="graph_board\qpointf_hasher.hpp" />
+    <ClInclude Include="graph_board\triangle.hpp" />
+    <ClInclude Include="graph_board\triangulator.hpp" />
+    <QtMoc Include="graph_board\graph_board_parameters_widget.hpp" />
+    <QtMoc Include="graph_board\graph_board.hpp" />
+    <QtMoc Include="hex_board.hpp" />
+    <QtMoc Include="gui\new_game_dialog.hpp" />
+    <QtMoc Include="gui\board_view.hpp" />
+    <ClInclude Include="gui\game_over_dialog_answer.hpp" />
+    <QtMoc Include="gui\mines_widget.hpp" />
+    <QtMoc Include="gui\game_over_dialog.hpp" />
+    <QtMoc Include="gui\main_window.hpp" />
+    <QtMoc Include="gui\board_scene.hpp" />
+    <ClInclude Include="gui\cell_item.hpp" />
+    <ClInclude Include="gui\standard_cell_item.hpp" />
+    <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
+    <QtMoc Include="standard_board.hpp" />
+    <QtMoc Include="rectangle_board.hpp" />
+    <ClInclude Include="utils.hpp" />
+    <QtMoc Include="iboard.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
