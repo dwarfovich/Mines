@@ -1,4 +1,5 @@
 RC_ICONS = gfx/app_icon.ico
+RC_FILE = icon.rc
 
 QT       += core gui
 

@@ -160,8 +160,12 @@
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
     <QtMoc Include="standard_board.hpp" />
     <QtMoc Include="rectangle_board.hpp" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="utils.hpp" />
     <QtMoc Include="iboard.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

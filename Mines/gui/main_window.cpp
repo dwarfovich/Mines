@@ -13,8 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui_(new Ui::MainW
     setWindowTitle(QStringLiteral("Mines"));
 
     new_game_dialog_ = new NewGameDialog { this };
-    ;
-    mines_widget_ = new MinesWidget { this };
+    mines_widget_    = new MinesWidget { this };
     setCentralWidget(mines_widget_);
     connect(mines_widget_, &MinesWidget::gameOver, this, &MainWindow::onGameOver);
     connect(ui_->actionNewGame, &QAction::triggered, this, &MainWindow::showNewGameDialog);
