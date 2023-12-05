@@ -105,6 +105,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graph_board\circle.cpp" />
     <ClCompile Include="graph_board\edge.cpp" />
     <ClCompile Include="graph_board\graph_board.cpp" />
     <ClCompile Include="graph_board\graph_board_parameters_widget.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="gui\rectangle_board_parameters_widget.cpp" />
     <ClCompile Include="gui\standard_cell_item.cpp" />
     <ClCompile Include="hex_board.cpp" />
+    <ClCompile Include="graph_board\mec.cpp" />
     <ClCompile Include="rectangle_board.cpp" />
     <ClCompile Include="standard_board.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -140,6 +142,7 @@
     <ClInclude Include="board_factory.hpp" />
     <ClInclude Include="board_state.hpp" />
     <ClInclude Include="cell.hpp" />
+    <ClInclude Include="graph_board\circle.hpp" />
     <ClInclude Include="game_state.hpp" />
     <ClInclude Include="graph_board\edge.hpp" />
     <ClInclude Include="graph_board\qpointf_hasher.hpp" />
@@ -160,6 +163,7 @@
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
     <QtMoc Include="standard_board.hpp" />
     <QtMoc Include="rectangle_board.hpp" />
+    <ClInclude Include="graph_board\mec.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utils.hpp" />
     <QtMoc Include="iboard.hpp" />

@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    BoardFactory::registerBoard(std::make_unique<RectangleBoard>());
-    BoardFactory::registerBoard(std::make_unique<HexBoard>());
+    // BoardFactory::registerBoard(std::make_unique<RectangleBoard>());
+    // BoardFactory::registerBoard(std::make_unique<HexBoard>());
     BoardFactory::registerBoard(std::make_unique<GraphBoard>());
 
     MainWindow w;

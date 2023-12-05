@@ -1,6 +1,8 @@
 #include "triangulator.hpp"
 #include "triangulator.hpp"
 #include "qpointf_hasher.hpp"
+#include "mec.hpp"
+#include "utils.hpp"
 
 #include <algorithm>
 #include <unordered_map>
@@ -13,11 +15,9 @@ void Triangulator::triangulate(const std::vector<QPointF>& points)
         return;
     }
 
-    // Get supertriangle
     Triangle        super_triangle = superTriangle(points);
     std::list<Edge> polygon;
     triangulation_.push_back(super_triangle);
-    // Main loop
     std::list<Triangle> bad_triangles;
     for (size_t n = 0; n < points.size(); ++n) {
         const QPointF& point = points[n];
@@ -28,38 +28,45 @@ void Triangulator::triangulate(const std::vector<QPointF>& points)
                 bad_triangles.push_back(triangle);
             }
         }
-        // Find boundary polygon for given point
         polygon = getBoundaryPolygon(bad_triangles);
-        // Remove bad triangles from triangulation
         for (const auto& bad_triangle : bad_triangles) {
             triangulation_.remove(bad_triangle);
         }
-        // Re-triangulate the polygonal hole
         for (const auto& edge : polygon) {
             triangulation_.push_back({ point, edge.point1, edge.point2 });
         }
     }
-    // Remove super-triangle & node-associated triangles from triangulation
+
     cleanTriangulation(super_triangle);
     formEdges(points);
 }
 
 Triangle Triangulator::superTriangle(const std::vector<QPointF>& points) const
 {
-    // TODO: Check if points are collinear
-    auto         x_minmax = std::minmax_element(points.cbegin(), points.cend(), [](const QPointF& a, const QPointF& b) {
-        return a.x() < b.x();
-    });
-    auto         y_minmax = std::minmax_element(points.cbegin(), points.cend(), [](const QPointF& a, const QPointF& b) {
-        return a.y() < b.y();
-    });
-    double       w        = x_minmax.second->x() - x_minmax.first->x();        // Bounding rect width
-    double       h        = y_minmax.second->y() - y_minmax.first->y();        // Bounding rect height
-    double       h_mid    = (y_minmax.first->y() + y_minmax.second->y()) / 2.; // Bounding rect middle y
-    const double offset   = 1.;
-    return { { x_minmax.first->x() - offset, h_mid - 1.5 * h - offset },
-             { x_minmax.first->x() - offset, h_mid + 1.5 * h + offset },
-             { x_minmax.first->x() + 2 * w, h_mid } };
+    auto mec = minimalEnclosingCircle(points);
+    mec.radius += 100000;
+    const auto r_square = sqr(mec.radius);
+    const auto x        = std::sqrt(sqr(mec.radius * 2) - sqr(mec.radius));
+
+    return { { mec.center.x() - x, mec.center.y() - mec.radius },
+             { mec.center.x(), mec.center.y() + 2 * mec.radius },
+             { mec.center.x() + x, mec.center.y() - mec.radius } };
+    //// TODO: Check if points are collinear
+    // auto         x_minmax = std::minmax_element(points.cbegin(), points.cend(), [](const QPointF& a, const QPointF&
+    // b) {
+    //     return a.x() < b.x();
+    // });
+    // auto         y_minmax = std::minmax_element(points.cbegin(), points.cend(), [](const QPointF& a, const QPointF&
+    // b) {
+    //     return a.y() < b.y();
+    // });
+    // double       w        = x_minmax.second->x() - x_minmax.first->x();        // Bounding rect width
+    // double       h        = y_minmax.second->y() - y_minmax.first->y();        // Bounding rect height
+    // double       h_mid    = (y_minmax.first->y() + y_minmax.second->y()) / 2.; // Bounding rect middle y
+    // const double offset   = 1.;
+    // return { { x_minmax.first->x() - offset, h_mid - 1.5 * h - offset },
+    //          { x_minmax.first->x() - offset, h_mid + 1.5 * h + offset },
+    //          { x_minmax.first->x() + 2 * w, h_mid } };
 }
 
 EdgeVector Triangulator::getEdges()
