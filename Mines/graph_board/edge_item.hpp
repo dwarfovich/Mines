@@ -8,6 +8,11 @@
 class EdgeItem : public QGraphicsItem, public BuddyNotificator
 {
 public:
+    enum
+    {
+        Type = UserType + 4
+    };
+
     EdgeItem();
     EdgeItem(const Edge& edge);
 

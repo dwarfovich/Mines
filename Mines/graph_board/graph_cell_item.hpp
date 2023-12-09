@@ -4,6 +4,7 @@
 #include "gui/buddy_notificator.hpp"
 
 class Cell;
+class QGraphicsDropShadowEffect;
 
 class GraphCellItem : public SpriteCellItem, public BuddyNotificator
 {
@@ -25,4 +26,5 @@ protected:
 private:
     static const QPen               hovered_pen_;
     std::vector<BuddyNotificator *> buddies_;
+    QGraphicsDropShadowEffect      *effect_ = nullptr;
 };
