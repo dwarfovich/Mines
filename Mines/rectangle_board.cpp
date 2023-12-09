@@ -8,7 +8,7 @@
 #include <QDebug>
 #define DEB qDebug()
 
-std::unique_ptr<IBoard> RectangleBoard::clone() const
+std::unique_ptr<IBoard> RectangleBoard::create() const
 {
     return std::make_unique<RectangleBoard>();
 }

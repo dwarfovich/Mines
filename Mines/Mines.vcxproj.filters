@@ -82,7 +82,7 @@
     <ClCompile Include="edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\graph_board.cpp">
+    <ClCompile Include="graph_board\delaunay_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graph_board\graph_board_parameters_widget.cpp">
@@ -206,7 +206,7 @@
     <QtMoc Include="hex_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="graph_board\graph_board.hpp">
+    <QtMoc Include="graph_board\delaunay_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="graph_board\graph_board_parameters_widget.hpp">

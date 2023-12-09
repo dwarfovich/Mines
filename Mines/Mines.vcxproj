@@ -108,7 +108,7 @@
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph_board\edge_item.cpp" />
-    <ClCompile Include="graph_board\graph_board.cpp" />
+    <ClCompile Include="graph_board\delaunay_board.cpp" />
     <ClCompile Include="graph_board\graph_board_parameters_widget.cpp" />
     <ClCompile Include="graph_board\graph_cell_item.cpp" />
     <ClCompile Include="gui\buddy_notificator.cpp" />
@@ -155,7 +155,7 @@
     <ClInclude Include="triangle.hpp" />
     <ClInclude Include="graph_board\triangulator.hpp" />
     <QtMoc Include="graph_board\graph_board_parameters_widget.hpp" />
-    <QtMoc Include="graph_board\graph_board.hpp" />
+    <QtMoc Include="graph_board\delaunay_board.hpp" />
     <QtMoc Include="hex_board.hpp" />
     <QtMoc Include="gui\new_game_dialog.hpp" />
     <QtMoc Include="gui\board_view.hpp" />

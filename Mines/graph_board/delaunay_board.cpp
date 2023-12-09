@@ -1,4 +1,4 @@
-#include "graph_board.hpp"
+#include "delaunay_board.hpp"
 #include "qpointf_hasher.hpp"
 #include "cell.hpp"
 #include "graph_cell_item.hpp"
@@ -12,34 +12,34 @@
 #include <unordered_map>
 #include <unordered_set>
 
-std::unique_ptr<IBoard> GraphBoard::clone() const
+std::unique_ptr<IBoard> DelaunayBoard::create() const
 {
-    return std::make_unique<GraphBoard>();
+    return std::make_unique<DelaunayBoard>();
 }
 
-QObject *GraphBoard::toQObject()
+QObject *DelaunayBoard::toQObject()
 {
     return this;
 }
 
-const QString &GraphBoard::id() const
+const QString &DelaunayBoard::id() const
 {
     static const QString id { "Graph" };
     return id;
 }
 
-const QString &GraphBoard::name() const
+const QString &DelaunayBoard::name() const
 {
     static const QString name = tr("Graph");
     return name;
 }
 
-QWidget *GraphBoard::createParametersWidget() const
+QWidget *DelaunayBoard::createParametersWidget() const
 {
     return new GraphBoardParametersWidget {};
 }
 
-void GraphBoard::generate(QWidget *parameters_widget)
+void DelaunayBoard::generate(QWidget *parameters_widget)
 {
     auto widget = qobject_cast<GraphBoardParametersWidget *>(parameters_widget);
     if (widget) {
@@ -63,36 +63,7 @@ void GraphBoard::generate(QWidget *parameters_widget)
     }
 }
 
-void GraphBoard::drawBoard(BoardScene *scene)
-{
-    drawNodes(scene);
-    drawEdges(scene, points_);
-}
-
-void GraphBoard::generatePoints()
-{
-    double             side       = std::sqrt(double(cells_.size()));
-    double             bound_size = grid_step_ * std::sqrt(side);
-    std::random_device device;
-    // std::mt19937                     generator { device() };
-    std::mt19937                     generator { 2 };
-    std::uniform_real_distribution<> distribution(0, bound_size);
-
-    bounding_rect_.setLeft(std::numeric_limits<double>::max());
-    bounding_rect_.setRight(std::numeric_limits<double>::lowest());
-    bounding_rect_.setTop(std::numeric_limits<double>::max());
-    bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
-    points_.resize(cells_.size());
-    for (auto &point : points_) {
-        point = { distribution(generator), distribution(generator) };
-        bounding_rect_.setLeft(std::min(point.x(), bounding_rect_.left()));
-        bounding_rect_.setRight(std::max(point.x(), bounding_rect_.right()));
-        bounding_rect_.setTop(std::min(point.y(), bounding_rect_.top()));
-        bounding_rect_.setBottom(std::max(point.y(), bounding_rect_.bottom()));
-    }
-}
-
-void GraphBoard::drawNodes(BoardScene *scene) const
+void DelaunayBoard::drawBoard(BoardScene *scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_round.png");
     int          sprite_size = SpriteCellItem::size();
@@ -131,19 +102,34 @@ void GraphBoard::drawNodes(BoardScene *scene) const
     }
 }
 
-void GraphBoard::drawEdges(BoardScene *scene, const std::vector<QPointF> &node_coordinates) const
+void DelaunayBoard::generatePoints()
 {
-    /* for (size_t id = 0; id < cells_.size(); ++id) {
-         for (const auto &second_id : neighbors_[id]) {
-             auto  point1 = node_coordinates[id];
-             auto  point2 = node_coordinates[second_id];
-             auto *item   = new QGraphicsLineItem { point1.x(), point1.y(), point2.x(), point2.y() };
-             scene->addItem(item);
-         }
-     }*/
+    double             side       = std::sqrt(double(cells_.size()));
+    double             bound_size = grid_step_ * std::sqrt(side);
+    std::random_device device;
+    // std::mt19937                     generator { device() };
+    std::mt19937                     generator { 2 };
+    std::uniform_real_distribution<> distribution(0, bound_size);
+
+    bounding_rect_.setLeft(std::numeric_limits<double>::max());
+    bounding_rect_.setRight(std::numeric_limits<double>::lowest());
+    bounding_rect_.setTop(std::numeric_limits<double>::max());
+    bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
+    points_.resize(cells_.size());
+    for (auto &point : points_) {
+        point = { distribution(generator), distribution(generator) };
+        bounding_rect_.setLeft(std::min(point.x(), bounding_rect_.left()));
+        bounding_rect_.setRight(std::max(point.x(), bounding_rect_.right()));
+        bounding_rect_.setTop(std::min(point.y(), bounding_rect_.top()));
+        bounding_rect_.setBottom(std::max(point.y(), bounding_rect_.bottom()));
+    }
 }
 
-void GraphBoard::FormNeighbors(const Triangulator &triangulator)
+void DelaunayBoard::drawNodes(BoardScene *scene) const
+{
+}
+
+void DelaunayBoard::FormNeighbors(const Triangulator &triangulator)
 {
     std::unordered_map<QPointF, size_t, QPointFHasher> map;
     for (size_t i = 0; i < points_.size(); ++i) {
@@ -168,7 +154,7 @@ void GraphBoard::FormNeighbors(const Triangulator &triangulator)
     }
 }
 
-std::vector<size_t> GraphBoard::neighborIds(size_t id) const
+std::vector<size_t> DelaunayBoard::neighborIds(size_t id) const
 {
     return neighbors_[id];
 }

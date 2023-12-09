@@ -1,15 +1,15 @@
-#ifndef GRAPHBOARD_HPP
-#define GRAPHBOARD_HPP
+#ifndef DELAUNAY_BOARD_HPP
+#define DELAUNAY_BOARD_HPP
 
 #include "standard_board.hpp"
 #include "triangulator.hpp"
 
-class GraphBoard : public StandardBoard
+class DelaunayBoard : public StandardBoard
 {
     Q_OBJECT
 
 public:
-    std::unique_ptr<IBoard> clone() const override;
+    std::unique_ptr<IBoard> create() const override;
     QObject                *toQObject() override;
     const QString          &id() const override;
     const QString          &name() const override;
@@ -19,9 +19,7 @@ public:
 
 protected: // methods
     std::vector<size_t> neighborIds(size_t id) const override;
-    virtual void        generatePoints();
-    virtual void        drawNodes(BoardScene *scene) const;
-    virtual void        drawEdges(BoardScene *scene, const std::vector<QPointF> &node_coordinates) const;
+    void                generatePoints();
     void                FormNeighbors(const Triangulator &triangulator);
 
 protected: // data
@@ -33,4 +31,4 @@ protected: // data
     QRectF          bounding_rect_;
 };
 
-#endif // GRAPHBOARD_HPP
+#endif // DELAUNAY_BOARD_HPP

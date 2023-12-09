@@ -8,11 +8,11 @@ class HexBoard : public StandardBoard
     Q_OBJECT
 
 public:
-    std::unique_ptr<IBoard> clone() const override;
-    QObject *toQObject() override;
-    const QString &id() const override;
-    const QString &name() const override;
-    void drawBoard(BoardScene *scene) override;
+    std::unique_ptr<IBoard> create() const override;
+    QObject                *toQObject() override;
+    const QString          &id() const override;
+    const QString          &name() const override;
+    void                    drawBoard(BoardScene *scene) override;
 
 protected:
     std::vector<size_t> neighborIds(size_t id) const override;

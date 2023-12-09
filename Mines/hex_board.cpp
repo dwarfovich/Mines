@@ -2,7 +2,7 @@
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 
-std::unique_ptr<IBoard> HexBoard::clone() const
+std::unique_ptr<IBoard> HexBoard::create() const
 {
     return std::make_unique<HexBoard>();
 }
