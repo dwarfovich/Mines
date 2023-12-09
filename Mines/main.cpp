@@ -3,11 +3,18 @@
 #include "rectangle_board.hpp"
 #include "hex_board.hpp"
 #include "graph_board/graph_board.hpp"
+#include "Windows.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+    if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
+        freopen("CONOUT$", "w", stdout);
+        freopen("CONOUT$", "w", stderr);
+        freopen("CONIN$", "r", stdin);
+    }
+
     QApplication a(argc, argv);
 
     // BoardFactory::registerBoard(std::make_unique<RectangleBoard>());

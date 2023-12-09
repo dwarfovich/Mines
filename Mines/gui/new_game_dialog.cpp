@@ -5,13 +5,11 @@
 #include <QDebug>
 #define DEB qDebug()
 
-NewGameDialog::NewGameDialog(QWidget *parent)
-    : QDialog{parent}
-    , ui_(new Ui::NewGameDialog)
+NewGameDialog::NewGameDialog(QWidget* parent) : QDialog { parent }, ui_(new Ui::NewGameDialog)
 {
     ui_->setupUi(this);
-    connect(ui_->boardsComboBox, qOverload<int>(&QComboBox::currentIndexChanged),
-            this, &NewGameDialog::onNewBoardSelected);
+    connect(
+        ui_->boardsComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &NewGameDialog::onNewBoardSelected);
     ui_->parametersWidgetFrame->setLayout(new QHBoxLayout {});
     initializeBoardCombo();
 
@@ -27,11 +25,11 @@ NewGameDialog::~NewGameDialog()
 void NewGameDialog::onNewBoardSelected(int index)
 {
     const auto& boardName = ui_->boardsComboBox->itemText(index);
-    auto board = BoardFactory::create(boardName);
+    auto        board     = BoardFactory::create(boardName);
     if (board) {
         delete parameters_widget_;
         parameters_widget_ = board->createParametersWidget();
-        if (parameters_widget_){
+        if (parameters_widget_) {
             auto layout = ui_->parametersWidgetFrame->layout();
             layout->addWidget(parameters_widget_);
         } else {
@@ -47,7 +45,7 @@ QString NewGameDialog::selectedBoard() const
     return ui_->boardsComboBox->currentText();
 }
 
-QWidget *NewGameDialog::parametersWidget() const
+QWidget* NewGameDialog::parametersWidget() const
 {
     return parameters_widget_;
 }

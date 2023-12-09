@@ -4,27 +4,23 @@
 #include "edge.hpp"
 #include "triangle.hpp"
 
-#include <list>
-#include <vector>
+#include <QRectF>
 
-using EdgeVector = std::vector<std::vector<size_t>>;
+#include <vector>
 
 class Triangulator
 {
 public:
-    virtual void triangulate (const std::vector<QPointF>& points);
-    virtual Triangle superTriangle(const std::vector<QPointF>& points) const;
-    virtual EdgeVector getEdges ();
-    virtual void clear ();
+    void                         triangulate(const std::vector<QPointF>& points, const QRectF& bounding_rect = {});
+    const std::vector<Triangle>& triangulation() const;
+    Triangle superTriangle(const std::vector<QPointF>& points, const QRectF& bounding_rect = {}) const;
+    void     clear();
 
 private: // methods
-    std::list<Edge> getBoundaryPolygon (std::list<Triangle>& bad_triangles);
-    void cleanTriangulation (const Triangle& super_triangle);
-    void formEdges (const std::vector<QPointF>& points);
+    void cleanTriangulation(const Triangle& super_triangle);
 
-private:
-    std::list<Triangle> triangulation_;
-    EdgeVector edges_;
+private: // data
+    std::vector<Triangle> triangulation_;
 };
 
 #endif // TRIANGULATOR_HPP

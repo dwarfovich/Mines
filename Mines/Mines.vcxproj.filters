@@ -55,7 +55,7 @@
     <ClCompile Include="gui\cell_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gui\standard_cell_item.cpp">
+    <ClCompile Include="gui\sprite_cell_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\board_scene.cpp">
@@ -79,7 +79,7 @@
     <ClCompile Include="hex_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\edge.cpp">
+    <ClCompile Include="edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graph_board\graph_board.cpp">
@@ -88,13 +88,28 @@
     <ClCompile Include="graph_board\graph_board_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\qpointf_hasher.cpp">
+    <ClCompile Include="qpointf_hasher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\triangle.cpp">
+    <ClCompile Include="triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graph_board\triangulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_board\graph_cell_item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui\buddy_notificator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_board\edge_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -117,25 +132,43 @@
     <ClInclude Include="gui\cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gui\standard_cell_item.hpp">
+    <ClInclude Include="gui\sprite_cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gui\game_over_dialog_answer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\edge.hpp">
+    <ClInclude Include="edge.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\qpointf_hasher.hpp">
+    <ClInclude Include="qpointf_hasher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\triangle.hpp">
+    <ClInclude Include="triangle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graph_board\triangulator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="circle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdPairHasher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_board\graph_cell_item.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gui\buddy_notificator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graph_board\edge_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,16 +1,16 @@
 #include "board_scene.hpp"
 #include "cell_item.hpp"
-#include "standard_cell_item.hpp"
+#include "sprite_cell_item.hpp"
 
 #include <QGraphicsSceneMouseEvent>
 
-BoardScene::BoardScene(QObject* parent)
-    : QGraphicsScene{parent}
-{}
+BoardScene::BoardScene(QObject *parent) : QGraphicsScene { parent }
+{
+}
 
 void BoardScene::registerCellItem(CellItem *cell_item)
 {
-    cell_items_.insert({cell_item->cell(), cell_item});
+    cell_items_.insert({ cell_item->cell(), cell_item });
     addItem(cell_item);
 }
 
@@ -30,7 +30,7 @@ void BoardScene::clear()
 
 void BoardScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    auto cell_item = dynamic_cast<CellItem*>(itemAt(event->scenePos(), QTransform()));
+    auto cell_item = dynamic_cast<CellItem *>(itemAt(event->scenePos(), QTransform()));
     if (cell_item) {
         emit cellItemClicked(cell_item, event);
     }

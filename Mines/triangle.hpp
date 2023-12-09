@@ -17,14 +17,11 @@ public:
     std::array<Edge, 3>    edges() const;
     std::array<QPointF, 3> vertices() const;
     bool                   circumcircleContains(const QPointF& point) const;
-    bool                   contains(const Edge& edge) const;
-    bool                   contains(const QPointF& point) const;
+    bool                   has(const Edge& edge) const;
+    bool                   has(const QPointF& point) const;
 
 private:
     std::array<QPointF, 3> points_;
-    /*QPointF p1_;
-    QPointF p2_;
-    QPointF p3_;*/
 };
 
 #endif // TRIANGLE_HPP

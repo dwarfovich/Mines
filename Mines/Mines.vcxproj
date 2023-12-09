@@ -105,12 +105,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="graph_board\circle.cpp" />
-    <ClCompile Include="graph_board\edge.cpp" />
+    <ClCompile Include="circle.cpp" />
+    <ClCompile Include="edge.cpp" />
+    <ClCompile Include="graph_board\edge_item.cpp" />
     <ClCompile Include="graph_board\graph_board.cpp" />
     <ClCompile Include="graph_board\graph_board_parameters_widget.cpp" />
-    <ClCompile Include="graph_board\qpointf_hasher.cpp" />
-    <ClCompile Include="graph_board\triangle.cpp" />
+    <ClCompile Include="graph_board\graph_cell_item.cpp" />
+    <ClCompile Include="gui\buddy_notificator.cpp" />
+    <ClCompile Include="qpointf_hasher.cpp" />
+    <ClCompile Include="triangle.cpp" />
     <ClCompile Include="graph_board\triangulator.cpp" />
     <ClCompile Include="gui\board_scene.cpp" />
     <ClCompile Include="gui\board_view.cpp" />
@@ -120,9 +123,9 @@
     <ClCompile Include="gui\mines_widget.cpp" />
     <ClCompile Include="gui\new_game_dialog.cpp" />
     <ClCompile Include="gui\rectangle_board_parameters_widget.cpp" />
-    <ClCompile Include="gui\standard_cell_item.cpp" />
+    <ClCompile Include="gui\sprite_cell_item.cpp" />
     <ClCompile Include="hex_board.cpp" />
-    <ClCompile Include="graph_board\mec.cpp" />
+    <ClCompile Include="mec.cpp" />
     <ClCompile Include="rectangle_board.cpp" />
     <ClCompile Include="standard_board.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -141,12 +144,15 @@
   <ItemGroup>
     <ClInclude Include="board_factory.hpp" />
     <ClInclude Include="board_state.hpp" />
+    <ClInclude Include="graph_board\edge_item.hpp" />
+    <ClInclude Include="gui\buddy_notificator.hpp" />
     <ClInclude Include="cell.hpp" />
-    <ClInclude Include="graph_board\circle.hpp" />
+    <ClInclude Include="circle.hpp" />
     <ClInclude Include="game_state.hpp" />
-    <ClInclude Include="graph_board\edge.hpp" />
-    <ClInclude Include="graph_board\qpointf_hasher.hpp" />
-    <ClInclude Include="graph_board\triangle.hpp" />
+    <ClInclude Include="edge.hpp" />
+    <ClInclude Include="graph_board\graph_cell_item.hpp" />
+    <ClInclude Include="qpointf_hasher.hpp" />
+    <ClInclude Include="triangle.hpp" />
     <ClInclude Include="graph_board\triangulator.hpp" />
     <QtMoc Include="graph_board\graph_board_parameters_widget.hpp" />
     <QtMoc Include="graph_board\graph_board.hpp" />
@@ -159,11 +165,12 @@
     <QtMoc Include="gui\main_window.hpp" />
     <QtMoc Include="gui\board_scene.hpp" />
     <ClInclude Include="gui\cell_item.hpp" />
-    <ClInclude Include="gui\standard_cell_item.hpp" />
+    <ClInclude Include="gui\sprite_cell_item.hpp" />
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
     <QtMoc Include="standard_board.hpp" />
     <QtMoc Include="rectangle_board.hpp" />
-    <ClInclude Include="graph_board\mec.hpp" />
+    <ClInclude Include="mec.hpp" />
+    <ClInclude Include="StdPairHasher.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="utils.hpp" />
     <QtMoc Include="iboard.hpp" />
