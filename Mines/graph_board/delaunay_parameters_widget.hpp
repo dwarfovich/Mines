@@ -17,7 +17,6 @@ public:
 
     size_t nodesCount() const;
     size_t minesCount() const;
-    size_t gridStep() const;
 
 private slots:
     void onNodesCountChanged(int new_value);

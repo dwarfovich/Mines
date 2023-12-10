@@ -26,11 +26,11 @@ protected: // methods
 protected: // data
     std::vector<QPointF> points_;
     using NeighborsVector = std::vector<std::vector<size_t>>;
-    NeighborsVector           neighbors_;
-    Triangulator              triangulator_;
-    double                    grid_step_ = 64.;
-    QRectF                    bounding_rect_;
-    DelaunayParametersWidget *parameters_widget_ = nullptr;
+    NeighborsVector                   neighbors_;
+    Triangulator                      triangulator_;
+    double                            grid_step_ = 64.;
+    QRectF                            bounding_rect_;
+    mutable DelaunayParametersWidget *parameters_widget_ = nullptr;
 };
 
 #endif // DELAUNAY_BOARD_HPP

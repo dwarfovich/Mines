@@ -25,7 +25,11 @@ const QString &DelaunayBoard::name() const
 
 QWidget *DelaunayBoard::parametersWidget() const
 {
-    return new DelaunayParametersWidget {};
+    if (!parameters_widget_) {
+        parameters_widget_ = new DelaunayParametersWidget {};
+    }
+
+    return parameters_widget_;
 }
 
 void DelaunayBoard::generate()
@@ -40,7 +44,7 @@ void DelaunayBoard::generate()
     board_state_.mines       = parameters_widget_->minesCount();
     size_t cells_counter     = parameters_widget_->nodesCount();
     board_state_.empty_cells = cells_counter - board_state_.mines;
-    grid_step_               = parameters_widget_->gridStep();
+    grid_step_               = constants::graph_board::grid_step;
 
     initialize(cells_counter);
     randomize();

@@ -27,11 +27,6 @@ size_t DelaunayParametersWidget::minesCount() const
     return static_cast<size_t>(ui_->minesSpinBox->value());
 }
 
-size_t DelaunayParametersWidget::gridStep() const
-{
-    return static_cast<size_t>(ui_->gridStepSpinBox->value());
-}
-
 void DelaunayParametersWidget::onNodesCountChanged(int new_value)
 {
     ui_->minesSpinBox->setMaximum(new_value - 1);
