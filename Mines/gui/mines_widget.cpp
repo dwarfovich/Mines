@@ -1,6 +1,6 @@
 #include "mines_widget.hpp"
 #include "ui_mines_widget.h"
-#include "iboard.hpp"
+#include "board.hpp"
 #include "board_state.hpp"
 #include "game_state.hpp"
 #include "game_over_dialog.hpp"
@@ -10,12 +10,12 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
-MinesWidget::MinesWidget(QWidget* parent)
-    : QWidget{parent}
-    , ui_{new Ui::MinesWidget}
-    , scene_{new BoardScene {this}}
-    , timer_{new QTimer {this}}
-    , game_over_dialog_{new GameOverDialog {this}}
+MinesWidget::MinesWidget(QWidget *parent)
+    : QWidget { parent }
+    , ui_ { new Ui::MinesWidget }
+    , scene_ { new BoardScene { this } }
+    , timer_ { new QTimer { this } }
+    , game_over_dialog_ { new GameOverDialog { this } }
 {
     ui_->setupUi(this);
 
@@ -29,13 +29,13 @@ MinesWidget::~MinesWidget()
     delete ui_;
 }
 
-void MinesWidget::setBoard(IBoard *board)
+void MinesWidget::setBoard(Board *board)
 {
     ui_->timeSpinBox->setValue(0);
     board_ = board;
     scene_->clear();
     board->drawBoard(scene_);
-    connect(board_, &IBoard::cellChanged, this, &MinesWidget::onCellChanged);
+    connect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
 }
 
 void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
@@ -47,7 +47,7 @@ void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEven
     }
 
     auto game_state = board_->boardState().game_state;
-    if(game_state != GameState::Playing) {
+    if (game_state != GameState::Playing) {
         timer_->stop();
         auto answer = game_over_dialog_->exec(game_state);
         emit gameOver(answer);
@@ -66,7 +66,7 @@ void MinesWidget::onTimerTimeout()
 
 void MinesWidget::processCellItemClick(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton){
+    if (event->button() == Qt::LeftButton) {
         board_->openCell(cell_item->cell()->id);
     } else if (event->button() == Qt::RightButton) {
         board_->toggleFlag(cell_item->cell()->id);

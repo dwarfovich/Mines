@@ -3,8 +3,10 @@
 
 #include "../utils.hpp"
 
-#include <QVariant>
 #include <QDialog>
+
+class BoardCollection;
+class QHBoxLayout;
 
 namespace Ui {
 class NewGameDialog;
@@ -15,10 +17,10 @@ class NewGameDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewGameDialog(QWidget* parent = nullptr);
+    explicit NewGameDialog(BoardCollection* collection, QWidget* parent = nullptr);
     ~NewGameDialog();
 
-    QString selectedBoard() const;
+    QString  selectedBoard() const;
     QWidget* parametersWidget() const;
 
 private slots:
@@ -29,7 +31,9 @@ private:
 
 private:
     Ui::NewGameDialog* ui_;
-    QWidget* parameters_widget_ = nullptr;
+    QWidget*           parameters_widget_ = nullptr;
+    QHBoxLayout*       parameters_layout_ = nullptr;
+    BoardCollection*   collection_        = nullptr;
 };
 
 #endif // NEW_GAME_DIALOG_HPP

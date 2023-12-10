@@ -1,5 +1,5 @@
 #include "gui/main_window.hpp"
-#include "board_factory.hpp"
+#include "board_collection.hpp"
 #include "rectangle_board.hpp"
 #include "hex_board.hpp"
 #include "graph_board/delaunay_board.hpp"
@@ -9,19 +9,23 @@
 
 int main(int argc, char *argv[])
 {
+#ifdef QT_DEBUG
     if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
         freopen("CONOUT$", "w", stdout);
         freopen("CONOUT$", "w", stderr);
         freopen("CONIN$", "r", stdin);
     }
+#endif
 
     QApplication a(argc, argv);
 
-    // BoardFactory::registerBoard(std::make_unique<RectangleBoard>());
-    // BoardFactory::registerBoard(std::make_unique<HexBoard>());
-    BoardFactory::registerBoard(std::make_unique<DelaunayBoard>());
+    auto collection = std::make_unique<BoardCollection>();
+    collection->registerBoard(std::make_unique<RectangleBoard>());
+    collection->registerBoard(std::make_unique<HexBoard>());
+    collection->registerBoard(std::make_unique<DelaunayBoard>());
 
-    MainWindow w;
+    MainWindow w { std::move(collection) };
     w.show();
+
     return a.exec();
 }

@@ -1,15 +1,11 @@
 #include "hex_board.hpp"
+#include "gui/rectangle_board_parameters_widget.hpp"
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 
-std::unique_ptr<IBoard> HexBoard::create() const
+std::unique_ptr<Board> HexBoard::create() const
 {
     return std::make_unique<HexBoard>();
-}
-
-QObject *HexBoard::toQObject()
-{
-    return this;
 }
 
 const QString &HexBoard::id() const
@@ -51,6 +47,35 @@ void HexBoard::drawBoard(BoardScene *scene)
             scene->registerCellItem(item);
         }
     }
+}
+
+void HexBoard::generate()
+{
+    if (!parameters_widget_) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    width_                   = parameters_widget_->boardWidth();
+    height_                  = parameters_widget_->boardHeight();
+    board_state_             = {};
+    flags_                   = 0;
+    board_state_.mines       = parameters_widget_->mines();
+    board_state_.empty_cells = width_ * height_ - board_state_.mines;
+
+    initialize(width_ * height_);
+    randomize();
+
+    board_state_.game_state = GameState::Playing;
+}
+
+QWidget *HexBoard::parametersWidget() const
+{
+    if (!parameters_widget_) {
+        parameters_widget_ = new RectangleBoardParametersWidget {};
+    }
+
+    return parameters_widget_;
 }
 
 std::vector<size_t> HexBoard::neighborIds(size_t id) const

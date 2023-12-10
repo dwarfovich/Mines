@@ -68,29 +68,6 @@ const BoardState &StandardBoard::boardState() const
     return board_state_;
 }
 
-QWidget *StandardBoard::createParametersWidget() const
-{
-    return new RectangleBoardParametersWidget {};
-}
-
-void StandardBoard::generate(QWidget *parameters_widget)
-{
-    auto widget = qobject_cast<RectangleBoardParametersWidget *>(parameters_widget);
-    if (widget) {
-        width_                   = widget->boardWidth();
-        height_                  = widget->boardHeight();
-        board_state_             = {};
-        flags_                   = 0;
-        board_state_.mines       = widget->mines();
-        board_state_.empty_cells = width_ * height_ - board_state_.mines;
-
-        initialize(width_ * height_);
-        randomize();
-
-        board_state_.game_state = GameState::Playing;
-    }
-}
-
 Cell *StandardBoard::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {

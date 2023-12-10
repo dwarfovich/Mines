@@ -2,75 +2,68 @@
 #include "qpointf_hasher.hpp"
 #include "cell.hpp"
 #include "graph_cell_item.hpp"
-#include "graph_board_parameters_widget.hpp"
+#include "delaunay_parameters_widget.hpp"
 #include "edge_item.hpp"
+#include "graph_boards_constants.h"
 #include "gui/board_scene.hpp"
-
-#include <QGraphicsLineItem>
 
 #include <random>
 #include <unordered_map>
 #include <unordered_set>
 
-std::unique_ptr<IBoard> DelaunayBoard::create() const
+std::unique_ptr<Board> DelaunayBoard::create() const
 {
     return std::make_unique<DelaunayBoard>();
 }
 
-QObject *DelaunayBoard::toQObject()
-{
-    return this;
-}
-
 const QString &DelaunayBoard::id() const
 {
-    static const QString id { "Graph" };
+    static const QString id { QStringLiteral("Delaunay") };
     return id;
 }
 
 const QString &DelaunayBoard::name() const
 {
-    static const QString name = tr("Graph");
+    static const QString name = QStringLiteral("Delaunay");
     return name;
 }
 
-QWidget *DelaunayBoard::createParametersWidget() const
+QWidget *DelaunayBoard::parametersWidget() const
 {
-    return new GraphBoardParametersWidget {};
+    return new DelaunayParametersWidget {};
 }
 
-void DelaunayBoard::generate(QWidget *parameters_widget)
+void DelaunayBoard::generate()
 {
-    auto widget = qobject_cast<GraphBoardParametersWidget *>(parameters_widget);
-    if (widget) {
-        board_state_             = {};
-        flags_                   = 0;
-        board_state_.mines       = widget->minesCount();
-        size_t cells_counter     = widget->nodesCount();
-        board_state_.empty_cells = cells_counter - board_state_.mines;
-        grid_step_               = widget->gridStep();
-
-        initialize(cells_counter);
-        randomize();
-
-        generatePoints();
-        triangulator_.triangulate(points_, bounding_rect_);
-        FormNeighbors(triangulator_);
-        triangulator_.clear();
-        board_state_.game_state = GameState::Playing;
-    } else {
+    if (!parameters_widget_) {
         Q_ASSERT(false);
+        return;
     }
+
+    board_state_             = {};
+    flags_                   = 0;
+    board_state_.mines       = parameters_widget_->minesCount();
+    size_t cells_counter     = parameters_widget_->nodesCount();
+    board_state_.empty_cells = cells_counter - board_state_.mines;
+    grid_step_               = parameters_widget_->gridStep();
+
+    initialize(cells_counter);
+    randomize();
+
+    generatePoints();
+    triangulator_.triangulate(points_, bounding_rect_);
+    formNeighbors(triangulator_);
+    triangulator_.clear();
+    board_state_.game_state = GameState::Playing;
 }
 
 void DelaunayBoard::drawBoard(BoardScene *scene)
 {
-    SpriteCellItem::setSprites(":/gfx/cells_round.png");
-    int          sprite_size = SpriteCellItem::size();
-    QPainterPath path;
-    path.addEllipse(0., 0., sprite_size, sprite_size);
-    SpriteCellItem::setShape(path);
+    Q_ASSERT(scene);
 
+    setupCellItems();
+
+    const auto                                  sprite_size = SpriteCellItem::size();
     std::unordered_map<size_t, GraphCellItem *> id_to_item_map;
     const int                                   node_z_value = 2;
     for (size_t id = 0; id < points_.size(); ++id) {
@@ -104,11 +97,10 @@ void DelaunayBoard::drawBoard(BoardScene *scene)
 
 void DelaunayBoard::generatePoints()
 {
-    double             side       = std::sqrt(double(cells_.size()));
-    double             bound_size = grid_step_ * std::sqrt(side);
-    std::random_device device;
-    // std::mt19937                     generator { device() };
-    std::mt19937                     generator { 2 };
+    double                           side       = std::sqrt(double(cells_.size()));
+    double                           bound_size = grid_step_ * std::sqrt(side);
+    std::random_device               device;
+    std::mt19937                     generator { device() };
     std::uniform_real_distribution<> distribution(0, bound_size);
 
     bounding_rect_.setLeft(std::numeric_limits<double>::max());
@@ -125,11 +117,7 @@ void DelaunayBoard::generatePoints()
     }
 }
 
-void DelaunayBoard::drawNodes(BoardScene *scene) const
-{
-}
-
-void DelaunayBoard::FormNeighbors(const Triangulator &triangulator)
+void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
 {
     std::unordered_map<QPointF, size_t, QPointFHasher> map;
     for (size_t i = 0; i < points_.size(); ++i) {
@@ -152,6 +140,15 @@ void DelaunayBoard::FormNeighbors(const Triangulator &triangulator)
     for (size_t i = 0; i < temp_edges_.size(); ++i) {
         neighbors_[i].insert(neighbors_[i].cend(), temp_edges_[i].cbegin(), temp_edges_[i].cend());
     }
+}
+
+void DelaunayBoard::setupCellItems()
+{
+    SpriteCellItem::setSprites(constants::graph_board::sprites_path);
+    int          sprite_size = SpriteCellItem::size();
+    QPainterPath path;
+    path.addEllipse(0., 0., sprite_size, sprite_size);
+    SpriteCellItem::setShape(path);
 }
 
 std::vector<size_t> DelaunayBoard::neighborIds(size_t id) const

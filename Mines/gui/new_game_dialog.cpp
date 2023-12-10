@@ -1,16 +1,19 @@
 #include "new_game_dialog.hpp"
 #include "ui_new_game_dialog.h"
-#include "board_factory.hpp"
+#include "board_collection.hpp"
 
 #include <QDebug>
 #define DEB qDebug()
 
-NewGameDialog::NewGameDialog(QWidget* parent) : QDialog { parent }, ui_(new Ui::NewGameDialog)
+NewGameDialog::NewGameDialog(BoardCollection* collection, QWidget* parent)
+    : QDialog { parent }, ui_(new Ui::NewGameDialog), collection_ { collection }
 {
     ui_->setupUi(this);
     connect(
         ui_->boardsComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &NewGameDialog::onNewBoardSelected);
-    ui_->parametersWidgetFrame->setLayout(new QHBoxLayout {});
+
+    parameters_layout_ = new QHBoxLayout();
+    ui_->parametersWidgetGroupBox->setLayout(parameters_layout_);
     initializeBoardCombo();
 
     connect(ui_->startButton, &QPushButton::clicked, this, &QDialog::accept);
@@ -25,13 +28,12 @@ NewGameDialog::~NewGameDialog()
 void NewGameDialog::onNewBoardSelected(int index)
 {
     const auto& boardName = ui_->boardsComboBox->itemText(index);
-    auto        board     = BoardFactory::create(boardName);
+    auto        board     = collection_->get(boardName);
     if (board) {
         delete parameters_widget_;
-        parameters_widget_ = board->createParametersWidget();
+        parameters_widget_ = board->parametersWidget();
         if (parameters_widget_) {
-            auto layout = ui_->parametersWidgetFrame->layout();
-            layout->addWidget(parameters_widget_);
+            parameters_layout_->addWidget(parameters_widget_);
         } else {
             Q_ASSERT(false);
         }
@@ -52,8 +54,9 @@ QWidget* NewGameDialog::parametersWidget() const
 
 void NewGameDialog::initializeBoardCombo()
 {
+    ui_->boardsComboBox->setInsertPolicy(QComboBox::InsertAlphabetically);
     QStringList names;
-    for (const auto& [name, board] : BoardFactory::boards()) {
+    for (const auto& [name, board] : collection_->boards()) {
         names << name;
     }
     ui_->boardsComboBox->addItems(names);

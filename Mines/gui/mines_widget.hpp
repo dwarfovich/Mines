@@ -9,13 +9,10 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDialog>
 
-class IBoard;
+class Board;
 class GameOverDialog;
-
-QT_BEGIN_NAMESPACE
 class QGraphicsScene;
 class QTimer;
-QT_END_NAMESPACE
 
 namespace Ui {
 class MinesWidget;
@@ -29,26 +26,26 @@ public:
     explicit MinesWidget(QWidget* parent = nullptr);
     ~MinesWidget();
 
-    void setBoard(IBoard* board);
+    void setBoard(Board* board);
 
 signals:
     void gameOver(GameOverDialogAnswer answer);
 
 private slots:
-    void onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent *event);
+    void onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
     void onCellChanged(Cell* cell);
     void onTimerTimeout();
 
 private:
-    void processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent *event);
+    void processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
     void updateFlagsCount();
 
 private:
     Ui::MinesWidget* ui_;
-    BoardScene* scene_;
-    IBoard* board_;
-    QTimer* timer_;
-    GameOverDialog* game_over_dialog_;
+    BoardScene*      scene_;
+    Board*           board_;
+    QTimer*          timer_;
+    GameOverDialog*  game_over_dialog_;
 };
 
 #endif // MINES_WIDGET_HPP

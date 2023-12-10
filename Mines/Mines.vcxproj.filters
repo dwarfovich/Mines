@@ -31,7 +31,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="board_factory.cpp">
+    <ClCompile Include="board_collection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="board_state.cpp">
@@ -85,7 +85,7 @@
     <ClCompile Include="graph_board\delaunay_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\graph_board_parameters_widget.cpp">
+    <ClCompile Include="graph_board\delaunay_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="qpointf_hasher.cpp">
@@ -114,7 +114,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="board_factory.hpp">
+    <ClInclude Include="board_collection.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="board_state.hpp">
@@ -171,9 +171,12 @@
     <ClInclude Include="graph_board\edge_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="graph_board\graph_boards_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="iboard.hpp">
+    <QtMoc Include="board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="rectangle_board.hpp">
@@ -209,7 +212,7 @@
     <QtMoc Include="graph_board\delaunay_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="graph_board\graph_board_parameters_widget.hpp">
+    <QtMoc Include="graph_board\delaunay_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -229,7 +232,7 @@
     <QtUic Include="gui\new_game_dialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="graph_board\graph_board_parameters_widget.ui">
+    <QtUic Include="graph_board\delaunay_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

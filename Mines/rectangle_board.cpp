@@ -8,7 +8,7 @@
 #include <QDebug>
 #define DEB qDebug()
 
-std::unique_ptr<IBoard> RectangleBoard::create() const
+std::unique_ptr<Board> RectangleBoard::create() const
 {
     return std::make_unique<RectangleBoard>();
 }
@@ -47,6 +47,35 @@ void RectangleBoard::drawBoard(BoardScene *scene)
     }
 }
 
+void RectangleBoard::generate()
+{
+    if (!parameters_widget_) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    width_                   = parameters_widget_->boardWidth();
+    height_                  = parameters_widget_->boardHeight();
+    board_state_             = {};
+    flags_                   = 0;
+    board_state_.mines       = parameters_widget_->mines();
+    board_state_.empty_cells = width_ * height_ - board_state_.mines;
+
+    initialize(width_ * height_);
+    randomize();
+
+    board_state_.game_state = GameState::Playing;
+}
+
+QWidget *RectangleBoard::parametersWidget() const
+{
+    if (!parameters_widget_) {
+        parameters_widget_ = new RectangleBoardParametersWidget {};
+    }
+
+    return parameters_widget_;
+}
+
 std::vector<size_t> RectangleBoard::neighborIds(size_t id) const
 {
     size_t min_id = (id / width_ > 0 ? id - width_ : id);
@@ -68,9 +97,4 @@ std::vector<size_t> RectangleBoard::neighborIds(size_t id) const
     }
 
     return ids;
-}
-
-QObject *RectangleBoard::toQObject()
-{
-    return this;
 }

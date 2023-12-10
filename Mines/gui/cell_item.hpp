@@ -8,8 +8,12 @@ class Cell;
 class CellItem : public QGraphicsItem
 {
 public:
-    enum { Type = UserType + 1 };
-    enum SpriteType {
+    enum
+    {
+        Type = UserType + 1
+    };
+    enum SpriteType
+    {
         Closed,
         ClosedWithFlag,
         OpenedMine,
@@ -17,10 +21,11 @@ public:
         MissedMine,
         Opened
     };
+
     CellItem(const Cell* cell);
 
-    virtual const Cell *cell() const;
-    virtual void setCell(Cell* cell);
+    virtual const Cell* cell() const;
+    virtual void        setCell(Cell* cell);
 
 protected:
     const Cell* cell_;
