@@ -11,11 +11,6 @@
 #include <unordered_map>
 #include <unordered_set>
 
-std::unique_ptr<Board> DelaunayBoard::create() const
-{
-    return std::make_unique<DelaunayBoard>();
-}
-
 const QString &DelaunayBoard::id() const
 {
     static const QString id { QStringLiteral("Delaunay") };
@@ -57,7 +52,7 @@ void DelaunayBoard::generate()
     board_state_.game_state = GameState::Playing;
 }
 
-void DelaunayBoard::drawBoard(BoardScene *scene)
+void DelaunayBoard::setupScene(BoardScene *scene)
 {
     Q_ASSERT(scene);
 

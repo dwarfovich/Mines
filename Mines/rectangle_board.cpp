@@ -5,14 +5,6 @@
 
 #include <QPainterPath>
 
-#include <QDebug>
-#define DEB qDebug()
-
-std::unique_ptr<Board> RectangleBoard::create() const
-{
-    return std::make_unique<RectangleBoard>();
-}
-
 const QString &RectangleBoard::id() const
 {
     static const QString id = "Rectangle";
@@ -27,7 +19,7 @@ const QString &RectangleBoard::name() const
     return name;
 }
 
-void RectangleBoard::drawBoard(BoardScene *scene)
+void RectangleBoard::setupScene(BoardScene *scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_square.png");
     int          sprite_size = SpriteCellItem::size();

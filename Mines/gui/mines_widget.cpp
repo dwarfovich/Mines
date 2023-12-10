@@ -34,7 +34,7 @@ void MinesWidget::setBoard(Board *board)
     ui_->timeSpinBox->setValue(0);
     board_ = board;
     scene_->clear();
-    board->drawBoard(scene_);
+    board->setupScene(scene_);
     connect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
 }
 

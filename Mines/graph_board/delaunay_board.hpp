@@ -1,22 +1,21 @@
 #ifndef DELAUNAY_BOARD_HPP
 #define DELAUNAY_BOARD_HPP
 
-#include "standard_board.hpp"
+#include "id_based_board.hpp"
 #include "triangulator.hpp"
 
 class DelaunayParametersWidget;
 
-class DelaunayBoard : public StandardBoard
+class DelaunayBoard : public IdBasedBoard
 {
     Q_OBJECT
 
 public:
-    std::unique_ptr<Board> create() const override;
-    const QString         &id() const override;
-    const QString         &name() const override;
-    QWidget               *parametersWidget() const override;
-    void                   generate() override;
-    void                   drawBoard(BoardScene *scene) override;
+    const QString &id() const override;
+    const QString &name() const override;
+    QWidget       *parametersWidget() const override;
+    void           generate() override;
+    void           setupScene(BoardScene *scene) override;
 
 protected: // methods
     std::vector<size_t> neighborIds(size_t id) const override;

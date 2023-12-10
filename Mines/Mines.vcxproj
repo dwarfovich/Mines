@@ -105,6 +105,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="board.cpp" />
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph_board\edge_item.cpp" />
@@ -127,7 +128,7 @@
     <ClCompile Include="hex_board.cpp" />
     <ClCompile Include="mec.cpp" />
     <ClCompile Include="rectangle_board.cpp" />
-    <ClCompile Include="standard_board.cpp" />
+    <ClCompile Include="id_based_board.cpp" />
     <ClCompile Include="utils.cpp" />
     <QtRcc Include="mines.qrc" />
     <QtUic Include="graph_board\delaunay_parameters_widget.ui" />
@@ -168,7 +169,7 @@
     <ClInclude Include="gui\cell_item.hpp" />
     <ClInclude Include="gui\sprite_cell_item.hpp" />
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
-    <QtMoc Include="standard_board.hpp" />
+    <QtMoc Include="id_based_board.hpp" />
     <QtMoc Include="rectangle_board.hpp" />
     <ClInclude Include="mec.hpp" />
     <ClInclude Include="StdPairHasher.hpp" />

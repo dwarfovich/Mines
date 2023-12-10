@@ -3,11 +3,6 @@
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 
-std::unique_ptr<Board> HexBoard::create() const
-{
-    return std::make_unique<HexBoard>();
-}
-
 const QString &HexBoard::id() const
 {
     static const QString id { "Hex" };
@@ -20,7 +15,7 @@ const QString &HexBoard::name() const
     return name;
 }
 
-void HexBoard::drawBoard(BoardScene *scene)
+void HexBoard::setupScene(BoardScene *scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_hex.png");
     int          sprite_size = SpriteCellItem::size();

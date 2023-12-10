@@ -1,17 +1,14 @@
-#include "standard_board.hpp"
+#include "id_based_board.hpp"
 #include "gui/rectangle_board_parameters_widget.hpp"
 
 #include <random>
 
-#include <QDebug>
-#define DEB qDebug()
-
-size_t StandardBoard::flags() const
+size_t IdBasedBoard::flags() const
 {
     return flags_;
 }
 
-const Cell *StandardBoard::cellById(size_t id) const
+const Cell *IdBasedBoard::cellById(size_t id) const
 {
     if (id >= 0 && id < cells_.size()) {
         return &cells_[id];
@@ -20,7 +17,7 @@ const Cell *StandardBoard::cellById(size_t id) const
     }
 }
 
-void StandardBoard::openCell(size_t id)
+void IdBasedBoard::openCell(size_t id)
 {
     auto cell = cellById(id);
     Q_ASSERT(cell);
@@ -51,7 +48,7 @@ void StandardBoard::openCell(size_t id)
     }
 }
 
-void StandardBoard::toggleFlag(size_t id)
+void IdBasedBoard::toggleFlag(size_t id)
 {
     auto cell      = cellById(id);
     cell->has_flag = !cell->has_flag;
@@ -63,12 +60,7 @@ void StandardBoard::toggleFlag(size_t id)
     cellChanged(cell);
 }
 
-const BoardState &StandardBoard::boardState() const
-{
-    return board_state_;
-}
-
-Cell *StandardBoard::cellById(size_t id)
+Cell *IdBasedBoard::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
         return &cells_[id];
@@ -77,7 +69,7 @@ Cell *StandardBoard::cellById(size_t id)
     }
 }
 
-void StandardBoard::relocateMine(Cell *cell)
+void IdBasedBoard::relocateMine(Cell *cell)
 {
     Q_ASSERT(cell);
 
@@ -90,7 +82,7 @@ void StandardBoard::relocateMine(Cell *cell)
     }
 }
 
-void StandardBoard::reveal()
+void IdBasedBoard::reveal()
 {
     for (size_t i = 0; i < cells_.size(); ++i) {
         if (cells_[i].is_closed) {
@@ -105,7 +97,7 @@ void StandardBoard::reveal()
     }
 }
 
-size_t StandardBoard::countNeighborMines(size_t id) const
+size_t IdBasedBoard::countNeighborMines(size_t id) const
 {
     const auto &ids   = neighborIds(id);
     int         mines = 0;
@@ -119,7 +111,7 @@ size_t StandardBoard::countNeighborMines(size_t id) const
     return mines;
 }
 
-void StandardBoard::openAdjacentCells(Cell *cell)
+void IdBasedBoard::openAdjacentCells(Cell *cell)
 {
     auto neighbors { neighborIds(cell->id) };
     for (auto neighborId : neighbors) {
@@ -130,7 +122,7 @@ void StandardBoard::openAdjacentCells(Cell *cell)
     }
 }
 
-void StandardBoard::initialize(size_t cells_counter)
+void IdBasedBoard::initialize(size_t cells_counter)
 {
     cells_.resize(cells_counter);
     size_t mines_counter = 0;
@@ -143,7 +135,7 @@ void StandardBoard::initialize(size_t cells_counter)
     }
 }
 
-void StandardBoard::randomize()
+void IdBasedBoard::randomize()
 {
     std::random_device random_device;
     std::mt19937       generator { random_device() };

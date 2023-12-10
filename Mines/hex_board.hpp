@@ -1,19 +1,18 @@
 #ifndef HEXBOARD_HPP
 #define HEXBOARD_HPP
 
-#include "standard_board.hpp"
+#include "rectangle_board.hpp"
 
-class HexBoard : public StandardBoard
+class HexBoard : public RectangleBoard
 {
     Q_OBJECT
 
 public:
-    std::unique_ptr<Board> create() const override;
-    const QString         &id() const override;
-    const QString         &name() const override;
-    void                   drawBoard(BoardScene *scene) override;
-    void                   generate() override;
-    QWidget               *parametersWidget() const override;
+    const QString &id() const override;
+    const QString &name() const override;
+    void           setupScene(BoardScene *scene) override;
+    void           generate() override;
+    QWidget       *parametersWidget() const override;
 
 protected:
     std::vector<size_t>                     neighborIds(size_t id) const override;

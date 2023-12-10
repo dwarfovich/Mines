@@ -46,7 +46,7 @@
     <ClCompile Include="rectangle_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="standard_board.cpp">
+    <ClCompile Include="id_based_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\rectangle_board_parameters_widget.cpp">
@@ -110,6 +110,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="graph_board\edge_item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,7 +185,7 @@
     <QtMoc Include="rectangle_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="standard_board.hpp">
+    <QtMoc Include="id_based_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp">
