@@ -82,10 +82,10 @@
     <ClCompile Include="edge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\delaunay_board.cpp">
+    <ClCompile Include="graph_boards\delaunay_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\delaunay_parameters_widget.cpp">
+    <ClCompile Include="graph_boards\delaunay_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="qpointf_hasher.cpp">
@@ -94,7 +94,7 @@
     <ClCompile Include="triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\triangulator.cpp">
+    <ClCompile Include="graph_boards\triangulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="circle.cpp">
@@ -103,16 +103,22 @@
     <ClCompile Include="mec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\graph_cell_item.cpp">
+    <ClCompile Include="graph_boards\graph_cell_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\buddy_notificator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graph_board\edge_item.cpp">
+    <ClCompile Include="graph_boards\edge_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_boards\graph_board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_boards\graph_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -150,7 +156,7 @@
     <ClInclude Include="triangle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\triangulator.hpp">
+    <ClInclude Include="graph_boards\triangulator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -162,19 +168,19 @@
     <ClInclude Include="mec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StdPairHasher.hpp">
+    <ClInclude Include="std_pair_hasher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\graph_cell_item.hpp">
+    <ClInclude Include="graph_boards\graph_cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gui\buddy_notificator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\edge_item.hpp">
+    <ClInclude Include="graph_boards\edge_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_board\graph_boards_constants.h">
+    <ClInclude Include="graph_boards\graph_boards_constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -212,10 +218,16 @@
     <QtMoc Include="hex_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="graph_board\delaunay_board.hpp">
+    <QtMoc Include="graph_boards\delaunay_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="graph_board\delaunay_parameters_widget.hpp">
+    <QtMoc Include="graph_boards\delaunay_parameters_widget.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="graph_boards\graph_parameters_widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="graph_boards\graph_board.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -235,7 +247,10 @@
     <QtUic Include="gui\new_game_dialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="graph_board\delaunay_parameters_widget.ui">
+    <QtUic Include="graph_boards\delaunay_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="graph_boards\graph_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

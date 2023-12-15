@@ -1,5 +1,5 @@
 #include "buddy_notificator.hpp"
-#include "graph_board/graph_cell_item.hpp"
+#include "graph_boards/graph_cell_item.hpp"
 
 #include <QGraphicsItem>
 

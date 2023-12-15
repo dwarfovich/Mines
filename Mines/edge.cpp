@@ -1,5 +1,5 @@
 #include "edge.hpp"
-#include "StdPairHasher.hpp"
+#include "std_pair_hasher.hpp"
 #include "qpointf_hasher.hpp"
 
 Edge::Edge(QPointF start_point, QPointF end_point) : points_ { start_point, end_point }

@@ -19,7 +19,7 @@ public:
 protected: // methods
     virtual std::vector<size_t> neighborIds(size_t id) const = 0;
     virtual Cell*               cellById(size_t id);
-    virtual void                relocateMine(Cell* cell);
+    virtual void                relocateFirstOpenedMine(Cell* cell);
     virtual void                reveal();
     virtual size_t              countNeighborMines(size_t id) const;
     virtual void                openAdjacentCells(Cell* cell);

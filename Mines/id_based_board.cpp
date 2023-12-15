@@ -27,7 +27,7 @@ void IdBasedBoard::openCell(size_t id)
     }
 
     if (!board_state_.first_cell_opened && cell->has_mine) {
-        relocateMine(cell);
+        relocateFirstOpenedMine(cell);
     }
     board_state_.first_cell_opened = true;
 
@@ -69,7 +69,7 @@ Cell *IdBasedBoard::cellById(size_t id)
     }
 }
 
-void IdBasedBoard::relocateMine(Cell *cell)
+void IdBasedBoard::relocateFirstOpenedMine(Cell *cell)
 {
     Q_ASSERT(cell);
 
@@ -100,9 +100,9 @@ void IdBasedBoard::reveal()
 size_t IdBasedBoard::countNeighborMines(size_t id) const
 {
     const auto &ids   = neighborIds(id);
-    int         mines = 0;
+    size_t      mines = 0;
     for (const auto &neighborId : ids) {
-        const auto *cell = cellById(neighborId);
+        const auto *const cell = cellById(neighborId);
         if (cell->has_mine) {
             ++mines;
         }
@@ -131,6 +131,8 @@ void IdBasedBoard::initialize(size_t cells_counter)
         if (mines_counter < board_state_.mines) {
             cells_[i].has_mine = true;
             ++mines_counter;
+        } else {
+            cells_[i].has_mine = false;
         }
     }
 }

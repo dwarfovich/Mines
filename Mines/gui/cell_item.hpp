@@ -28,7 +28,7 @@ public:
     virtual void        setCell(Cell* cell);
 
 protected:
-    const Cell* cell_;
+    const Cell* cell_ = nullptr;
 };
 
 Q_DECLARE_METATYPE(CellItem*);

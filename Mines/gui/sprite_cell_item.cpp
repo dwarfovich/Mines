@@ -71,6 +71,15 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->setOpacity(0.3);
         painter->drawPath(shape());
     }
+
+    if (cell_->has_mine) {
+        QBrush b { Qt::SolidPattern };
+        b.setColor(Qt::red);
+        QPen p { Qt::red };
+        painter->setPen(p);
+        painter->setBrush(b);
+        painter->drawEllipse(0, 0, 20, 20);
+    }
 }
 
 bool SpriteCellItem::IsHovered() const
