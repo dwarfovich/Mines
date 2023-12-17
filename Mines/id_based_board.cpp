@@ -122,7 +122,7 @@ void IdBasedBoard::openAdjacentCells(Cell *cell)
     }
 }
 
-void IdBasedBoard::initialize(size_t cells_counter)
+void IdBasedBoard::initializeCells(size_t cells_counter)
 {
     cells_.resize(cells_counter);
     size_t mines_counter = 0;

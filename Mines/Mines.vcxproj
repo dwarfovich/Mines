@@ -148,9 +148,9 @@
   <ItemGroup>
     <ClInclude Include="board_collection.hpp" />
     <ClInclude Include="board_state.hpp" />
-    <QtMoc Include="graph_boards\graph_board.h" />
+    <QtMoc Include="graph_boards\graph_board.hpp" />
     <ClInclude Include="graph_boards\edge_item.hpp" />
-    <ClInclude Include="graph_boards\graph_boards_constants.h" />
+    <ClInclude Include="graph_boards\graph_boards_constants.hpp" />
     <QtMoc Include="graph_boards\graph_parameters_widget.h" />
     <ClInclude Include="gui\buddy_notificator.hpp" />
     <ClInclude Include="cell.hpp" />

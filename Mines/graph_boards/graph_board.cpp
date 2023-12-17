@@ -1,6 +1,6 @@
-#include "graph_board.h"
+#include "graph_board.hpp"
 #include "graph_parameters_widget.h"
-#include "graph_boards_constants.h"
+#include "graph_boards_constants.hpp"
 #include "graph_cell_item.hpp"
 #include "edge.hpp"
 #include "edge_item.hpp"
@@ -46,9 +46,8 @@ void GraphBoard::generate()
     board_state_.mines       = parameters_widget_->minesCount();
     size_t cells_counter     = parameters_widget_->nodesCount();
     board_state_.empty_cells = cells_counter - board_state_.mines;
-    grid_step_               = constants::graph_board::grid_step;
 
-    initialize(cells_counter);
+    initializeCells(cells_counter);
     randomize();
 
     generatePoints();
@@ -93,6 +92,10 @@ void GraphBoard::setupScene(BoardScene *scene)
             }
         }
     }
+
+    using namespace constants::graph_board;
+    scene->setSceneRect(bounding_rect_.adjusted(
+        -bounding_side_adjustment, -bounding_side_adjustment, bounding_side_adjustment, bounding_side_adjustment));
 }
 
 std::vector<size_t> GraphBoard::neighborIds(size_t id) const
@@ -102,16 +105,13 @@ std::vector<size_t> GraphBoard::neighborIds(size_t id) const
 
 void GraphBoard::generatePoints()
 {
-    double side       = std::sqrt(double(cells_.size()));
-    double bound_size = grid_step_ * std::sqrt(side);
-
-    std::uniform_real_distribution<> distribution(0, bound_size);
-
     bounding_rect_.setLeft(std::numeric_limits<double>::max());
     bounding_rect_.setRight(std::numeric_limits<double>::lowest());
     bounding_rect_.setTop(std::numeric_limits<double>::max());
     bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
+
     points_.resize(cells_.size());
+    std::uniform_real_distribution<> distribution(0, constants::graph_board::random_points_bounding_side);
     for (auto &point : points_) {
         point = { distribution(random_generator_), distribution(random_generator_) };
         bounding_rect_.setLeft(std::min(point.x(), bounding_rect_.left()));
@@ -125,28 +125,26 @@ void GraphBoard::formNeighbors()
 {
     Q_ASSERT(parameters_widget_);
 
-    const auto &max_neighbors = parameters_widget_->maximumNeighbors();
     neighbors_.clear();
     neighbors_.resize(points_.size());
 
     if (!parameters_widget_->disjointGraphAllowed()) {
-        size_t current_neighbors = 0;
         for (size_t i = 1; i < points_.size(); ++i) {
             neighbors_[i].push_back(i - 1);
             neighbors_[i - 1].push_back(i);
-            ++current_neighbors;
         }
     }
 
     std::uniform_int_distribution<size_t> neighbor_distribution(0, points_.size() - 1);
-    std::uniform_int_distribution<size_t> distribution(parameters_widget_->disjointGraphAllowed() ? 0 : 1, 4);
+    std::uniform_int_distribution<size_t> max_distribution(parameters_widget_->disjointGraphAllowed() ? 0 : 1,
+                                                           parameters_widget_->maximumNeighbors());
     for (size_t i = 0; i < neighbors_.size(); ++i) {
         auto &neighbor_ids  = neighbors_[i];
-        auto  max_neighbors = distribution(random_generator_);
+        auto  max_neighbors = max_distribution(random_generator_);
         while (neighbor_ids.size() <= max_neighbors) {
-            size_t neighbor_id  = 0;
-            size_t max_attempts = 50;
-            size_t attempt      = 0;
+            const auto &max_attempts = constants::graph_board::max_attempts_to_find_neighbor;
+            auto        neighbor_id  = 0;
+            size_t      attempt      = 0;
             do {
                 neighbor_id = neighbor_distribution(random_generator_);
             } while (((neighbor_id == i) || ::contains(neighbor_ids, neighbor_id)) && (++attempt < max_attempts));
@@ -155,6 +153,8 @@ void GraphBoard::formNeighbors()
                 if (!::contains(neighbors_[neighbor_id], i)) {
                     neighbors_[neighbor_id].push_back(i);
                 }
+            } else { // Failed to find correct neighbor.
+                break;
             }
         }
     }

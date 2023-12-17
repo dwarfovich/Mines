@@ -53,7 +53,7 @@ void RectangleBoard::generate()
     board_state_.mines       = parameters_widget_->mines();
     board_state_.empty_cells = width_ * height_ - board_state_.mines;
 
-    initialize(width_ * height_);
+    initializeCells(width_ * height_);
     randomize();
 
     board_state_.game_state = GameState::Playing;

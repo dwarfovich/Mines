@@ -21,16 +21,15 @@ public:
 
 protected: // methods
     std::vector<size_t> neighborIds(size_t id) const override;
-    void                generatePoints();
-    void                formNeighbors();
-    void                setupCellItems();
+    virtual void        generatePoints();
+    virtual void        formNeighbors();
+    virtual void        setupCellItems();
 
 protected: // data
     std::vector<QPointF> points_;
     using NeighborsVector = std::vector<std::vector<size_t>>;
     NeighborsVector                neighbors_;
     QRectF                         bounding_rect_;
-    double                         grid_step_ = 64.;
     std::random_device             random_device_;
     std::mt19937                   random_generator_;
     mutable GraphParametersWidget *parameters_widget_ = nullptr;

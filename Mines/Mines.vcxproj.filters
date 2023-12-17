@@ -180,7 +180,7 @@
     <ClInclude Include="graph_boards\edge_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graph_boards\graph_boards_constants.h">
+    <ClInclude Include="graph_boards\graph_boards_constants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,7 +227,7 @@
     <QtMoc Include="graph_boards\graph_parameters_widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="graph_boards\graph_board.h">
+    <QtMoc Include="graph_boards\graph_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

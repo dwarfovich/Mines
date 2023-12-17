@@ -36,6 +36,7 @@ void MinesWidget::setBoard(Board *board)
     scene_->clear();
     board->setupScene(scene_);
     connect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
+    centerView();
 }
 
 void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
@@ -43,7 +44,7 @@ void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEven
     processCellItemClick(cell_item, event);
 
     if (!timer_->isActive()) {
-        timer_->start(1000);
+        timer_->start(timer_period_);
     }
 
     auto game_state = board_->boardState().game_state;
@@ -77,4 +78,11 @@ void MinesWidget::processCellItemClick(CellItem *cell_item, QGraphicsSceneMouseE
 void MinesWidget::updateFlagsCount()
 {
     ui_->minesSpinBox->setValue(static_cast<int>(board_->flags()));
+}
+
+void MinesWidget::centerView()
+{
+    // auto rect = ui_->minesGraphicsView->sceneRect();
+    QRectF rect = { 0, 0, 50, 50 };
+    ui_->minesGraphicsView->fitInView(rect, Qt::KeepAspectRatio);
 }

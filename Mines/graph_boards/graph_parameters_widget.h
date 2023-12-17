@@ -18,10 +18,10 @@ public:
     GraphParametersWidget(QWidget *parent = nullptr);
     ~GraphParametersWidget();
 
-    size_t minesCount() const { return 5; }
-    size_t nodesCount() const { return 10; }
-    size_t maximumNeighbors() { return 10; }
-    bool   disjointGraphAllowed() { return false; }
+    size_t nodesCount() const;
+    size_t minesCount() const;
+    size_t maximumNeighbors();
+    bool   disjointGraphAllowed();
 
 private:
     Ui::GraphParametersWidgetClass *ui_;

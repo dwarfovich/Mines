@@ -23,7 +23,7 @@ protected: // methods
     virtual void                reveal();
     virtual size_t              countNeighborMines(size_t id) const;
     virtual void                openAdjacentCells(Cell* cell);
-    virtual void                initialize(size_t cells_counter);
+    virtual void                initializeCells(size_t cells_counter);
     virtual void                randomize();
 
 protected: // data

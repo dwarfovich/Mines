@@ -4,7 +4,7 @@
 #include "graph_cell_item.hpp"
 #include "delaunay_parameters_widget.hpp"
 #include "edge_item.hpp"
-#include "graph_boards_constants.h"
+#include "graph_boards_constants.hpp"
 #include "gui/board_scene.hpp"
 
 #include <random>
@@ -44,9 +44,8 @@ void DelaunayBoard::generate()
     board_state_.mines       = parameters_widget_->minesCount();
     size_t cells_counter     = parameters_widget_->nodesCount();
     board_state_.empty_cells = cells_counter - board_state_.mines;
-    grid_step_               = constants::graph_board::grid_step;
 
-    initialize(cells_counter);
+    initializeCells(cells_counter);
     randomize();
 
     generatePoints();
@@ -54,66 +53,6 @@ void DelaunayBoard::generate()
     formNeighbors(triangulator_);
     triangulator_.clear();
     board_state_.game_state = GameState::Playing;
-}
-
-void DelaunayBoard::setupScene(BoardScene *scene)
-{
-    Q_ASSERT(scene);
-
-    setupCellItems();
-
-    const auto                                  sprite_size = SpriteCellItem::size();
-    std::unordered_map<size_t, GraphCellItem *> id_to_item_map;
-    const int                                   node_z_value = 2;
-    for (size_t id = 0; id < points_.size(); ++id) {
-        auto *node_item = new GraphCellItem { cellById(id) };
-        node_item->setZValue(node_z_value);
-        const auto &location = points_[id];
-        node_item->setPos(location.x() - sprite_size / 2., location.y() - sprite_size / 2.);
-        scene->registerCellItem(node_item);
-        id_to_item_map[id] = node_item;
-    }
-
-    std::unordered_set<Edge, EdgeHasher> createdEdges;
-    for (const auto &[id, item] : id_to_item_map) {
-        const auto &neighbors = neighbors_[id];
-        const auto &point1    = points_[id];
-        for (const auto &buddy_id : neighbors) {
-            item->addBuddy(id_to_item_map[buddy_id]);
-            const auto &point2 = points_[buddy_id];
-            Edge        edge { point1, point2 };
-            auto        iter = createdEdges.find(edge);
-            if (createdEdges.find(edge) == createdEdges.cend()) {
-                createdEdges.insert(edge);
-                auto *edge_item = new EdgeItem { edge };
-                scene->addItem(edge_item);
-                item->addBuddy(edge_item);
-                id_to_item_map[buddy_id]->addBuddy(edge_item);
-            }
-        }
-    }
-}
-
-void DelaunayBoard::generatePoints()
-{
-    double                           side       = std::sqrt(double(cells_.size()));
-    double                           bound_size = grid_step_ * std::sqrt(side);
-    std::random_device               device;
-    std::mt19937                     generator { device() };
-    std::uniform_real_distribution<> distribution(0, bound_size);
-
-    bounding_rect_.setLeft(std::numeric_limits<double>::max());
-    bounding_rect_.setRight(std::numeric_limits<double>::lowest());
-    bounding_rect_.setTop(std::numeric_limits<double>::max());
-    bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
-    points_.resize(cells_.size());
-    for (auto &point : points_) {
-        point = { distribution(generator), distribution(generator) };
-        bounding_rect_.setLeft(std::min(point.x(), bounding_rect_.left()));
-        bounding_rect_.setRight(std::max(point.x(), bounding_rect_.right()));
-        bounding_rect_.setTop(std::min(point.y(), bounding_rect_.top()));
-        bounding_rect_.setBottom(std::max(point.y(), bounding_rect_.bottom()));
-    }
 }
 
 void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
@@ -139,15 +78,6 @@ void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
     for (size_t i = 0; i < temp_edges_.size(); ++i) {
         neighbors_[i].insert(neighbors_[i].cend(), temp_edges_[i].cbegin(), temp_edges_[i].cend());
     }
-}
-
-void DelaunayBoard::setupCellItems()
-{
-    SpriteCellItem::setSprites(constants::graph_board::sprites_path);
-    int          sprite_size = SpriteCellItem::size();
-    QPainterPath path;
-    path.addEllipse(0., 0., sprite_size, sprite_size);
-    SpriteCellItem::setShape(path);
 }
 
 std::vector<size_t> DelaunayBoard::neighborIds(size_t id) const
