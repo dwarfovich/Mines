@@ -21,6 +21,7 @@ const QString &RectangleBoard::name() const
 
 void RectangleBoard::setupScene(BoardScene *scene)
 {
+    auto r1 = scene->sceneRect();
     SpriteCellItem::setSprites(":/gfx/cells_square.png");
     int          sprite_size = SpriteCellItem::size();
     QPainterPath path;

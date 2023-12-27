@@ -82,7 +82,8 @@ void MinesWidget::updateFlagsCount()
 
 void MinesWidget::centerView()
 {
-    // auto rect = ui_->minesGraphicsView->sceneRect();
-    QRectF rect = { 0, 0, 50, 50 };
-    ui_->minesGraphicsView->fitInView(rect, Qt::KeepAspectRatio);
+    const auto &scene_rect = ui_->minesGraphicsView->sceneRect();
+    double      dx         = (scene_rect.width() - view_side_) / 2.;
+    double      dy         = (scene_rect.height() - view_side_) / 2.;
+    ui_->minesGraphicsView->fitInView(scene_rect.adjusted(dx, dy, -dx, -dy), Qt::KeepAspectRatio);
 }

@@ -42,12 +42,13 @@ private:
     void centerView();
 
 private:
-    Ui::MinesWidget*     ui_;
-    BoardScene*          scene_            = nullptr;
-    Board*               board_            = nullptr;
-    QTimer*              timer_            = nullptr;
-    static constexpr int timer_period_     = 1000;
-    GameOverDialog*      game_over_dialog_ = nullptr;
+    Ui::MinesWidget*        ui_;
+    BoardScene*             scene_            = nullptr;
+    Board*                  board_            = nullptr;
+    QTimer*                 timer_            = nullptr;
+    static constexpr int    timer_period_     = 1000;
+    static constexpr double view_side_        = 50;
+    GameOverDialog*         game_over_dialog_ = nullptr;
 };
 
 #endif // MINES_WIDGET_HPP
