@@ -17,7 +17,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{ADE4252A-8626-46B2-B80D-C0FAEC33D5B4}</ProjectGuid>
+    <ProjectGuid>{5F270F58-5BF9-4D3F-8DAB-F37F5D88C261}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.22621.0</WindowsTargetPlatformVersion>
@@ -37,13 +37,14 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>Qt6.5.0_x64</QtInstall>
+    <QtInstall>Qt 6.7.0</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>Qt6.5.0_x64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtInstall>Qt 6.7.0</QtInstall>
+    <QtModules>
+    </QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -59,21 +60,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(QtMsBuild)\Qt.props" />
+    <Import Project="OutDir.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <OutDir>$(SolutionDir)Build-$(TargetName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(OutDir).intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutDir>$(SolutionDir)Build-$(TargetName)-$(Platform)-$(Configuration)\</OutDir>
-    <IntDir>$(OutDir).intermediate\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -106,20 +99,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="board.cpp" />
+    <ClCompile Include="board_collection.cpp" />
+    <ClCompile Include="board_state.cpp" />
+    <ClCompile Include="cell.cpp" />
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="edge.cpp" />
-    <ClCompile Include="graph_boards\graph_board.cpp" />
-    <ClCompile Include="graph_boards\edge_item.cpp" />
     <ClCompile Include="graph_boards\delaunay_board.cpp" />
     <ClCompile Include="graph_boards\delaunay_parameters_widget.cpp" />
+    <ClCompile Include="graph_boards\edge_item.cpp" />
+    <ClCompile Include="graph_boards\graph_board.cpp" />
     <ClCompile Include="graph_boards\graph_cell_item.cpp" />
     <ClCompile Include="graph_boards\graph_parameters_widget.cpp" />
-    <ClCompile Include="gui\buddy_notificator.cpp" />
-    <ClCompile Include="qpointf_hasher.cpp" />
-    <ClCompile Include="triangle.cpp" />
     <ClCompile Include="graph_boards\triangulator.cpp" />
     <ClCompile Include="gui\board_scene.cpp" />
     <ClCompile Include="gui\board_view.cpp" />
+    <ClCompile Include="gui\buddy_notificator.cpp" />
     <ClCompile Include="gui\cell_item.cpp" />
     <ClCompile Include="gui\game_over_dialog.cpp" />
     <ClCompile Include="gui\main_window.cpp" />
@@ -128,11 +122,21 @@
     <ClCompile Include="gui\rectangle_board_parameters_widget.cpp" />
     <ClCompile Include="gui\sprite_cell_item.cpp" />
     <ClCompile Include="hex_board.cpp" />
-    <ClCompile Include="mec.cpp" />
-    <ClCompile Include="rectangle_board.cpp" />
     <ClCompile Include="id_based_board.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mec.cpp" />
+    <ClCompile Include="qpointf_hasher.cpp" />
+    <ClCompile Include="rectangle_board.cpp" />
+    <ClCompile Include="triangle.cpp" />
     <ClCompile Include="utils.cpp" />
-    <QtRcc Include="mines.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="graph_boards\delaunay_board.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="graph_boards\delaunay_parameters_widget.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <QtUic Include="graph_boards\delaunay_parameters_widget.ui" />
     <QtUic Include="graph_boards\graph_parameters_widget.ui" />
     <QtUic Include="gui\game_over_dialog.ui" />
@@ -140,50 +144,50 @@
     <QtUic Include="gui\mines_widget.ui" />
     <QtUic Include="gui\new_game_dialog.ui" />
     <QtUic Include="gui\rectangle_board_parameters_widget.ui" />
-    <ClCompile Include="board_collection.cpp" />
-    <ClCompile Include="board_state.cpp" />
-    <ClCompile Include="cell.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board_collection.hpp" />
     <ClInclude Include="board_state.hpp" />
-    <QtMoc Include="graph_boards\graph_board.hpp" />
-    <ClInclude Include="graph_boards\edge_item.hpp" />
-    <ClInclude Include="graph_boards\graph_boards_constants.hpp" />
-    <QtMoc Include="graph_boards\graph_parameters_widget.h" />
-    <ClInclude Include="gui\buddy_notificator.hpp" />
     <ClInclude Include="cell.hpp" />
     <ClInclude Include="circle.hpp" />
-    <ClInclude Include="game_state.hpp" />
     <ClInclude Include="edge.hpp" />
-    <ClInclude Include="graph_boards\graph_cell_item.hpp" />
+    <ClInclude Include="game_state.hpp" />
+    <ClInclude Include="mec.hpp" />
     <ClInclude Include="qpointf_hasher.hpp" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="std_pair_hasher.hpp" />
     <ClInclude Include="triangle.hpp" />
-    <ClInclude Include="graph_boards\triangulator.hpp" />
-    <QtMoc Include="graph_boards\delaunay_parameters_widget.hpp" />
-    <QtMoc Include="graph_boards\delaunay_board.hpp" />
+    <ClInclude Include="utils.hpp" />
+    <QtMoc Include="rectangle_board.hpp" />
+    <QtMoc Include="id_based_board.hpp" />
     <QtMoc Include="hex_board.hpp" />
-    <QtMoc Include="gui\new_game_dialog.hpp" />
-    <QtMoc Include="gui\board_view.hpp" />
-    <ClInclude Include="gui\game_over_dialog_answer.hpp" />
-    <QtMoc Include="gui\mines_widget.hpp" />
-    <QtMoc Include="gui\game_over_dialog.hpp" />
-    <QtMoc Include="gui\main_window.hpp" />
-    <QtMoc Include="gui\board_scene.hpp" />
+    <QtMoc Include="board.hpp" />
+    <ClInclude Include="graph_boards\edge_item.hpp" />
+    <ClInclude Include="graph_boards\graph_boards_constants.hpp" />
+    <ClInclude Include="graph_boards\graph_cell_item.hpp" />
+    <ClInclude Include="graph_boards\triangulator.hpp" />
+    <ClInclude Include="gui\buddy_notificator.hpp" />
     <ClInclude Include="gui\cell_item.hpp" />
+    <ClInclude Include="gui\game_over_dialog_answer.hpp" />
     <ClInclude Include="gui\sprite_cell_item.hpp" />
     <QtMoc Include="gui\rectangle_board_parameters_widget.hpp" />
-    <QtMoc Include="id_based_board.hpp" />
-    <QtMoc Include="rectangle_board.hpp" />
-    <ClInclude Include="mec.hpp" />
-    <ClInclude Include="std_pair_hasher.hpp" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="utils.hpp" />
-    <QtMoc Include="board.hpp" />
+    <QtMoc Include="gui\new_game_dialog.hpp" />
+    <QtMoc Include="gui\mines_widget.hpp" />
+    <QtMoc Include="gui\main_window.hpp" />
+    <QtMoc Include="gui\game_over_dialog.hpp" />
+    <QtMoc Include="gui\board_view.hpp" />
+    <QtMoc Include="gui\board_scene.hpp" />
+    <QtMoc Include="graph_boards\graph_parameters_widget.h" />
+    <QtMoc Include="graph_boards\graph_board.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mines.pro" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="mines.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
