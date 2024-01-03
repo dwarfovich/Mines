@@ -54,7 +54,6 @@
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\..\..\Users\Boo\AppData\Local\QtMsBuild\Qt.props" />
     <Import Project="OutDir.props" />
     <Import Project="$(QtMsBuild)\Qt.props" />
   </ImportGroup>
