@@ -31,12 +31,14 @@ public:
     virtual QWidget*       parametersWidget() const      = 0;
 
     const BoardState& boardState() const;
+    void              TakeOwnershipOfParametersWidget(QWidget* widget);
 
 signals:
     void cellChanged(Cell* cell);
 
 protected:
     BoardState board_state_;
+    mutable QWidget    dummy_parent_widget_;
 };
 
 #endif // IBOARD_HPP

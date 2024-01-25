@@ -1,10 +1,12 @@
 #ifndef NEW_GAME_DIALOG_HPP
 #define NEW_GAME_DIALOG_HPP
 
-#include "../utils.hpp"
+#include "utils.hpp"
+
 
 #include <QDialog>
 
+class Board;
 class BoardCollection;
 class QHBoxLayout;
 
@@ -34,6 +36,7 @@ private:
     QWidget*           parameters_widget_ = nullptr;
     QHBoxLayout*       parameters_layout_ = nullptr;
     BoardCollection*   collection_        = nullptr;
+    Board* board_             = nullptr;
 };
 
 #endif // NEW_GAME_DIALOG_HPP

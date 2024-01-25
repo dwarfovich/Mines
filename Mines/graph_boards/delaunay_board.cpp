@@ -26,7 +26,7 @@ const QString &DelaunayBoard::name() const
 QWidget *DelaunayBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new DelaunayParametersWidget {};
+        parameters_widget_ = new DelaunayParametersWidget { &dummy_parent_widget_ };
     }
 
     return parameters_widget_;

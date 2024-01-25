@@ -69,7 +69,7 @@ void HexBoard::generate()
 QWidget *HexBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new RectangleBoardParametersWidget {};
+        parameters_widget_ = new RectangleBoardParametersWidget { &dummy_parent_widget_ };
     }
 
     return parameters_widget_;

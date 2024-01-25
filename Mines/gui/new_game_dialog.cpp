@@ -30,13 +30,14 @@ void NewGameDialog::onNewBoardSelected(int index)
     const auto& boardName = ui_->boardsComboBox->itemText(index);
     auto        board     = collection_->get(boardName);
     if (board) {
-        delete parameters_widget_;
-        parameters_widget_ = board->parametersWidget();
         if (parameters_widget_) {
-            parameters_layout_->addWidget(parameters_widget_);
-        } else {
-            Q_ASSERT(false);
+            parameters_layout_->removeWidget(parameters_widget_);
+            board_->TakeOwnershipOfParametersWidget(parameters_widget_);
         }
+        parameters_widget_ = board->parametersWidget();
+        Q_ASSERT(parameters_widget_);
+        parameters_layout_->addWidget(parameters_widget_);
+        board_ = board;
     } else {
         Q_ASSERT(false);
     }
