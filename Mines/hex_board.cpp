@@ -42,6 +42,8 @@ void HexBoard::setupScene(BoardScene *scene)
             scene->registerCellItem(item);
         }
     }
+
+     scene->setSceneRect(0, 0, width_ * sprite_size + sprite_size/2, height_ * sprite_size);
 }
 
 void HexBoard::generate()

@@ -31,6 +31,10 @@ MinesWidget::~MinesWidget()
 
 void MinesWidget::setBoard(Board *board)
 {
+    if (board_) {
+        disconnect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
+    }
+
     ui_->timeSpinBox->setValue(0);
     board_ = board;
     scene_->clear();
@@ -83,7 +87,20 @@ void MinesWidget::updateFlagsCount()
 void MinesWidget::centerView()
 {
     const auto &scene_rect = ui_->minesGraphicsView->sceneRect();
-    double      dx         = (scene_rect.width() - view_side_) / 2.;
-    double      dy         = (scene_rect.height() - view_side_) / 2.;
-    ui_->minesGraphicsView->fitInView(scene_rect.adjusted(dx, dy, -dx, -dy), Qt::KeepAspectRatio);
+    const double      min_width   = 160.;
+    const double      min_height   = 160;
+    const double      max_width   = 1500.;
+    const double      max_height  = 1500.;
+
+    if (scene_rect.width() < min_width || scene_rect.height() < min_height) {
+        auto min = qMin(scene_rect.width(), scene_rect.height());
+        auto x_factor = scene_rect.width() / min_width;
+        auto y_factor = scene_rect.height() / min_height;
+        auto min_factor = qMin(x_factor, y_factor);
+        ui_->minesGraphicsView->scale(min_factor, min_factor);
+    } else if (scene_rect.width() > min_width || scene_rect.height() > min_height) {
+        auto max = qMax(max_width, max_height);
+        ui_->minesGraphicsView->fitInView(0, 0, max, max, Qt::KeepAspectRatio);
+    }
+    ui_->minesGraphicsView->centerOn(scene_rect.width() / 2., scene_rect.height() / 2.);
 }

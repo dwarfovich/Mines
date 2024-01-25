@@ -5,6 +5,7 @@
 #include "board_collection.hpp"
 
 #include <QVBoxLayout>
+#include <QTimer>
 
 MainWindow::MainWindow(std::unique_ptr<BoardCollection> collection, QWidget* parent)
     : QMainWindow(parent), ui_(new Ui::MainWindow), board_collection_ { std::move(collection) }
@@ -21,7 +22,7 @@ MainWindow::MainWindow(std::unique_ptr<BoardCollection> collection, QWidget* par
     connect(ui_->actionNewGame, &QAction::triggered, this, &MainWindow::showNewGameDialog);
     connect(ui_->actionQuit, &QAction::triggered, this, &QMainWindow::close);
 
-    showNewGameDialog();
+    QTimer::singleShot(50, this, &MainWindow::showNewGameDialog);
 }
 
 MainWindow::~MainWindow()
