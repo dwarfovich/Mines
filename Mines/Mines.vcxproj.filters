@@ -95,9 +95,6 @@
     <ClCompile Include="hex_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="id_based_board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nmino_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nmino_cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,9 +164,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="hex_board.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="id_based_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="rectangle_board.hpp">
@@ -270,6 +267,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="nmino_board.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nmino_cell.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="id_based_board.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,7 +6,7 @@
 
 class GraphParametersWidget;
 
-class GraphBoard : public IdBasedBoard
+class GraphBoard : public IdBasedBoard<Cell>
 {
     Q_OBJECT
 

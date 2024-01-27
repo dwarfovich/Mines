@@ -122,10 +122,10 @@
     <ClCompile Include="gui\sprite_cell_item.cpp" />
     <ClCompile Include="hex_board.cpp" />
     <ClCompile Include="hex_parameters_widget.cpp" />
-    <ClCompile Include="id_based_board.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mec.cpp" />
     <ClCompile Include="nmino_board.cpp" />
+    <ClCompile Include="nmino_cell.cpp" />
     <ClCompile Include="nmino_parameters_widget.cpp" />
     <ClCompile Include="qpointf_hasher.cpp" />
     <ClCompile Include="rectangle_board.cpp" />
@@ -160,13 +160,14 @@
     <ClInclude Include="mec.hpp" />
     <ClInclude Include="nmino_board.hpp" />
     <QtMoc Include="nmino_parameters_widget.h" />
+    <ClInclude Include="nmino_cell.hpp" />
     <ClInclude Include="qpointf_hasher.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="std_pair_hasher.hpp" />
     <ClInclude Include="triangle.hpp" />
     <ClInclude Include="utils.hpp" />
     <QtMoc Include="rectangle_board.hpp" />
-    <QtMoc Include="id_based_board.hpp" />
+    <ClInclude Include="id_based_board.hpp" />
     <QtMoc Include="hex_board.hpp" />
     <QtMoc Include="board.hpp" />
     <ClInclude Include="graph_boards\edge_item.hpp" />

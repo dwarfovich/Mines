@@ -31,8 +31,8 @@ void HexBoard::setupScene(BoardScene *scene)
     const size_t cols = width_;
     for (size_t i = 0; i < height_; ++i) {
         for (size_t j = 0; j < width_; ++j) {
-            const auto *cell        = &cells_[i * width_ + j];
-            auto       *item        = new SpriteCellItem { cell };
+            const auto& cell        = cells_[i * width_ + j];
+            auto       *item        = new SpriteCellItem { cell.get() };
             qreal       row         = cell->id / cols;
             qreal       col         = cell->id % cols;
             double      sprite_size = SpriteCellItem::size();

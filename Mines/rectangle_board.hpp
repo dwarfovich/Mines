@@ -3,7 +3,7 @@
 
 #include "id_based_board.hpp"
 
-class RectangleBoard : public IdBasedBoard
+class RectangleBoard : public IdBasedBoard<Cell>
 {
     Q_OBJECT
 
