@@ -19,7 +19,7 @@ const QString &DelaunayBoard::id() const
 
 const QString &DelaunayBoard::name() const
 {
-    static const QString name = QStringLiteral("Delaunay");
+    static const QString name = QStringLiteral("Triangulated");
     return name;
 }
 
@@ -74,6 +74,8 @@ void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
         temp_edges_[point3].insert(point1);
         temp_edges_[point3].insert(point2);
     }
+
+    neighbors_.clear();
     neighbors_.resize(points_.size());
     for (size_t i = 0; i < temp_edges_.size(); ++i) {
         neighbors_[i].insert(neighbors_[i].cend(), temp_edges_[i].cbegin(), temp_edges_[i].cend());

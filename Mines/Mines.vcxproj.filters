@@ -119,6 +119,12 @@
     <ClCompile Include="hex_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nmino_board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nmino_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="graph_boards\delaunay_board.hpp">
@@ -169,6 +175,9 @@
     <QtMoc Include="hex_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="nmino_parameters_widget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="graph_boards\delaunay_parameters_widget.ui">
@@ -193,6 +202,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="hex_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="nmino_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -255,6 +267,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nmino_board.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

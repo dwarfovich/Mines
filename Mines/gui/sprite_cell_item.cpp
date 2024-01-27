@@ -68,17 +68,8 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     if (is_hovered_) {
         painter->setBrush(Qt::white);
         painter->setPen(Qt::NoPen);
-        painter->setOpacity(0.3);
+        painter->setOpacity(hovered_opacity_);
         painter->drawPath(shape());
-    }
-
-    if (cell_->has_mine) {
-        QBrush b { Qt::SolidPattern };
-        b.setColor(Qt::red);
-        QPen p { Qt::red };
-        painter->setPen(p);
-        painter->setBrush(b);
-        painter->drawEllipse(0, 0, 20, 20);
     }
 }
 

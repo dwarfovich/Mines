@@ -1,9 +1,9 @@
 #include "graph_cell_item.hpp"
+#include "cell.hpp"
 
 #include <QPainter>
 #include <QGraphicsDropShadowEffect>
 
-#include "cell.hpp"
 const QPen GraphCellItem::hovered_pen_ { Qt::red };
 
 GraphCellItem::GraphCellItem(const Cell* cell)
@@ -20,9 +20,6 @@ void GraphCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 {
     effect_->setEnabled(BuddyIsHovered());
     SpriteCellItem::paint(painter, option, widget);
-    // painter->setFont(font_);
-    painter->setPen(textColor(cell_->neighbor_mines));
-    painter->drawText(0., 0., 25, 25, Qt::AlignCenter, QString::number(cell()->id));
 }
 
 void GraphCellItem::addBuddy(BuddyNotificator* buddy)
