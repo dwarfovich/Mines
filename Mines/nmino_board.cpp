@@ -1,7 +1,9 @@
 #include "nmino_board.hpp"
 #include "nmino_parameters_widget.h"
+#include "direction.hpp"
 
 #include <unordered_set>
+#include <queue>
 
 NminoBoard::NminoBoard() : random_generator_ { random_device_() }
 {
@@ -25,7 +27,8 @@ void NminoBoard::generate()
     const size_t height         = 10;
     const size_t max_nmino_size = 5;
 
-    std::uniform_int_distribution<> distribution(1, max_nmino_size);
+    std::uniform_int_distribution<size_t> distribution(1, max_nmino_size);
+    std::uniform_int_distribution<unsigned short> direction_distribution(0, 3);
 
     cells_.clear();
     std::unordered_map<size_t, std::unordered_set<size_t>> neighbors;
@@ -44,7 +47,17 @@ void NminoBoard::generate()
             cell->row = row;
             cell->col = col;
 
-            auto size = distribution(random_generator_);
+
+            const auto target_size = distribution(random_generator_);
+            size_t     current_size = 1;
+            std::queue<QPoint> queue;
+            queue.push({ row, col });
+            while (current_size < target_size) {
+                do {
+                    auto direction = Direction(direction_distribution(random_generator_));
+                    //auto new_coords = 
+                } while (true);
+            }
 
 
         }

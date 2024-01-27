@@ -102,6 +102,7 @@
     <ClCompile Include="board_state.cpp" />
     <ClCompile Include="cell.cpp" />
     <ClCompile Include="circle.cpp" />
+    <ClCompile Include="direction.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="graph_boards\delaunay_board.cpp" />
     <ClCompile Include="graph_boards\delaunay_parameters_widget.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="board_state.hpp" />
     <ClInclude Include="cell.hpp" />
     <ClInclude Include="circle.hpp" />
+    <ClInclude Include="direction.hpp" />
     <ClInclude Include="edge.hpp" />
     <ClInclude Include="game_state.hpp" />
     <QtMoc Include="hex_parameters_widget.hpp" />

@@ -125,6 +125,9 @@
     <ClCompile Include="nmino_cell.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="direction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="graph_boards\delaunay_board.hpp">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="id_based_board.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="direction.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
