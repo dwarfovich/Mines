@@ -3,6 +3,8 @@
 
 #include "rectangle_board.hpp"
 
+class HexParametersWidget;
+
 class HexBoard : public RectangleBoard
 {
     Q_OBJECT
@@ -16,7 +18,7 @@ public:
 
 protected:
     std::vector<size_t>                     neighborIds(size_t id) const override;
-    mutable RectangleBoardParametersWidget *parameters_widget_ = nullptr;
+    mutable HexParametersWidget *parameters_widget_ = nullptr;
 };
 
 #endif // HEXBOARD_HPP

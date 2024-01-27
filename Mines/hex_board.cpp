@@ -1,5 +1,5 @@
 #include "hex_board.hpp"
-#include "gui/rectangle_board_parameters_widget.hpp"
+#include "hex_parameters_widget.hpp"
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 
@@ -69,7 +69,7 @@ void HexBoard::generate()
 QWidget *HexBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new RectangleBoardParametersWidget { &dummy_parent_widget_ };
+        parameters_widget_ = new HexParametersWidget { &dummy_parent_widget_ };
     }
 
     return parameters_widget_;

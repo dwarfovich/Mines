@@ -116,6 +116,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hex_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="graph_boards\delaunay_board.hpp">
@@ -163,6 +166,9 @@
     <QtMoc Include="rectangle_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="hex_parameters_widget.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="graph_boards\delaunay_parameters_widget.ui">
@@ -184,6 +190,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="gui\rectangle_board_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="hex_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
