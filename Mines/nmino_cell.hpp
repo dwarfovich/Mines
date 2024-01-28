@@ -3,14 +3,15 @@
 #include "cell.hpp"
 
 #include <QPoint>
+#include <QColor>
 
 #include <vector>
 
 class NminoCell : public Cell
 {
 public:
-    std::vector<QPoint> square_coordinates;
+    std::vector<QPoint> shifts;
     std::vector<size_t> neighbor_ids;
-    size_t              row;
-    size_t              col;
+    QPoint              center;
+    QColor              color;
 };

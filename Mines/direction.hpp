@@ -13,3 +13,4 @@ enum class Direction : uint8_t
 };
 
 QPoint directionToShift(Direction d);
+Direction nextDirection(Direction d);

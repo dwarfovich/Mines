@@ -10,3 +10,11 @@ QPoint directionToShift(Direction d)
         default: return {};
     }
 }
+
+Direction nextDirection(Direction d)
+{
+    auto n = static_cast<std::underlying_type_t<Direction>>(d);
+    (n >= 3 ? n = 0 : ++n);
+   
+    return Direction(n);
+}
