@@ -30,6 +30,7 @@ private:
 
 private:
     static constexpr size_t           empty_matrix_id_   = 0;
+    static constexpr int              cell_square_size_  = 50;
     size_t                            width_             = 0;
     size_t                            height_            = 0;
     mutable PolyminoParametersWidget* parameters_widget_ = nullptr;

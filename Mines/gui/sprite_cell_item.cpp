@@ -65,17 +65,12 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->drawText(0., 0., size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
     }
 
-    if (is_hovered_) {
+    if (IsHovered()) {
         painter->setBrush(Qt::white);
         painter->setPen(Qt::NoPen);
         painter->setOpacity(hovered_opacity_);
         painter->drawPath(shape());
     }
-}
-
-bool SpriteCellItem::IsHovered() const
-{
-    return is_hovered_;
 }
 
 CellItem::SpriteType SpriteCellItem::spriteTypeForCurrentCell() const
@@ -111,18 +106,4 @@ const QColor SpriteCellItem::textColor(size_t mines) const
     } else {
         return text_colors_.back();
     }
-}
-
-void SpriteCellItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
-{
-    is_hovered_ = true;
-    update();
-    event->ignore();
-}
-
-void SpriteCellItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
-{
-    is_hovered_ = false;
-    update();
-    event->ignore();
 }

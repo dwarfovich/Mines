@@ -25,11 +25,19 @@ public:
     CellItem() = default;
     CellItem(const Cell* cell);
 
-    virtual const Cell* cell() const;
-    virtual void        setCell(Cell* cell);
+    const Cell* cell() const;
+    void        setCell(Cell* cell);
+    bool        IsHovered() const;
 
-protected:
+protected: // methods
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+
+protected: // data
     const Cell* cell_ = nullptr;
+
+private:
+    bool is_hovered_ = false;
 };
 
 #endif // CELLITEM_HPP

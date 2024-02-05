@@ -57,6 +57,7 @@ void PolyminoBoard::generate()
 
             const auto         target_size  = size_distribution(random_generator_);
             size_t             current_size = 1;
+            cell->shifts.push_back({ 0, 0 });
             std::deque<QPoint> empty_neighbors;
             addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
             while (current_size < target_size && !empty_neighbors.empty()) {
@@ -67,7 +68,6 @@ void PolyminoBoard::generate()
                 ++current_size;
                 addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
             }
-            //cell->color = generateRandomColor();
             cells_.push_back(std::move(cell));
             ++id;
         }
@@ -76,11 +76,10 @@ void PolyminoBoard::generate()
 
 void PolyminoBoard::setupScene(BoardScene* scene)
 {
-    PolyminoCellItem::setSize(SpriteCellItem::size());
+    PolyminoCellItem::setSize(cell_square_size_);
     for (const auto& cell : cells_) {
         auto item = new PolyminoCellItem();
         item->initialize(cell.get(), generateRandomColor());
-        //item->setPos(x, y);
         scene->registerCellItem(item);
     }
 
@@ -88,34 +87,6 @@ void PolyminoBoard::setupScene(BoardScene* scene)
                           0.,
                           static_cast<qreal>(width_ * SpriteCellItem::size()),
                           static_cast<qreal>(height_ * SpriteCellItem::size()) });
-
-    //SpriteCellItem::setSprites(":/gfx/cells_hex.png");
-    //int          sprite_size = SpriteCellItem::size();
-    //QPainterPath path;
-    //path.moveTo(sprite_size / 2., 0);                // Top
-    //path.lineTo(sprite_size, sprite_size / 3.);      // Top right
-    //path.lineTo(sprite_size, 2. * sprite_size / 3.); // Bottom right
-    //path.lineTo(sprite_size / 2., sprite_size);      // Bottom
-    //path.lineTo(0., 2. * sprite_size / 3.);          // Bottom left
-    //path.lineTo(0, sprite_size / 3.);                // Top left
-    //path.closeSubpath();
-    //SpriteCellItem::setShape(path);
-    //const size_t cols = width_;
-    //for (size_t i = 0; i < height_; ++i) {
-    //    for (size_t j = 0; j < width_; ++j) {
-    //        const auto& cell        = cells_[i * width_ + j];
-    //        auto*       item        = new SpriteCellItem { cell.get() };
-    //        qreal       row         = cell->id / cols;
-    //        qreal       col         = cell->id % cols;
-    //        double      sprite_size = SpriteCellItem::size();
-    //        qreal       x = (size_t(row) % 2 == 0 ? col * sprite_size : col * sprite_size + sprite_size * 0.5);
-    //        qreal       y = row * (2 * sprite_size / 3);
-    //        item->setPos(x, y);
-    //        scene->registerCellItem(item);
-    //    }
-    //}
-
-    //scene->setSceneRect(0, 0, width_ * sprite_size + sprite_size / 2, height_ * sprite_size);
 }
 
 QWidget* PolyminoBoard::parametersWidget() const
@@ -140,8 +111,8 @@ bool PolyminoBoard::isValidMatrixCoordinates(const QPoint& point, size_t width, 
 QColor PolyminoBoard::generateRandomColor() const
 {
     std::random_device random_device;
-    // std::mt19937                         random_generator(random_device());
-    std::mt19937                         random_generator(1);
+    std::mt19937       random_generator(random_device());
+    // std::mt19937                         random_generator(1);
     std::uniform_int_distribution<short> color(0, 255);
 
     return { color(random_generator), color(random_generator), color(random_generator) };
@@ -154,8 +125,8 @@ bool PolyminoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, 
 }
 
 void PolyminoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
-                                        const QPoint&                           point,
-                                        std::deque<QPoint>&                     neighbors) const
+                                          const QPoint&                           point,
+                                          std::deque<QPoint>&                     neighbors) const
 {
     Direction d = Direction::Up;
     do {
