@@ -1,8 +1,8 @@
 <UI version="4.0" >
- <class>NminoParametersWidgetClass</class>
- <widget class="QWidget" name="NminoParametersWidgetClass" >
+ <class>PolyminoParametersWidgetClass</class>
+ <widget class="QWidget" name="PolyminoParametersWidgetClass" >
   <property name="objectName" >
-   <string notr="true">NminoParametersWidgetClass</string>
+   <string notr="true">PolyminoParametersWidgetClass</string>
   </property>
   <property name="geometry" >
    <rect>
@@ -13,7 +13,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>NminoParametersWidget</string>
+   <string>PolyminoParametersWidget</string>
   </property>$centralwidget$
  </widget>
  <layoutDefault spacing="6" margin="11" />

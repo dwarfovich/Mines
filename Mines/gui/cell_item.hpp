@@ -22,6 +22,7 @@ public:
         Opened
     };
 
+    CellItem() = default;
     CellItem(const Cell* cell);
 
     virtual const Cell* cell() const;
@@ -30,7 +31,5 @@ public:
 protected:
     const Cell* cell_ = nullptr;
 };
-
-Q_DECLARE_METATYPE(CellItem*);
 
 #endif // CELLITEM_HPP

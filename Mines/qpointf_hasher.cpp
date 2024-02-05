@@ -2,7 +2,7 @@
 
 #include <QPointF>
 
-size_t QPointFHasher::operator()(const QPointF point) const
+size_t QPointFHasher::operator()(const QPointF& point) const
 {
     return std::hash<qreal>()(point.x()) * 31 ^ std::hash<qreal>()(point.y()) * 53;
 }

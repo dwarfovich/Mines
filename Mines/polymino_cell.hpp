@@ -7,11 +7,10 @@
 
 #include <vector>
 
-class NminoCell : public Cell
+class PolyminoCell : public Cell
 {
 public:
     std::vector<QPoint> shifts;
     std::vector<size_t> neighbor_ids;
     QPoint              center;
-    QColor              color;
 };
