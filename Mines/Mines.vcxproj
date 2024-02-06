@@ -128,6 +128,7 @@
     <ClCompile Include="polymino_cell_item.cpp" />
     <ClCompile Include="polymino_board.cpp" />
     <ClCompile Include="polymino_parameters_widget.cpp" />
+    <ClCompile Include="qline_hasher.cpp" />
     <ClCompile Include="qpointf_hasher.cpp" />
     <ClCompile Include="qpoint_hasher.cpp" />
     <ClCompile Include="rectangle_board.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="polymino_board.hpp" />
     <QtMoc Include="polymino_parameters_widget.hpp" />
     <ClInclude Include="polymino_cell.hpp" />
+    <ClInclude Include="qline_hasher.hpp" />
     <ClInclude Include="qpointf_hasher.hpp" />
     <ClInclude Include="qpoint_hasher.hpp" />
     <ClInclude Include="resource.h" />

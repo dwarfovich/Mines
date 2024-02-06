@@ -2,9 +2,12 @@
 #include "polymino_cell.hpp"
 #include "direction.hpp"
 #include "utils.hpp"
+#include "qpoint_hasher.hpp"
 
 #include <QPainter>
 #include <QGraphicsRectItem>
+
+#include <unordered_set>
 
 int PolyminoCellItem::size_ = 0;
 
@@ -28,10 +31,9 @@ void PolyminoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-
-    for (const auto& child : children_) {
-        child->paint(painter, option, widget);
-    }
+    painter->setBrush({ color_ });
+    painter->drawPolygon(polygon_);
+    //painter->drawRect(0, 0, 10, 10);
 }
 
 void PolyminoCellItem::initialize(PolyminoCell* cell, const QColor& color)
@@ -41,15 +43,68 @@ void PolyminoCellItem::initialize(PolyminoCell* cell, const QColor& color)
 
     setPos(cell->center.x() * size_, cell->center.y() * size_);
 
-    for (const auto& shift : cell->shifts) {
-        auto  x1    = shift.x() * size_;
-        auto  y1    = shift.y() * size_;
-        auto* child = new QGraphicsRectItem(x1, y1, size_, size_, this);
-        child->setBrush(color_);
-        children_.push_back(child);
-        painter_path_.addRect(child->boundingRect());
-        bounding_rect_ = painter_path_.boundingRect();
-    }
-        int t          = 43;
+    painter_path_ = createPainterPath(*cell);
+    polygon_      = painter_path_.toFillPolygon().toPolygon();
+    bounding_rect_ = painter_path_.boundingRect();
+}
 
+QPainterPath PolyminoCellItem::createPainterPath(const PolyminoCell& cell) const
+{
+    QPainterPath path;
+    std::unordered_map<QPoint, QPoint, QPointHasher> lines;
+    for (const auto& shift : cell.shifts) {
+        Q_ASSERT(!cell.shifts.empty());
+        qDebug() << "shift: " <<  shift;
+        for (const auto& direction : directionsArray) {
+            const auto& neighborShift = shift + directionToShift(direction);
+            if (::contains(cell.shifts, neighborShift)) {
+                continue;
+            }
+
+            qDebug() << neighborShift;
+
+            using LinesIterator = std::unordered_map<QPoint, QPoint, QPointHasher>::iterator;
+            std::pair<LinesIterator, bool> r;
+            switch (direction) {
+                case Direction::Up:
+                    r = lines.insert(
+                        { { shift.x() * size_, shift.y() * size_ }, { shift.x() * size_ + size_, shift.y() * size_ } });
+                    break;
+                case Direction::Right:
+                    r = lines.insert(
+                        { { shift.x() * size_ + size_, shift.y() * size_ }, { shift.x() * size_ + size_, shift.y() * size_ + size_} });
+                    break;
+                case Direction::Down:
+                    r = lines.insert({ { shift.x() * size_ + size_, shift.y() * size_ + size_ },
+                                   { shift.x() * size_, shift.y() * size_ + size_ } });
+                    break;
+                case Direction::Left:
+                    r = lines.insert({ { shift.x() * size_, shift.y() * size_ + size_ },
+                                   { shift.x() * size_, shift.y() * size_} });
+                    break;
+                default: break;
+            }
+            Q_ASSERT(r.second);
+        }
+    }
+    int counter = 0;
+    QPoint p1 = lines.begin()->first;
+    path.moveTo(p1);
+    auto p2 = lines.begin()->second;
+    path.lineTo(p2);
+    while (counter < lines.size()) {
+        p1 = p2;
+        auto iter = lines.find(p1);
+        if (iter == lines.cend()) {
+            break;
+        } else {
+            p2 = iter->second;
+            path.lineTo(p2);
+
+        }
+        ++counter;
+    }
+    
+
+    return path;
 }

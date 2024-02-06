@@ -6,8 +6,6 @@
 
 #include <random>
 
-class RectangleBoardParametersWidget;
-
 template<typename CellType>
 class IdBasedBoard : public Board
 {

@@ -3,6 +3,8 @@
 
 #include "id_based_board.hpp"
 
+class RectangleBoardParametersWidget;
+
 class RectangleBoard : public IdBasedBoard<Cell>
 {
     Q_OBJECT

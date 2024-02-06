@@ -36,14 +36,14 @@ void PolyminoBoard::generate()
     width_                      = width;
     height_                     = height;
 
-    std::uniform_int_distribution<size_t> size_distribution(1, max_nmino_size);
+    std::uniform_int_distribution<size_t> size_distribution { 1, max_nmino_size };
 
     cells_.clear();
     std::unordered_map<size_t, std::unordered_set<size_t>> neighbors;
 
     std::vector<std::vector<size_t>> matrix;
-    matrix.resize(width, std::vector(height, empty_matrix_id_));
-    size_t id = 1;
+    matrix.resize(height, std::vector(width, empty_matrix_id_));
+    size_t id = 0;
     for (size_t row = 0; row < height; ++row) {
         for (size_t col = 0; col < width; ++col) {
             if (matrix[row][col] != empty_matrix_id_) {
@@ -60,13 +60,18 @@ void PolyminoBoard::generate()
             cell->shifts.push_back({ 0, 0 });
             std::deque<QPoint> empty_neighbors;
             addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
-            while (current_size < target_size && !empty_neighbors.empty()) {
-                std::uniform_int_distribution<size_t> distribution(0, empty_neighbors.size() - 1);
+            static constexpr int maxAttempts = 20;
+            int                  attempt     = 0;
+            while (current_size < target_size && !empty_neighbors.empty() && ++attempt <= maxAttempts) {
+                std::uniform_int_distribution<size_t> distribution { 0, empty_neighbors.size() - 1 };
                 auto                                  neighbor_point = empty_neighbors[distribution(random_generator_)];
                 matrix[neighbor_point.y()][neighbor_point.x()]       = id;
-                cell->shifts.push_back(neighbor_point - cell->center);
-                ++current_size;
-                addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
+                //Q_ASSERT(!::contains(cell->shifts, neighbor_point - cell->center));
+                if (!::contains(cell->shifts, neighbor_point - cell->center)) {
+                    cell->shifts.push_back(neighbor_point - cell->center);
+                    ++current_size;
+                    addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
+                }
             }
             cells_.push_back(std::move(cell));
             ++id;
@@ -110,12 +115,9 @@ bool PolyminoBoard::isValidMatrixCoordinates(const QPoint& point, size_t width, 
 
 QColor PolyminoBoard::generateRandomColor() const
 {
-    std::random_device random_device;
-    std::mt19937       random_generator(random_device());
-    // std::mt19937                         random_generator(1);
     std::uniform_int_distribution<short> color(0, 255);
 
-    return { color(random_generator), color(random_generator), color(random_generator) };
+    return { color(random_generator_), color(random_generator_), color(random_generator_) };
 }
 
 bool PolyminoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const

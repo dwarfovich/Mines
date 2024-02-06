@@ -34,6 +34,6 @@ private:
     size_t                            width_             = 0;
     size_t                            height_            = 0;
     mutable PolyminoParametersWidget* parameters_widget_ = nullptr;
-    std::random_device                random_device_;
-    std::mt19937                      random_generator_;
+    mutable std::random_device                random_device_;
+    mutable std::mt19937                      random_generator_;
 };

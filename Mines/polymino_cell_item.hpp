@@ -14,6 +14,8 @@ public:
     QRectF       boundingRect() const override;
     void         paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void         initialize(PolyminoCell* cell, const QColor& color);
+    QPainterPath createPainterPath(const PolyminoCell& cell) const;
+
 
     static void setSize(int size);
 
@@ -21,7 +23,7 @@ private: // data
     static int                      size_;
     QRectF                          bounding_rect_;
     QPainterPath                    painter_path_;
-    QPolygon polygon_;
+    QPolygon                        polygon_;
     QColor                          color_;
     std::vector<QGraphicsRectItem*> children_;
 };
