@@ -15,7 +15,7 @@ public:
     const QPointF& operator[](int number) const;
 
     std::array<Edge, 3>    edges() const;
-    std::array<QPointF, 3> vertices() const;
+    const std::array<QPointF, 3>& vertices() const;
     bool                   circumcircleContains(const QPointF& point) const;
     bool                   has(const Edge& edge) const;
     bool                   has(const QPointF& point) const;

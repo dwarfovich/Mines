@@ -20,13 +20,13 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    QApplication a(argc, argv);
+    QApplication a { argc, argv };
 
     auto collection = std::make_unique<BoardCollection>();
-    //collection->registerBoard(std::make_unique<RectangleBoard>());
-    //collection->registerBoard(std::make_unique<HexBoard>());
-    //collection->registerBoard(std::make_unique<GraphBoard>());
-    //collection->registerBoard(std::make_unique<DelaunayBoard>());
+    // collection->registerBoard(std::make_unique<RectangleBoard>());
+    // collection->registerBoard(std::make_unique<HexBoard>());
+    // collection->registerBoard(std::make_unique<GraphBoard>());
+    // collection->registerBoard(std::make_unique<DelaunayBoard>());
     collection->registerBoard(std::make_unique<PolyminoBoard>());
 
     MainWindow w { std::move(collection) };

@@ -66,8 +66,7 @@ Triangle Triangulator::superTriangle(const std::vector<QPointF>& points, const Q
         auto                    mec              = minimalEnclosingCircle(points);
         static constexpr double magicEnlargement = 1'000'000.;
         mec.radius += magicEnlargement;
-        const auto r_square = sqr(mec.radius);
-        const auto x        = std::sqrt(sqr(mec.radius * 2) - sqr(mec.radius));
+        const auto x = std::sqrt(sqr(mec.radius * 2) - sqr(mec.radius));
 
         return {
             { mec.center.x(), mec.center.y() + 2 * mec.radius },

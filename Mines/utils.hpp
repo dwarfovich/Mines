@@ -20,7 +20,6 @@ template<typename Container, typename Element>
 bool contains(const Container& c, const Element& e)
 {
     using namespace std;
-
     return (find(cbegin(c), cend(c), e) != cend(c));
 }
 

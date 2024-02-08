@@ -27,9 +27,6 @@ bool Triangle::operator==(const Triangle &rhs) const
     }
 
     return a[0] != a[1] && a[0] != a[2] && a[1] != a[2];
-
-    // const auto &current_edges = edges();
-    // return rhs.contains(current_edges[0]) && rhs.contains(current_edges[1]) && rhs.contains(current_edges[2]);
 }
 
 const QPointF &Triangle::operator[](int number) const
@@ -42,7 +39,7 @@ std::array<Edge, 3> Triangle::edges() const
     return { Edge { points_[0], points_[1] }, Edge { points_[1], points_[2] }, Edge { points_[0], points_[2] } };
 }
 
-std::array<QPointF, 3> Triangle::vertices() const
+const std::array<QPointF, 3> &Triangle::vertices() const
 {
     return points_;
 }

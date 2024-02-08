@@ -33,7 +33,9 @@ void PolyminoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 
     painter->setBrush({ color_ });
     painter->drawPolygon(polygon_);
-    //painter->drawRect(0, 0, 10, 10);
+    if (!cell_->is_closed) {
+        painter->drawText(QPoint{ 0, 0 }, QString::number(cell_->neighbor_mines));
+    }
 }
 
 void PolyminoCellItem::initialize(PolyminoCell* cell, const QColor& color)

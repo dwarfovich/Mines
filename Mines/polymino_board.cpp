@@ -33,13 +33,19 @@ void PolyminoBoard::generate()
     const size_t width          = 5;
     const size_t height         = 5;
     const size_t max_nmino_size = 5;
-    width_                      = width;
-    height_                     = height;
+    const size_t mines          = 2;
+
+    board_state_             = {};
+    board_state_.mines       = mines;
+    size_t cells_counter     = cells_.size();
+    board_state_.empty_cells = cells_counter - board_state_.mines;
+
+    width_  = width;
+    height_ = height;
 
     std::uniform_int_distribution<size_t> size_distribution { 1, max_nmino_size };
 
     cells_.clear();
-    std::unordered_map<size_t, std::unordered_set<size_t>> neighbors;
 
     std::vector<std::vector<size_t>> matrix;
     matrix.resize(height, std::vector(width, empty_matrix_id_));
@@ -55,8 +61,8 @@ void PolyminoBoard::generate()
             cell->center                               = { static_cast<int>(col), static_cast<int>(row) };
             matrix[cell->center.y()][cell->center.x()] = id;
 
-            const auto         target_size  = size_distribution(random_generator_);
-            size_t             current_size = 1;
+            const auto target_size  = size_distribution(random_generator_);
+            size_t     current_size = 1;
             cell->shifts.push_back({ 0, 0 });
             std::deque<QPoint> empty_neighbors;
             addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
@@ -66,17 +72,19 @@ void PolyminoBoard::generate()
                 std::uniform_int_distribution<size_t> distribution { 0, empty_neighbors.size() - 1 };
                 auto                                  neighbor_point = empty_neighbors[distribution(random_generator_)];
                 matrix[neighbor_point.y()][neighbor_point.x()]       = id;
-                //Q_ASSERT(!::contains(cell->shifts, neighbor_point - cell->center));
                 if (!::contains(cell->shifts, neighbor_point - cell->center)) {
                     cell->shifts.push_back(neighbor_point - cell->center);
                     ++current_size;
                     addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
                 }
             }
+            setupNeighbors(matrix, *cell);
             cells_.push_back(std::move(cell));
             ++id;
         }
     }
+
+    assignMines(board_state_.mines);
 }
 
 void PolyminoBoard::setupScene(BoardScene* scene)
@@ -105,12 +113,55 @@ QWidget* PolyminoBoard::parametersWidget() const
 
 std::vector<size_t> PolyminoBoard::neighborIds(size_t id) const
 {
-    return std::vector<size_t>();
+    if (id < cells_.size()) {
+        return cells_[id]->neighbor_ids;
+    } else {
+        Q_ASSERT(false && "Wrong id");
+        return {};
+    }
 }
 
 bool PolyminoBoard::isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const
 {
     return point.x() >= 0 && point.y() >= 0 && point.x() < width && point.y() < height;
+}
+
+void PolyminoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyminoCell& cell)
+{
+    const auto currentId = cell.id;
+    for (const auto& shift : cell.shifts) {
+        const auto currentSubCell = cell.center + shift;
+        for (const auto direction : directionsArray) {
+            const auto neighborCellCoords = currentSubCell + directionToShift(direction);
+            if (!isValidMatrixCoordinates(neighborCellCoords, width_, height_)) {
+                continue;
+            }
+            auto neighborId = matrix[neighborCellCoords.y()][neighborCellCoords.x()];
+            if (neighborId == currentId || neighborId == empty_matrix_id_) {
+                continue;
+            }
+            if (!::contains(cell.neighbor_ids, neighborId)) {
+                cell.neighbor_ids.push_back(neighborId);
+            }
+            auto& neighborCell = cells_[neighborId];
+            if (!::contains(neighborCell->neighbor_ids, currentId)) {
+                neighborCell->neighbor_ids.push_back(currentId);
+            }
+        }
+    }
+}
+
+void PolyminoBoard::assignMines(size_t minesCount)
+{
+    std::vector<bool> mines(cells_.size(), false);
+    for (size_t i = 0; i < minesCount; ++i) {
+        mines[i] = true;
+    }
+    std::shuffle(mines.begin(), mines.end(), random_generator_);
+
+    for (size_t i = 0; i < cells_.size(); ++i) {
+        cells_[i]->has_mine = mines[i];
+    }
 }
 
 QColor PolyminoBoard::generateRandomColor() const
