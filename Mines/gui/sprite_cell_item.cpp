@@ -57,9 +57,9 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 
     Q_ASSERT(cell_);
 
-    auto spriteType = spriteTypeForCurrentCell();
-    painter->drawPixmap(boundingRect(), *SpriteCellItem::sprites_, spriteRect(spriteType));
-    if (spriteType == SpriteType::Opened && cell_->neighbor_mines > 0) {
+    auto cell_state = cellState();
+    painter->drawPixmap(boundingRect(), *SpriteCellItem::sprites_, spriteRect(cell_state));
+    if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
         painter->setFont(font_);
         painter->setPen(textColor(cell_->neighbor_mines));
         painter->drawText(0., 0., size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
@@ -73,28 +73,7 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     }
 }
 
-CellItem::SpriteType SpriteCellItem::spriteTypeForCurrentCell() const
-{
-    if (cell_->is_closed) {
-        if (cell_->has_flag) {
-            return SpriteType::ClosedWithFlag;
-        } else {
-            return SpriteType::Closed;
-        }
-    } else {
-        if (cell_->has_flag && cell_->has_mine) {
-            return SpriteType::OpenedMine;
-        } else if (cell_->has_flag && !cell_->has_mine) {
-            return SpriteType::MissedFlag;
-        } else if (!cell_->has_flag && cell_->has_mine) {
-            return SpriteType::MissedMine;
-        } else {
-            return SpriteType::Opened;
-        }
-    }
-}
-
-QRectF SpriteCellItem::spriteRect(SpriteType type) const
+QRectF SpriteCellItem::spriteRect(CellState type) const
 {
     return QRectF { size_ * (qreal(type)), 0., qreal(size_), qreal(size_) };
 }

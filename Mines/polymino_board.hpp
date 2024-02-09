@@ -24,7 +24,7 @@ private:
     bool   isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const;
     void   setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyminoCell& cell);
     void   assignMines(size_t minesCount);
-    QColor generateRandomColor() const;
+    QColor generateCellColor() const;
     bool   isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
     void   addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
                                  const QPoint&                           point,

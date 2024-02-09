@@ -90,9 +90,11 @@ void PolyminoBoard::generate()
 void PolyminoBoard::setupScene(BoardScene* scene)
 {
     PolyminoCellItem::setSize(cell_square_size_);
+    int i = 0;
     for (const auto& cell : cells_) {
         auto item = new PolyminoCellItem();
-        item->initialize(cell.get(), generateRandomColor());
+        //item->initialize(cell.get(), {QColor::Hsv, 32 * (++i), 100,100 });
+        item->initialize(cell.get(), generateCellColor());
         scene->registerCellItem(item);
     }
 
@@ -131,7 +133,7 @@ void PolyminoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matri
     const auto currentId = cell.id;
     for (const auto& shift : cell.shifts) {
         const auto currentSubCell = cell.center + shift;
-        for (const auto direction : directionsArray) {
+        for (const auto direction : directions_array) {
             const auto neighborCellCoords = currentSubCell + directionToShift(direction);
             if (!isValidMatrixCoordinates(neighborCellCoords, width_, height_)) {
                 continue;
@@ -164,11 +166,12 @@ void PolyminoBoard::assignMines(size_t minesCount)
     }
 }
 
-QColor PolyminoBoard::generateRandomColor() const
+QColor PolyminoBoard::generateCellColor() const
 {
-    std::uniform_int_distribution<short> color(0, 255);
-
-    return { color(random_generator_), color(random_generator_), color(random_generator_) };
+    int                                  h = 32;
+    std::uniform_int_distribution<short> s(60, 80);
+    std::uniform_int_distribution<short> v(0, 255);
+    return { QColor::Hsv, h, s(random_generator_), v(random_generator_) };
 }
 
 bool PolyminoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const

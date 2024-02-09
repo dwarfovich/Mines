@@ -14,16 +14,29 @@ public:
     QRectF       boundingRect() const override;
     void         paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void         initialize(PolyminoCell* cell, const QColor& color);
-    QPainterPath createPainterPath(const PolyminoCell& cell) const;
-
 
     static void setSize(int size);
 
+private: // methods
+    QPainterPath createPainterPath(const PolyminoCell& cell) const;
+    QRect        findCellDescriptionRect(const PolyminoCell& cell) const;
+    QRectF       spriteRect(CellState state) const
+    {
+        if (state == CellState::ClosedWithFlag || state == CellState::OpenedMine || state == CellState::MissedFlag
+            || state == CellState::MissedMine) {
+            return QRectF { size_ * (qreal(state) - 1), 0., qreal(size_), qreal(size_) };
+        } else {
+            return {};
+        }
+    }
+
 private: // data
-    static int                      size_;
-    QRectF                          bounding_rect_;
-    QPainterPath                    painter_path_;
-    QPolygon                        polygon_;
-    QColor                          color_;
-    std::vector<QGraphicsRectItem*> children_;
+    inline static int                      size_    = 0;
+    inline static std::unique_ptr<QPixmap> sprites_ = nullptr;
+    QRectF                                 bounding_rect_;
+    QPainterPath                           painter_path_;
+    QPolygon                               polygon_;
+    QColor                                 color_;
+    QRect                                  cell_description_rect_;
+    std::vector<QGraphicsRectItem*>        children_;
 };

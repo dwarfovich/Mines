@@ -13,6 +13,8 @@ public:
         Type = UserType + 2
     };
 
+
+
     explicit SpriteCellItem(const Cell *cell);
 
     static const QPixmap &sprites();
@@ -24,8 +26,8 @@ public:
     void                  paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 protected:
-    virtual SpriteType   spriteTypeForCurrentCell() const;
-    virtual QRectF       spriteRect(SpriteType type) const;
+
+    virtual QRectF       spriteRect(CellState type) const;
     virtual const QColor textColor(size_t mines) const;
 
 private:

@@ -12,7 +12,8 @@ public:
     {
         Type = UserType + 1
     };
-    enum SpriteType
+
+        enum CellState
     {
         Closed,
         ClosedWithFlag,
@@ -30,6 +31,7 @@ public:
     bool        IsHovered() const;
 
 protected: // methods
+    CellItem::CellState cellState() const;
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
 
