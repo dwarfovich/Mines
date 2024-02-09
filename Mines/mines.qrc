@@ -6,5 +6,6 @@
         <file>gfx/cells_square.png</file>
         <file>gfx/cells_hex.png</file>
         <file>gfx/cells_round.png</file>
+        <file>gfx/transparent_images.png</file>
     </qresource>
 </RCC>
