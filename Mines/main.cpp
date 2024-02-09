@@ -2,7 +2,7 @@
 #include "board_collection.hpp"
 #include "rectangle_board.hpp"
 #include "hex_board.hpp"
-#include "polymino_board.hpp"
+#include "polyomino_board.hpp"
 #include "graph_boards/graph_board.hpp"
 #include "graph_boards/delaunay_board.hpp"
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // collection->registerBoard(std::make_unique<HexBoard>());
     // collection->registerBoard(std::make_unique<GraphBoard>());
     // collection->registerBoard(std::make_unique<DelaunayBoard>());
-    collection->registerBoard(std::make_unique<PolyminoBoard>());
+    collection->registerBoard(std::make_unique<PolyominoBoard>());
 
     MainWindow w { std::move(collection) };
     w.show();

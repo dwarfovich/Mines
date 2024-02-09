@@ -7,7 +7,7 @@
 
 #include <vector>
 
-class PolyminoCell : public Cell
+class PolyominoCell : public Cell
 {
 public:
     std::vector<QPoint> shifts;

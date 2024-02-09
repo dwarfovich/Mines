@@ -116,10 +116,10 @@
     <ClCompile Include="hex_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="polymino_board.cpp">
+    <ClCompile Include="polyomino_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="polymino_parameters_widget.cpp">
+    <ClCompile Include="polyomino_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="direction.cpp">
@@ -128,7 +128,7 @@
     <ClCompile Include="qpoint_hasher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="polymino_cell_item.cpp">
+    <ClCompile Include="polyomino_cell_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="qline_hasher.cpp">
@@ -181,7 +181,7 @@
     <QtMoc Include="hex_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="polymino_parameters_widget.hpp">
+    <QtMoc Include="polyomino_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -275,10 +275,10 @@
     <ClInclude Include="utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polymino_board.hpp">
+    <ClInclude Include="polyomino_board.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polymino_cell.hpp">
+    <ClInclude Include="polyomino_cell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="id_based_board.hpp">
@@ -290,7 +290,7 @@
     <ClInclude Include="qpoint_hasher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polymino_cell_item.hpp">
+    <ClInclude Include="polyomino_cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="qline_hasher.hpp">

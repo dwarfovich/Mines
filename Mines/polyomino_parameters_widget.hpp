@@ -4,12 +4,12 @@
 
 #include <QWidget>
 
-class PolyminoParametersWidget : public QWidget
+class PolyominoParametersWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    PolyminoParametersWidget(QWidget *parent = nullptr);
+    PolyominoParametersWidget(QWidget *parent = nullptr);
 
 private:
     Ui::PolyminoParametersWidgetClass ui;

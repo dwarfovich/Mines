@@ -1,17 +1,17 @@
 #pragma once
 
 #include "id_based_board.hpp"
-#include "polymino_cell.hpp"
+#include "polyomino_cell.hpp"
 
 #include <random>
 #include <deque>
 
-class PolyminoParametersWidget;
+class PolyominoParametersWidget;
 
-class PolyminoBoard : public IdBasedBoard<PolyminoCell>
+class PolyominoBoard : public IdBasedBoard<PolyominoCell>
 {
 public:
-    PolyminoBoard();
+    PolyominoBoard();
 
     const QString&      id() const override;
     const QString&      name() const override;
@@ -22,7 +22,7 @@ public:
 
 private:
     bool   isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const;
-    void   setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyminoCell& cell);
+    void   setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyominoCell& cell);
     void   assignMines(size_t minesCount);
     QColor generateCellColor() const;
     bool   isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
@@ -32,10 +32,9 @@ private:
 
 private:
     static constexpr size_t           empty_matrix_id_   = -1;
-    static constexpr int              cell_square_size_  = 50;
     size_t                            width_             = 0;
     size_t                            height_            = 0;
-    mutable PolyminoParametersWidget* parameters_widget_ = nullptr;
-    mutable std::random_device                random_device_;
-    mutable std::mt19937                      random_generator_;
+    mutable PolyominoParametersWidget* parameters_widget_ = nullptr;
+    mutable std::random_device        random_device_;
+    mutable std::mt19937              random_generator_;
 };

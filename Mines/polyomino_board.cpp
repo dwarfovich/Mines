@@ -1,8 +1,8 @@
-#include "polymino_board.hpp"
-#include "polymino_parameters_widget.hpp"
+#include "polyomino_board.hpp"
+#include "polyomino_parameters_widget.hpp"
 #include "direction.hpp"
 #include "qpoint_hasher.hpp"
-#include "polymino_cell_item.hpp"
+#include "polyomino_cell_item.hpp"
 #include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
 
@@ -12,23 +12,23 @@
 #include <iostream>
 
 // NminoBoard::NminoBoard() : random_generator_ { random_device_() }
-PolyminoBoard::PolyminoBoard() : random_generator_ { 1 }
+PolyominoBoard::PolyominoBoard() : random_generator_ { 1 }
 {
 }
 
-const QString& PolyminoBoard::id() const
+const QString& PolyominoBoard::id() const
 {
-    static const QString id = "Polymino";
+    static const QString id = "Polyomino";
     return id;
 }
 
-const QString& PolyminoBoard::name() const
+const QString& PolyominoBoard::name() const
 {
-    static const QString name = "Polymino";
+    static const QString name = "Polyomino";
     return name;
 }
 
-void PolyminoBoard::generate()
+void PolyominoBoard::generate()
 {
     const size_t width          = 5;
     const size_t height         = 5;
@@ -56,7 +56,7 @@ void PolyminoBoard::generate()
                 continue;
             }
 
-            auto cell                                  = std::make_unique<PolyminoCell>();
+            auto cell                                  = std::make_unique<PolyominoCell>();
             cell->id                                   = id;
             cell->center                               = { static_cast<int>(col), static_cast<int>(row) };
             matrix[cell->center.y()][cell->center.x()] = id;
@@ -87,12 +87,11 @@ void PolyminoBoard::generate()
     assignMines(board_state_.mines);
 }
 
-void PolyminoBoard::setupScene(BoardScene* scene)
+void PolyominoBoard::setupScene(BoardScene* scene)
 {
-    PolyminoCellItem::setSize(cell_square_size_);
     int i = 0;
     for (const auto& cell : cells_) {
-        auto item = new PolyminoCellItem();
+        auto item = new PolyominoCellItem();
         //item->initialize(cell.get(), {QColor::Hsv, 32 * (++i), 100,100 });
         item->initialize(cell.get(), generateCellColor());
         scene->registerCellItem(item);
@@ -104,16 +103,16 @@ void PolyminoBoard::setupScene(BoardScene* scene)
                           static_cast<qreal>(height_ * SpriteCellItem::size()) });
 }
 
-QWidget* PolyminoBoard::parametersWidget() const
+QWidget* PolyominoBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new PolyminoParametersWidget { &dummy_parent_widget_ };
+        parameters_widget_ = new PolyominoParametersWidget { &dummy_parent_widget_ };
     }
 
     return parameters_widget_;
 }
 
-std::vector<size_t> PolyminoBoard::neighborIds(size_t id) const
+std::vector<size_t> PolyominoBoard::neighborIds(size_t id) const
 {
     if (id < cells_.size()) {
         return cells_[id]->neighbor_ids;
@@ -123,17 +122,17 @@ std::vector<size_t> PolyminoBoard::neighborIds(size_t id) const
     }
 }
 
-bool PolyminoBoard::isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const
+bool PolyominoBoard::isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const
 {
     return point.x() >= 0 && point.y() >= 0 && point.x() < width && point.y() < height;
 }
 
-void PolyminoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyminoCell& cell)
+void PolyominoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyominoCell& cell)
 {
     const auto currentId = cell.id;
     for (const auto& shift : cell.shifts) {
         const auto currentSubCell = cell.center + shift;
-        for (const auto direction : directions_array) {
+        for (const auto direction : extended_directions_array) {
             const auto neighborCellCoords = currentSubCell + directionToShift(direction);
             if (!isValidMatrixCoordinates(neighborCellCoords, width_, height_)) {
                 continue;
@@ -153,7 +152,7 @@ void PolyminoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matri
     }
 }
 
-void PolyminoBoard::assignMines(size_t minesCount)
+void PolyominoBoard::assignMines(size_t minesCount)
 {
     std::vector<bool> mines(cells_.size(), false);
     for (size_t i = 0; i < minesCount; ++i) {
@@ -166,7 +165,7 @@ void PolyminoBoard::assignMines(size_t minesCount)
     }
 }
 
-QColor PolyminoBoard::generateCellColor() const
+QColor PolyominoBoard::generateCellColor() const
 {
     int                                  h = 32;
     std::uniform_int_distribution<short> s(60, 80);
@@ -174,13 +173,13 @@ QColor PolyminoBoard::generateCellColor() const
     return { QColor::Hsv, h, s(random_generator_), v(random_generator_) };
 }
 
-bool PolyminoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const
+bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const
 {
     return isValidMatrixCoordinates(point, matrix[0].size(), matrix.size())
            && matrix[point.y()][point.x()] == empty_matrix_id_;
 }
 
-void PolyminoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
+void PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
                                           const QPoint&                           point,
                                           std::deque<QPoint>&                     neighbors) const
 {

@@ -125,9 +125,9 @@
     <ClCompile Include="hex_parameters_widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mec.cpp" />
-    <ClCompile Include="polymino_cell_item.cpp" />
-    <ClCompile Include="polymino_board.cpp" />
-    <ClCompile Include="polymino_parameters_widget.cpp" />
+    <ClCompile Include="polyomino_cell_item.cpp" />
+    <ClCompile Include="polyomino_board.cpp" />
+    <ClCompile Include="polyomino_parameters_widget.cpp" />
     <ClCompile Include="qline_hasher.cpp" />
     <ClCompile Include="qpointf_hasher.cpp" />
     <ClCompile Include="qpoint_hasher.cpp" />
@@ -162,10 +162,10 @@
     <ClInclude Include="game_state.hpp" />
     <QtMoc Include="hex_parameters_widget.hpp" />
     <ClInclude Include="mec.hpp" />
-    <ClInclude Include="polymino_cell_item.hpp" />
-    <ClInclude Include="polymino_board.hpp" />
-    <QtMoc Include="polymino_parameters_widget.hpp" />
-    <ClInclude Include="polymino_cell.hpp" />
+    <ClInclude Include="polyomino_cell_item.hpp" />
+    <ClInclude Include="polyomino_board.hpp" />
+    <QtMoc Include="polyomino_parameters_widget.hpp" />
+    <ClInclude Include="polyomino_cell.hpp" />
     <ClInclude Include="qline_hasher.hpp" />
     <ClInclude Include="qpointf_hasher.hpp" />
     <ClInclude Include="qpoint_hasher.hpp" />
