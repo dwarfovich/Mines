@@ -210,7 +210,7 @@
     <QtUic Include="hex_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="polymino_parameters_widget.ui">
+    <QtUic Include="polyomino_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -6,13 +6,11 @@
 #include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
 
-#include <unordered_set>
-#include <queue>
-
-#include <iostream>
-
-// NminoBoard::NminoBoard() : random_generator_ { random_device_() }
+#ifdef QT_DEBUG
 PolyominoBoard::PolyominoBoard() : random_generator_ { 1 }
+#else
+NminoBoard::NminoBoard() : random_generator_ { random_device_() }
+#endif // QT_DEBUG
 {
 }
 
@@ -30,28 +28,22 @@ const QString& PolyominoBoard::name() const
 
 void PolyominoBoard::generate()
 {
-    const size_t width          = 5;
-    const size_t height         = 5;
-    const size_t max_nmino_size = 5;
-    const size_t mines          = 2;
+    width_              = parameters_widget_->width();
+    height_             = parameters_widget_->height();
+    max_polyomino_size_ = parameters_widget_->maxPolyominoSize();
 
     board_state_             = {};
-    board_state_.mines       = mines;
+    board_state_.mines       = parameters_widget_->minesCount();
     size_t cells_counter     = cells_.size();
     board_state_.empty_cells = cells_counter - board_state_.mines;
-
-    width_  = width;
-    height_ = height;
-
-    std::uniform_int_distribution<size_t> size_distribution { 1, max_nmino_size };
-
     cells_.clear();
 
-    std::vector<std::vector<size_t>> matrix;
-    matrix.resize(height, std::vector(width, empty_matrix_id_));
+    std::uniform_int_distribution<size_t> size_distribution { 1, max_polyomino_size_ };
+    std::vector<std::vector<size_t>>      matrix;
+    matrix.resize(height_, std::vector(width_, empty_matrix_id_));
     size_t id = 0;
-    for (size_t row = 0; row < height; ++row) {
-        for (size_t col = 0; col < width; ++col) {
+    for (size_t row = 0; row < height_; ++row) {
+        for (size_t col = 0; col < width_; ++col) {
             if (matrix[row][col] != empty_matrix_id_) {
                 continue;
             }
@@ -89,10 +81,8 @@ void PolyominoBoard::generate()
 
 void PolyominoBoard::setupScene(BoardScene* scene)
 {
-    int i = 0;
     for (const auto& cell : cells_) {
         auto item = new PolyominoCellItem();
-        //item->initialize(cell.get(), {QColor::Hsv, 32 * (++i), 100,100 });
         item->initialize(cell.get(), generateCellColor());
         scene->registerCellItem(item);
     }
@@ -180,16 +170,14 @@ bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix,
 }
 
 void PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
-                                          const QPoint&                           point,
-                                          std::deque<QPoint>&                     neighbors) const
+                                           const QPoint&                           point,
+                                           std::deque<QPoint>&                     neighbors) const
 {
-    Direction d = Direction::Up;
-    do {
-        auto shift    = directionToShift(d);
+    for (const auto direction : directions_array) {
+        auto shift    = directionToShift(direction);
         auto neighbor = point + shift;
         if (isEmptyCell(matrix, neighbor)) {
             neighbors.push_back(neighbor);
         }
-        d = nextDirection(d);
-    } while (d != Direction::Up);
+    }
 }

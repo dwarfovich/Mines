@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ui_polymino_parameters_widget.h"
+#include "ui_polyomino_parameters_widget.h"
 
 #include <QWidget>
 
@@ -11,6 +11,15 @@ class PolyominoParametersWidget : public QWidget
 public:
     PolyominoParametersWidget(QWidget *parent = nullptr);
 
-private:
-    Ui::PolyminoParametersWidgetClass ui;
+    size_t width() const;
+    size_t height() const;
+    size_t maxPolyominoSize() const;
+    size_t minesCount() const;
+
+private slots:
+    void updateMaxPolyominoSizeSpinBox();
+    void updateMinesSpinbox();
+
+private: // data
+    Ui::PolyominoParametersWidgetClass ui_;
 };
