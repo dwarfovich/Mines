@@ -73,8 +73,10 @@ QWidget *RectangleBoard::parametersWidget() const
 std::vector<size_t> RectangleBoard::neighborIds(size_t id) const
 {
     size_t min_id = (id / width_ > 0 ? id - width_ : id);
-    if (min_id % width_ != 0)
+    if (min_id % width_ != 0) {
         --min_id;
+    
+    }
     size_t col_span = ((id % width_ == 0) || ((id + 1) % width_ == 0) ? 2 : 3);
     size_t row_span = ((id / width_ == 0) || (id / width_ == height_ - 1) ? 2 : 3);
 

@@ -11,22 +11,22 @@ class IdBasedBoard : public Board
 {
 public:
     size_t      flags() const override;
-    const Cell* cellById(size_t id) const override;
+    const Cell *cellById(size_t id) const override;
     void        openCell(size_t id) override;
     void        toggleFlag(size_t id) override;
 
 protected: // methods
     virtual std::vector<size_t> neighborIds(size_t id) const = 0;
-    virtual Cell*               cellById(size_t id);
-    virtual void                relocateFirstOpenedMine(Cell* cell);
+    virtual Cell               *cellById(size_t id);
+    virtual void                relocateFirstOpenedMine(Cell *cell);
     virtual void                reveal();
     virtual size_t              countNeighborMines(size_t id) const;
-    virtual void                openAdjacentCells(Cell* cell);
+    virtual void                openAdjacentCells(Cell *cell);
     virtual void                initializeCells(size_t cells_counter);
     virtual void                randomize();
 
 protected: // data
-    size_t            flags_ = 0;
+    size_t                                 flags_ = 0;
     std::vector<std::unique_ptr<CellType>> cells_;
 };
 
@@ -81,14 +81,16 @@ void IdBasedBoard<CellType>::openCell(size_t id)
 template<typename CellType>
 void IdBasedBoard<CellType>::toggleFlag(size_t id)
 {
-    auto cell      = cellById(id);
-    cell->has_flag = !cell->has_flag;
-    if (cell->has_flag) {
-        ++flags_;
-    } else {
-        --flags_;
+    auto cell = cellById(id);
+    if (cell->is_closed) {
+        cell->has_flag = !cell->has_flag;
+        if (cell->has_flag) {
+            ++flags_;
+        } else {
+            --flags_;
+        }
+        cellChanged(cell);
     }
-    cellChanged(cell);
 }
 
 template<typename CellType>
@@ -122,11 +124,11 @@ void IdBasedBoard<CellType>::reveal()
         if (cells_[i]->is_closed) {
             if (!cells_[i]->has_mine) {
                 cells_[i]->neighbor_mines = countNeighborMines(i);
-                cellChanged(cells_[i].get());
             } else if (board_state_.game_state == GameState::Win) {
                 cells_[i]->has_flag = true;
             }
             cells_[i]->is_closed = false;
+                cellChanged(cells_[i].get());
         }
     }
 }
@@ -186,6 +188,5 @@ void IdBasedBoard<CellType>::randomize()
         cells_[i]->id = i;
     }
 }
-
 
 #endif // ID_BASED_BOARD_HPP

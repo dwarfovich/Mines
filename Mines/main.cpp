@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // collection->registerBoard(std::make_unique<HexBoard>());
     // collection->registerBoard(std::make_unique<GraphBoard>());
     // collection->registerBoard(std::make_unique<DelaunayBoard>());
-    collection->registerBoard(std::make_unique<PolyominoBoard>());
+    // collection->registerBoard(std::make_unique<PolyominoBoard>());
 
     MainWindow w { std::move(collection) };
     w.show();

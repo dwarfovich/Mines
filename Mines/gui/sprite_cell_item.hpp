@@ -13,8 +13,6 @@ public:
         Type = UserType + 2
     };
 
-
-
     explicit SpriteCellItem(const Cell *cell);
 
     static const QPixmap &sprites();
