@@ -36,12 +36,12 @@ private slots:
     void onCellChanged(Cell* cell);
     void onTimerTimeout();
 
-private:
+private: // methods
     void processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
     void updateFlagsCount();
     void centerView();
 
-private:
+private: // data
     Ui::MinesWidget*        ui_;
     BoardScene*             scene_            = nullptr;
     Board*                  board_            = nullptr;
@@ -49,6 +49,10 @@ private:
     GameOverDialog*         game_over_dialog_ = nullptr;
     static constexpr int    timer_period_     = 1000;
     static constexpr double view_side_        = 50;
+    static constexpr double min_width_        = 160.;
+    static constexpr double min_height_       = 160.;
+    static constexpr double max_width_        = 1500.;
+    static constexpr double max_height_       = 1500.;
 };
 
 #endif // MINES_WIDGET_HPP

@@ -25,7 +25,7 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-
+    painter->setPen(constants::polyomino_board::pen);
 
     if (cell_->is_closed) {
         painter->setBrush(closed_brush_);
@@ -41,6 +41,13 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
         }
     } else {
         painter->drawPixmap(cell_info_rect_, *sprites_, rect);
+    }
+
+    if (IsHovered()) {
+        painter->setBrush(Qt::white);
+        painter->setPen(Qt::NoPen);
+        painter->setOpacity(100);
+        painter->drawPath(shape());
     }
 }
 
@@ -101,6 +108,7 @@ QPainterPath PolyominoCellItem::createPainterPath(const PolyominoCell& cell) con
         path.lineTo(iter->second);
         iter = lines.find(iter->second);
     }
+    path.closeSubpath();
 
     return path;
 }

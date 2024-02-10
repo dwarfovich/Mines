@@ -34,6 +34,7 @@ void MainWindow::onGameOver(GameOverDialogAnswer answer)
 {
     if (answer == GameOverDialogAnswer::Replay) {
         board_->generate();
+        mines_widget_->setBoard(board_);
     } else if (answer == GameOverDialogAnswer::NewGame) {
         int result = new_game_dialog_->exec();
         if (result == QDialog::Accepted) {

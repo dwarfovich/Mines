@@ -158,10 +158,12 @@ void PolyominoBoard::assignMines(size_t minesCount)
 
 QColor PolyominoBoard::generateCellColor() const
 {
-    const int                            h = 32;
-    std::uniform_int_distribution<short> s(60, 80);
-    std::uniform_int_distribution<short> v(0, 255);
-    return { QColor::Hsv, h, s(random_generator_), v(random_generator_) };
+    using namespace constants::polyomino_board;
+    std::uniform_int_distribution<short> s(min_saturation, max_saturation);
+    std::uniform_int_distribution<short> v(min_color_value, max_color_value);
+    QColor                               color {QColor::Hsv};
+    color.setHsv(hue, s(random_generator_), v(random_generator_));
+    return color;
 }
 
 bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const

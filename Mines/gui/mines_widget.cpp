@@ -87,19 +87,15 @@ void MinesWidget::updateFlagsCount()
 void MinesWidget::centerView()
 {
     const auto &scene_rect = ui_->minesGraphicsView->sceneRect();
-    const double      min_width   = 160.;
-    const double      min_height   = 160;
-    const double      max_width   = 1500.;
-    const double      max_height  = 1500.;
 
-    if (scene_rect.width() < min_width || scene_rect.height() < min_height) {
+    if (scene_rect.width() < min_width_ || scene_rect.height() < min_height_) {
         auto min = qMin(scene_rect.width(), scene_rect.height());
-        auto x_factor = scene_rect.width() / min_width;
-        auto y_factor = scene_rect.height() / min_height;
+        auto x_factor = scene_rect.width() / min_width_;
+        auto y_factor = scene_rect.height() / min_height_;
         auto min_factor = qMin(x_factor, y_factor);
         ui_->minesGraphicsView->scale(min_factor, min_factor);
-    } else if (scene_rect.width() > min_width || scene_rect.height() > min_height) {
-        auto max = qMax(max_width, max_height);
+    } else if (scene_rect.width() > min_width_ || scene_rect.height() > min_height_) {
+        auto max = qMax(max_width_, max_height_);
         ui_->minesGraphicsView->fitInView(0, 0, max, max, Qt::KeepAspectRatio);
     }
     ui_->minesGraphicsView->centerOn(scene_rect.width() / 2., scene_rect.height() / 2.);
