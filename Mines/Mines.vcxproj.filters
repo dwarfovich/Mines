@@ -296,6 +296,9 @@
     <ClInclude Include="qline_hasher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="polyomino_board_constants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc">

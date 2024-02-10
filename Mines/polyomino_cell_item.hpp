@@ -25,19 +25,17 @@ private: // methods
     void         initializeMinesCountAttributes(QPainter* painter);
 
 private: // data
-    inline static int                      sub_cell_size_    = 64;
-    inline static int                      sprite_size_    = 64;
-    inline static std::unique_ptr<QPixmap> sprites_ = nullptr;
-    inline static const QBrush             opened_brush_     = QColor{50,50,50};
-    inline static const int                font_size_        = 30;
+
+    inline static std::unique_ptr<QPixmap> sprites_       = nullptr;
+    inline static const QBrush             opened_brush_  = QColor { 50, 50, 50 };
+    inline static const int                font_size_     = 30;
     QString                                mines_count_;
-    int                                    text_x_offset_                      = 0;
-    int                                    text_y_offset_                      = 0;
+    int                                    text_x_offset_                     = 0;
+    int                                    text_y_offset_                     = 0;
     bool                                   mines_count_attributes_initialized = false;
-    QBrush                   closed_brush_;
+    QBrush                                 closed_brush_;
     QRectF                                 bounding_rect_;
     QPainterPath                           painter_path_;
     QPolygon                               polygon_;
-    //QColor                                 color_;
-    QRect                                  cell_description_rect_;
+    QRect                                  cell_info_rect_;
 };

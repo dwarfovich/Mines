@@ -3,6 +3,7 @@
 #include "direction.hpp"
 #include "qpoint_hasher.hpp"
 #include "polyomino_cell_item.hpp"
+#include "polyomino_board_constants.hpp"
 #include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
 
@@ -32,19 +33,19 @@ void PolyominoBoard::generate()
     height_             = parameters_widget_->height();
     max_polyomino_size_ = parameters_widget_->maxPolyominoSize();
 
-    board_state_             = {};
-    board_state_.mines       = parameters_widget_->minesCount();
-    size_t cells_counter     = cells_.size();
-    board_state_.empty_cells = cells_counter - board_state_.mines;
+    board_state_               = {};
+    board_state_.mines         = parameters_widget_->minesCount();
+    const size_t cells_counter = cells_.size();
+    board_state_.empty_cells   = cells_counter - board_state_.mines;
     cells_.clear();
 
     std::uniform_int_distribution<size_t> size_distribution { 1, max_polyomino_size_ };
     std::vector<std::vector<size_t>>      matrix;
-    matrix.resize(height_, std::vector(width_, empty_matrix_id_));
+    matrix.resize(height_, std::vector(width_, constants::polyomino_board::empty_matrix_id));
     size_t id = 0;
     for (size_t row = 0; row < height_; ++row) {
         for (size_t col = 0; col < width_; ++col) {
-            if (matrix[row][col] != empty_matrix_id_) {
+            if (matrix[row][col] != constants::polyomino_board::empty_matrix_id) {
                 continue;
             }
 
@@ -62,7 +63,7 @@ void PolyominoBoard::generate()
             int                  attempt     = 0;
             while (current_size < target_size && !empty_neighbors.empty() && ++attempt <= maxAttempts) {
                 std::uniform_int_distribution<size_t> distribution { 0, empty_neighbors.size() - 1 };
-                auto                                  neighbor_point = empty_neighbors[distribution(random_generator_)];
+                const auto                                  neighbor_point = empty_neighbors[distribution(random_generator_)];
                 matrix[neighbor_point.y()][neighbor_point.x()]       = id;
                 if (!::contains(cell->shifts, neighbor_point - cell->center)) {
                     cell->shifts.push_back(neighbor_point - cell->center);
@@ -128,7 +129,7 @@ void PolyominoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matr
                 continue;
             }
             auto neighborId = matrix[neighborCellCoords.y()][neighborCellCoords.x()];
-            if (neighborId == currentId || neighborId == empty_matrix_id_) {
+            if (neighborId == currentId || neighborId == constants::polyomino_board::empty_matrix_id) {
                 continue;
             }
             if (!::contains(cell.neighbor_ids, neighborId)) {
@@ -157,7 +158,7 @@ void PolyominoBoard::assignMines(size_t minesCount)
 
 QColor PolyominoBoard::generateCellColor() const
 {
-    int                                  h = 32;
+    const int                            h = 32;
     std::uniform_int_distribution<short> s(60, 80);
     std::uniform_int_distribution<short> v(0, 255);
     return { QColor::Hsv, h, s(random_generator_), v(random_generator_) };
@@ -166,7 +167,7 @@ QColor PolyominoBoard::generateCellColor() const
 bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const
 {
     return isValidMatrixCoordinates(point, matrix[0].size(), matrix.size())
-           && matrix[point.y()][point.x()] == empty_matrix_id_;
+           && matrix[point.y()][point.x()] == constants::polyomino_board::empty_matrix_id;
 }
 
 void PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,

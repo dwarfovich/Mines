@@ -162,6 +162,7 @@
     <ClInclude Include="game_state.hpp" />
     <QtMoc Include="hex_parameters_widget.hpp" />
     <ClInclude Include="mec.hpp" />
+    <ClInclude Include="polyomino_board_constants.hpp" />
     <ClInclude Include="polyomino_cell_item.hpp" />
     <ClInclude Include="polyomino_board.hpp" />
     <QtMoc Include="polyomino_parameters_widget.hpp" />
