@@ -24,7 +24,7 @@ private:
     void   assignMines(size_t minesCount);
     QColor generateCellColor() const;
     bool   isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
-    void   addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
+    bool   addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
                                  const QPoint&                           point,
                                  std::deque<QPoint>&                     neighbors) const;
 

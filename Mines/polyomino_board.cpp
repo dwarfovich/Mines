@@ -41,26 +41,31 @@ void PolyominoBoard::generate()
                 continue;
             }
 
-            auto cell                                  = std::make_unique<PolyominoCell>();
-            cell->id                                   = id;
-            cell->center                               = { static_cast<int>(col), static_cast<int>(row) };
+            auto cell = std::make_unique<PolyominoCell>(id, QPoint { static_cast<int>(col), static_cast<int>(row) });
             matrix[cell->center.y()][cell->center.x()] = id;
 
-            const auto target_size  = size_distribution(random_generator_);
-            size_t     current_size = 1;
+            const auto target_size = size_distribution(random_generator_);
             cell->shifts.push_back({ 0, 0 });
+            size_t             current_size = 1;
             std::deque<QPoint> empty_neighbors;
             addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
-            static constexpr int maxAttempts = 20;
-            int                  attempt     = 0;
-            while (current_size < target_size && !empty_neighbors.empty() && ++attempt <= maxAttempts) {
+            while (current_size < target_size && !empty_neighbors.empty()) {
                 std::uniform_int_distribution<size_t> distribution { 0, empty_neighbors.size() - 1 };
-                const auto                                  neighbor_point = empty_neighbors[distribution(random_generator_)];
+                const auto                            neighbor_point = empty_neighbors[distribution(random_generator_)];
                 matrix[neighbor_point.y()][neighbor_point.x()]       = id;
-                if (!::contains(cell->shifts, neighbor_point - cell->center)) {
-                    cell->shifts.push_back(neighbor_point - cell->center);
+                const auto neighbor_shift                            = neighbor_point - cell->center;
+                if (!::contains(cell->shifts, neighbor_shift)) {
+                    cell->shifts.push_back(neighbor_shift);
                     ++current_size;
-                    addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
+                    auto insertion_happened = addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
+                    if (!insertion_happened) {
+                        empty_neighbors.erase(
+                            std::remove(empty_neighbors.begin(), empty_neighbors.end(), neighbor_point),
+                            empty_neighbors.end());
+                    }
+                } else {
+                    empty_neighbors.erase(std::remove(empty_neighbors.begin(), empty_neighbors.end(), neighbor_point),
+                                          empty_neighbors.end());
                 }
             }
             setupNeighbors(matrix, *cell);
@@ -153,7 +158,7 @@ QColor PolyominoBoard::generateCellColor() const
     using namespace constants::polyomino_board;
     std::uniform_int_distribution<short> s(min_saturation, max_saturation);
     std::uniform_int_distribution<short> v(min_color_value, max_color_value);
-    QColor                               color {QColor::Hsv};
+    QColor                               color { QColor::Hsv };
     color.setHsv(hue, s(random_generator_), v(random_generator_));
     return color;
 }
@@ -164,15 +169,18 @@ bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix,
            && matrix[point.y()][point.x()] == constants::polyomino_board::empty_matrix_id;
 }
 
-void PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
+bool PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
                                            const QPoint&                           point,
                                            std::deque<QPoint>&                     neighbors) const
 {
+    bool insertion_happened = false;
     for (const auto direction : directions_array) {
-        auto shift    = directionToShift(direction);
-        auto neighbor = point + shift;
+        const auto shift    = directionToShift(direction);
+        const auto neighbor = point + shift;
         if (isEmptyCell(matrix, neighbor)) {
             neighbors.push_back(neighbor);
+            insertion_happened = true;
         }
     }
+    return insertion_happened;
 }

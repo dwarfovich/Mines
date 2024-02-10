@@ -1,10 +1,11 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 
-
 class Cell
 {
 public:
+    Cell() = default;
+    Cell(size_t new_id);
     virtual ~Cell() = default;
 
     bool   is_closed : 1  = true;

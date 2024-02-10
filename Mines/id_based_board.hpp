@@ -35,7 +35,12 @@ protected: // data
 };
 
 template<typename CellType>
+#ifdef QT_DEBUG
+IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { 1 }
+#else
 IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { random_device_() }
+#endif // QT_DEBUG
+
 {
 }
 

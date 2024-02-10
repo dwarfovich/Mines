@@ -125,6 +125,7 @@
     <ClCompile Include="hex_parameters_widget.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mec.cpp" />
+    <ClCompile Include="polyomino_cell.cpp" />
     <ClCompile Include="polyomino_cell_item.cpp" />
     <ClCompile Include="polyomino_board.cpp" />
     <ClCompile Include="polyomino_parameters_widget.cpp" />
