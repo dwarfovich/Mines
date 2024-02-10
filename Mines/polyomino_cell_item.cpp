@@ -24,19 +24,23 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
-    
+
+
+
     if (cell_->is_closed) {
         painter->setBrush(closed_brush_);
         painter->drawPolygon(polygon_);
     } else {
         painter->setBrush(opened_brush_);
         painter->drawPolygon(polygon_);
-        const auto& rect = spriteRect(cellState());
-        if (rect.isNull()) {
+    }
+    const auto& rect = spriteRect(cellState());
+    if (rect.isNull()) {
+        if (!cell_->is_closed) {
             paintMinesCount(painter);
-        } else {
-            painter->drawPixmap(cell_info_rect_, *sprites_, rect);
         }
+    } else {
+        painter->drawPixmap(cell_info_rect_, *sprites_, rect);
     }
 }
 
@@ -164,10 +168,12 @@ void PolyominoCellItem::paintMinesCount(QPainter* painter)
     if (!mines_count_attributes_initialized) {
         initializeMinesCountAttributes(painter);
     }
-    auto font = painter->font();
-    font.setPixelSize(font_size_);
-    painter->setFont(font);
-    painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
+    if (cell_->neighbor_mines != 0) {
+        auto font = painter->font();
+        font.setPixelSize(font_size_);
+        painter->setFont(font);
+        painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
+    }
 }
 
 void PolyominoCellItem::initializeMinesCountAttributes(QPainter* painter)

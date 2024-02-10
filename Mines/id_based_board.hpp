@@ -128,7 +128,7 @@ void IdBasedBoard<CellType>::reveal()
                 cells_[i]->has_flag = true;
             }
             cells_[i]->is_closed = false;
-                cellChanged(cells_[i].get());
+            cellChanged(cells_[i].get());
         }
     }
 }
