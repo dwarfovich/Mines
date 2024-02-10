@@ -10,6 +10,7 @@ class PolyominoParametersWidget;
 
 class PolyominoBoard : public IdBasedBoard<PolyominoCell>
 {
+    Q_OBJECT
 public:
     const QString&      id() const override;
     const QString&      name() const override;

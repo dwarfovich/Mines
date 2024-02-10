@@ -1,5 +1,5 @@
 #include "rectangle_board.hpp"
-#include "gui/rectangle_board_parameters_widget.hpp"
+#include "rectangle_board_parameters_widget.hpp"
 #include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
 

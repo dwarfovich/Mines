@@ -1,7 +1,7 @@
 #pragma once
 
 #include "edge.hpp"
-#include "gui/buddy_notificator.hpp"
+#include "buddy_notificator.hpp"
 
 #include <QGraphicsItem>
 

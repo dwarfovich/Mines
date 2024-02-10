@@ -23,34 +23,26 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="graph_boards\delaunay_board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\delaunay_parameters_widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\edge_item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\graph_board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\graph_cell_item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\graph_parameters_widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graph_boards\triangulator.cpp">
+    <ResourceCompile Include="icon.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Mines.pro" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="mines.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\board_scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\board_view.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\buddy_notificator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\cell_item.cpp">
@@ -66,9 +58,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\new_game_dialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gui\rectangle_board_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gui\sprite_cell_item.cpp">
@@ -89,16 +78,55 @@
     <ClCompile Include="circle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="delaunay_board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="delaunay_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="direction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="edge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="edge_item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_cell_item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hex_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="hex_parameters_widget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polyomino_board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polyomino_cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polyomino_cell_item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="polyomino_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qline_hasher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="qpoint_hasher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="qpointf_hasher.cpp">
@@ -107,50 +135,23 @@
     <ClCompile Include="rectangle_board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rectangle_board_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="triangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="triangulator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hex_parameters_widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="polyomino_board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="polyomino_parameters_widget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="direction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="qpoint_hasher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="polyomino_cell_item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="qline_hasher.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="polyomino_cell.cpp">
+    <ClCompile Include="buddy_notificator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="graph_boards\delaunay_board.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="graph_boards\delaunay_parameters_widget.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="graph_boards\graph_board.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="graph_boards\graph_parameters_widget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="gui\board_scene.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -169,70 +170,41 @@
     <QtMoc Include="gui\new_game_dialog.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="gui\rectangle_board_parameters_widget.hpp">
+    <QtMoc Include="board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="board.hpp">
+    <QtMoc Include="delaunay_board.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="delaunay_parameters_widget.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="graph_board.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="graph_parameters_widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="hex_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="rectangle_board.hpp">
+    <QtMoc Include="hex_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="hex_parameters_widget.hpp">
+    <QtMoc Include="polyomino_board.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="polyomino_parameters_widget.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="rectangle_board.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="rectangle_board_parameters_widget.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="graph_boards\delaunay_parameters_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="graph_boards\graph_parameters_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="gui\game_over_dialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="gui\main_window.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="gui\mines_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="gui\new_game_dialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="gui\rectangle_board_parameters_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="hex_parameters_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="polyomino_parameters_widget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="graph_boards\edge_item.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_boards\graph_boards_constants.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_boards\graph_cell_item.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="graph_boards\triangulator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gui\buddy_notificator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gui\cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -254,43 +226,34 @@
     <ClInclude Include="circle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="direction.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="edge.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="edge_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game_state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mec.hpp">
+    <ClInclude Include="graph_boards_constants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qpointf_hasher.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="std_pair_hasher.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="triangle.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utils.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="polyomino_board.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="polyomino_cell.hpp">
+    <ClInclude Include="graph_cell_item.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="id_based_board.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="direction.hpp">
+    <ClInclude Include="mec.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="qpoint_hasher.hpp">
+    <ClInclude Include="polyomino_board_constants.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="polyomino_cell.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="polyomino_cell_item.hpp">
@@ -299,21 +262,55 @@
     <ClInclude Include="qline_hasher.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="polyomino_board_constants.hpp">
+    <ClInclude Include="qpoint_hasher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="qpointf_hasher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="std_pair_hasher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="triangle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="triangulator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buddy_notificator.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="icon.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Mines.pro" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="mines.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
+    <QtUic Include="gui\game_over_dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="gui\main_window.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="gui\mines_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="gui\new_game_dialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="delaunay_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="graph_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="hex_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="polyomino_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="rectangle_board_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
 </Project>

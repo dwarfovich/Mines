@@ -15,12 +15,12 @@ SOURCES += \
     board_factory.cpp \
     board_state.cpp \
     cell.cpp \
-    graph_board/edge.cpp \
-    graph_board/graph_board.cpp \
-    graph_board/graph_board_parameters_widget.cpp \
-    graph_board/qpointf_hasher.cpp \
-    graph_board/triangle.cpp \
-    graph_board/triangulator.cpp \
+    edge.cpp \
+    graph_board.cpp \
+    graph_board_parameters_widget.cpp \
+    qpointf_hasher.cpp \
+    triangle.cpp \
+    triangulator.cpp \
     gui/board_scene.cpp \
     gui/board_view.cpp \
     gui/cell_item.cpp \
@@ -41,12 +41,12 @@ HEADERS += \
     board_state.hpp \
     cell.hpp \
     game_state.hpp \
-    graph_board/edge.hpp \
-    graph_board/graph_board.hpp \
-    graph_board/graph_board_parameters_widget.hpp \
-    graph_board/qpointf_hasher.hpp \
-    graph_board/triangle.hpp \
-    graph_board/triangulator.hpp \
+    edge.hpp \
+    graph_board.hpp \
+    graph_board_parameters_widget.hpp \
+    qpointf_hasher.hpp \
+    triangle.hpp \
+    triangulator.hpp \
     gui/board_scene.hpp \
     gui/board_view.hpp \
     gui/cell_item.hpp \
