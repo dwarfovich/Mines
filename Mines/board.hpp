@@ -18,7 +18,15 @@ class Board : public QObject
     Q_OBJECT
 
 public:
-    virtual ~Board() = default;
+    Board()                        = default;
+    virtual ~Board()               = default;
+    Board(const Board&)            = delete;
+    Board(Board&&)                 = delete;
+    Board& operator=(const Board&) = delete;
+    Board& operator=(Board&&)      = delete;
+
+    const BoardState& boardState() const;
+    void              TakeOwnershipOfParametersWidget(QWidget* widget);
 
     virtual const QString& id() const                    = 0;
     virtual const QString& name() const                  = 0;
@@ -30,15 +38,12 @@ public:
     virtual void           setupScene(BoardScene* scene) = 0;
     virtual QWidget*       parametersWidget() const      = 0;
 
-    const BoardState& boardState() const;
-    void              TakeOwnershipOfParametersWidget(QWidget* widget);
-
 signals:
     void cellChanged(Cell* cell);
 
 protected:
-    BoardState board_state_;
-    mutable QWidget    dummy_parent_widget_;
+    BoardState      board_state_;
+    mutable QWidget dummy_parent_widget_;
 };
 
 #endif // IBOARD_HPP

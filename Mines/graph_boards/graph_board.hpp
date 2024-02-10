@@ -11,8 +11,6 @@ class GraphBoard : public IdBasedBoard<Cell>
     Q_OBJECT
 
 public:
-    GraphBoard();
-
     const QString &id() const override;
     const QString &name() const override;
     QWidget       *parametersWidget() const override;
@@ -30,7 +28,5 @@ protected: // data
     using NeighborsVector = std::vector<std::vector<size_t>>;
     NeighborsVector                neighbors_;
     QRectF                         bounding_rect_;
-    std::random_device             random_device_;
-    std::mt19937                   random_generator_;
     mutable GraphParametersWidget *parameters_widget_ = nullptr;
 };

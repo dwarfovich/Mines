@@ -10,6 +10,8 @@ template<typename CellType>
 class IdBasedBoard : public Board
 {
 public:
+    IdBasedBoard();
+
     size_t      flags() const override;
     const Cell *cellById(size_t id) const override;
     void        openCell(size_t id) override;
@@ -28,7 +30,14 @@ protected: // methods
 protected: // data
     size_t                                 flags_ = 0;
     std::vector<std::unique_ptr<CellType>> cells_;
+    mutable std::random_device             random_device_;
+    mutable std::mt19937 random_generator_;
 };
+
+template<typename CellType>
+IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { random_device_() }
+{
+}
 
 template<typename CellType>
 size_t IdBasedBoard<CellType>::flags() const
@@ -181,9 +190,7 @@ void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
 template<typename CellType>
 void IdBasedBoard<CellType>::randomize()
 {
-    std::random_device random_device;
-    std::mt19937       generator { random_device() };
-    std::shuffle(cells_.begin(), cells_.end(), generator);
+    std::shuffle(cells_.begin(), cells_.end(), random_generator_);
     for (size_t i = 0; i < cells_.size(); ++i) {
         cells_[i]->id = i;
     }

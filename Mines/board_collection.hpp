@@ -10,10 +10,12 @@
 
 class BoardCollection
 {
-    Q_DECLARE_TR_FUNCTIONS(BoardCollection);
-
 public:
-    BoardCollection();
+    BoardCollection()                                  = default;
+    BoardCollection(const BoardCollection&)            = delete;
+    BoardCollection(BoardCollection&&)                 = delete;
+    BoardCollection& operator=(const BoardCollection&) = delete;
+    BoardCollection& operator=(BoardCollection&&)      = delete;
 
     void                                                       registerBoard(std::unique_ptr<Board> board);
     Board*                                                     get(const QString& boardName);

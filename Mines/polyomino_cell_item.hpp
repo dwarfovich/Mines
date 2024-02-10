@@ -5,7 +5,6 @@
 #include <QBrush>
 
 class PolyominoCell;
-class QGraphicsRectItem;
 
 class PolyominoCellItem : public CellItem
 {

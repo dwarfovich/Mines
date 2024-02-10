@@ -9,10 +9,6 @@
 
 #include <unordered_set>
 
-GraphBoard::GraphBoard() : random_generator_ { random_device_() }
-{
-}
-
 const QString &GraphBoard::id() const
 {
     static const QString id { QStringLiteral("Graph") };

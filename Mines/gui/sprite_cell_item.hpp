@@ -1,5 +1,5 @@
-#ifndef STANDARDCELLITEM_HPP
-#define STANDARDCELLITEM_HPP
+#ifndef SPRITE_CELL_ITEM_HPP
+#define SPRITE_CELL_ITEM_HPP
 
 #include "cell_item.hpp"
 
@@ -15,16 +15,16 @@ public:
 
     explicit SpriteCellItem(const Cell *cell);
 
+    QPainterPath shape() const override;
+    QRectF       boundingRect() const override;
+    void         paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
     static const QPixmap &sprites();
     static void           setSprites(const QString &path);
     static int            size();
     static void           setShape(const QPainterPath &shape);
-    QPainterPath          shape() const override;
-    QRectF                boundingRect() const override;
-    void                  paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
 
 protected:
-
     virtual QRectF       spriteRect(CellState type) const;
     virtual const QColor textColor(size_t mines) const;
 
@@ -37,4 +37,4 @@ private:
     static const QFont               font_;
 };
 
-#endif // STANDARDCELLITEM_HPP
+#endif // SPRITE_CELL_ITEM_HPP

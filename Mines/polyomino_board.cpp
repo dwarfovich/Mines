@@ -7,14 +7,6 @@
 #include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
 
-#ifdef QT_DEBUG
-PolyominoBoard::PolyominoBoard() : random_generator_ { 1 }
-#else
-NminoBoard::NminoBoard() : random_generator_ { random_device_() }
-#endif // QT_DEBUG
-{
-}
-
 const QString& PolyominoBoard::id() const
 {
     static const QString id = "Polyomino";

@@ -1,9 +1,5 @@
 #include "board_collection.hpp"
 
-BoardCollection::BoardCollection()
-{
-}
-
 void BoardCollection::registerBoard(std::unique_ptr<Board> board)
 {
     const auto &name = board->name();

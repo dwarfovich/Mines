@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>437</width>
-    <height>361</height>
+    <height>364</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -54,17 +54,17 @@
         <locale language="English" country="UnitedStates"/>
        </property>
        <property name="insertPolicy">
-        <enum>QComboBox::NoInsert</enum>
+        <enum>QComboBox::InsertPolicy::InsertAlphabetically</enum>
        </property>
        <property name="sizeAdjustPolicy">
-        <enum>QComboBox::AdjustToContents</enum>
+        <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
        </property>
       </widget>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -82,10 +82,10 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Policy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -100,7 +100,7 @@
      <item>
       <spacer name="horizontalSpacer_3">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
