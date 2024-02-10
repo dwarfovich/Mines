@@ -3,6 +3,11 @@
 
 #include <QGraphicsSceneHoverEvent>
 
+CellItem::CellItem()
+{
+    setAcceptHoverEvents(true);
+}
+
 CellItem::CellItem(const Cell *cell)
     : cell_{cell}
 {

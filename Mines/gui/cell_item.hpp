@@ -23,7 +23,7 @@ public:
         Opened
     };
 
-    CellItem() = default;
+    CellItem();
     CellItem(const Cell* cell);
 
     const Cell* cell() const;

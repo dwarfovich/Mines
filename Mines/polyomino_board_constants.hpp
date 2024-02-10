@@ -15,7 +15,10 @@ inline constexpr size_t min_saturation  = 60;
 inline constexpr size_t max_saturation  = 100;
 inline constexpr size_t min_color_value = 220;
 inline constexpr size_t max_color_value = 255;
-inline const QPen       pen             = QColor { Qt::black };
+inline constexpr int    font_size       = 30;
+inline const QPen       border_pen      = QColor { Qt::black };
+inline const QBrush     opened_brush    = QColor { 230, 255, 200 };
+inline const QBrush     hovered_brush   = QColor { 220, 220, 255 };
 
 } // namespace polyomino_board
 } // namespace constants

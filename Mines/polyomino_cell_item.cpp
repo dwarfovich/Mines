@@ -25,13 +25,17 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->setPen(constants::polyomino_board::pen);
+    painter->setPen(constants::polyomino_board::border_pen);
 
     if (cell_->is_closed) {
-        painter->setBrush(closed_brush_);
+        if (IsHovered()) {
+            painter->setBrush(constants::polyomino_board::hovered_brush);
+        } else {
+            painter->setBrush(closed_brush_);
+        }
         painter->drawPolygon(polygon_);
     } else {
-        painter->setBrush(opened_brush_);
+        painter->setBrush(constants::polyomino_board::opened_brush);
         painter->drawPolygon(polygon_);
     }
     const auto& rect = spriteRect(cellState());
@@ -41,13 +45,6 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
         }
     } else {
         painter->drawPixmap(cell_info_rect_, *sprites_, rect);
-    }
-
-    if (IsHovered()) {
-        painter->setBrush(Qt::white);
-        painter->setPen(Qt::NoPen);
-        painter->setOpacity(100);
-        painter->drawPath(shape());
     }
 }
 
@@ -178,7 +175,7 @@ void PolyominoCellItem::paintMinesCount(QPainter* painter)
     }
     if (cell_->neighbor_mines != 0) {
         auto font = painter->font();
-        font.setPixelSize(font_size_);
+        font.setPixelSize(constants::polyomino_board::font_size);
         painter->setFont(font);
         painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
     }

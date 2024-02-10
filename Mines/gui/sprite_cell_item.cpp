@@ -16,7 +16,6 @@ const std::vector<QColor> SpriteCellItem::text_colors_ = { Qt::black,        { 4
 
 SpriteCellItem::SpriteCellItem(const Cell *cell) : CellItem { cell }
 {
-    setAcceptHoverEvents(true);
 }
 
 const QPixmap &SpriteCellItem::sprites()

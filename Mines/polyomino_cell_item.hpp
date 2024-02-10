@@ -10,8 +10,6 @@ class QGraphicsRectItem;
 class PolyominoCellItem : public CellItem
 {
 public:
-    PolyominoCellItem() = default;
-
     QPainterPath shape() const override;
     QRectF       boundingRect() const override;
     void         paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
@@ -25,10 +23,8 @@ private: // methods
     void         initializeMinesCountAttributes(QPainter* painter);
 
 private: // data
-
     inline static std::unique_ptr<QPixmap> sprites_       = nullptr;
-    inline static const QBrush             opened_brush_  = QColor { 50, 50, 50 };
-    inline static const int                font_size_     = 30;
+
     QString                                mines_count_;
     int                                    text_x_offset_                     = 0;
     int                                    text_y_offset_                     = 0;
