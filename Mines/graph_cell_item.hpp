@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gui/sprite_cell_item.hpp"
-#include "gui/buddy_notificator.hpp"
+#include "buddy_notificator.hpp"
 
 class Cell;
 class QGraphicsDropShadowEffect;

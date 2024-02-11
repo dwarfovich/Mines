@@ -6,6 +6,7 @@
 
 BoardScene::BoardScene(QObject *parent) : QGraphicsScene { parent }
 {
+    connect(&timer_, &QTimer::timeout, this, &BoardScene::advance);
 }
 
 void BoardScene::registerCellItem(CellItem *cell_item)
@@ -26,6 +27,29 @@ void BoardScene::clear()
 {
     cell_items_.clear();
     QGraphicsScene::clear();
+}
+
+void BoardScene::startAnimation()
+{
+    if (advance_period_) {
+        timer_.start(advance_period_);
+    }
+}
+
+void BoardScene::stopAnimation()
+{
+    timer_.stop();
+}
+
+void BoardScene::setNotAnimated()
+{
+    timer_.stop();
+    advance_period_ = 0;
+}
+
+void BoardScene::setAdvancePeriod(int period)
+{
+    advance_period_ = period;
 }
 
 void BoardScene::mousePressEvent(QGraphicsSceneMouseEvent *event)

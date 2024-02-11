@@ -6,6 +6,11 @@ Edge::Edge(QPointF start_point, QPointF end_point) : points_ { start_point, end_
 {
 }
 
+QPointF &Edge::operator[](int index)
+{
+    return (index == 0 ? points_.first : points_.second);
+}
+
 const QPointF &Edge::operator[](int index) const
 {
     return (index == 0 ? points_.first : points_.second);

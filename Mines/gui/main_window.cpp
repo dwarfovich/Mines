@@ -35,6 +35,7 @@ void MainWindow::onGameOver(GameOverDialogAnswer answer)
     if (answer == GameOverDialogAnswer::Replay) {
         board_->generate();
         mines_widget_->setBoard(board_);
+        mines_widget_->startGame();
     } else if (answer == GameOverDialogAnswer::NewGame) {
         int result = new_game_dialog_->exec();
         if (result == QDialog::Accepted) {
@@ -42,6 +43,7 @@ void MainWindow::onGameOver(GameOverDialogAnswer answer)
             board_         = board_collection_->get(boardName);
             board_->generate();
             mines_widget_->setBoard(board_);
+            mines_widget_->startGame();
         }
     } else {
         close();
@@ -56,5 +58,6 @@ void MainWindow::showNewGameDialog()
         board_         = board_collection_->get(boardName);
         board_->generate();
         mines_widget_->setBoard(board_);
+        mines_widget_->startGame();
     }
 }

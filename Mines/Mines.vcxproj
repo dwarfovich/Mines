@@ -115,6 +115,8 @@
     <ClCompile Include="delaunay_board.cpp" />
     <ClCompile Include="delaunay_parameters_widget.cpp" />
     <ClCompile Include="direction.cpp" />
+    <ClCompile Include="dynamic_graph_board.cpp" />
+    <ClCompile Include="dynamic_graph_cell_item.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="edge_item.cpp" />
     <ClCompile Include="graph_board.cpp" />
@@ -157,7 +159,10 @@
     <ClInclude Include="buddy_notificator.hpp" />
     <ClInclude Include="cell.hpp" />
     <ClInclude Include="circle.hpp" />
+    <ClInclude Include="constants.hpp" />
     <ClInclude Include="direction.hpp" />
+    <ClInclude Include="dynamic_graph_board.hpp" />
+    <ClInclude Include="dynamic_graph_cell_item.hpp" />
     <ClInclude Include="edge.hpp" />
     <ClInclude Include="edge_item.hpp" />
     <ClInclude Include="game_state.hpp" />

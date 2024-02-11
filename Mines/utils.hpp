@@ -27,4 +27,6 @@ bool contains(const Container& c, const Element& e)
     return (find(cbegin(c), cend(c), e) != cend(c));
 }
 
+qreal normalizeAngle(qreal angle);
+
 #endif // UTILS_HPP

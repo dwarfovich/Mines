@@ -4,6 +4,7 @@
 #include "cell_item.hpp"
 
 #include <QGraphicsScene>
+#include <QTimer>
 
 #include <unordered_map>
 
@@ -17,6 +18,10 @@ public:
     void registerCellItem(CellItem* cell_item);
     void updateCellItemForCell(Cell* cell);
     void clear();
+    void startAnimation();
+    void stopAnimation();
+    void setNotAnimated();
+    void setAdvancePeriod(int period);
 
 signals:
     void cellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
@@ -26,6 +31,8 @@ protected:
 
 protected:
     std::unordered_map<const Cell*, CellItem*> cell_items_;
+    QTimer                                     timer_;
+    int                                      advance_period_ = 0;
 };
 
 #endif // BOARDSCENE_HPP

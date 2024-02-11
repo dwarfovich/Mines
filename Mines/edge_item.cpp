@@ -1,4 +1,6 @@
 #include "edge_item.hpp"
+#include "graph_boards_constants.hpp"
+#include "gui/sprite_cell_item.hpp"
 
 #include <QPainter>
 
@@ -10,6 +12,20 @@ EdgeItem::EdgeItem() : BuddyNotificator { static_cast<QGraphicsItem&>(*this) }
 
 EdgeItem::EdgeItem(const Edge& edge) : BuddyNotificator { static_cast<QGraphicsItem&>(*this) }, edge_ { edge }
 {
+}
+
+void EdgeItem::setPointItem1(QGraphicsItem* item)
+{
+    Q_ASSERT(item);
+    
+    p1_ = item;
+}
+
+void EdgeItem::setPointItem2(QGraphicsItem* item)
+{
+    Q_ASSERT(item);
+
+    p2_ = item;
 }
 
 QRectF EdgeItem::boundingRect() const
@@ -27,4 +43,18 @@ void EdgeItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, 
         painter->setPen(hovered_pen_);
     }
     painter->drawLine(edge_[0], edge_[1]);
+}
+
+void EdgeItem::advance(int step)
+{
+    Q_ASSERT(p1_);
+    Q_ASSERT(p2_);
+
+    auto x1 = p1_->x() + SpriteCellItem::size() / 2;
+    auto y1 = p1_->y() + SpriteCellItem::size() / 2;
+    edge_[0] = { x1, y1 };
+    auto x2 = p2_->x() + SpriteCellItem::size() / 2;
+    auto y2 = p2_->y() + SpriteCellItem::size() / 2;
+    edge_[1] = { x2, y2 };
+    update();
 }

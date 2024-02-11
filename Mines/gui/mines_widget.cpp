@@ -43,6 +43,11 @@ void MinesWidget::setBoard(Board *board)
     centerView();
 }
 
+void MinesWidget::startGame()
+{
+    scene_->startAnimation();
+}
+
 void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
 {
     processCellItemClick(cell_item, event);

@@ -27,6 +27,7 @@ public:
     ~MinesWidget();
 
     void setBoard(Board* board);
+    void startGame();
 
 signals:
     void gameOver(GameOverDialogAnswer answer);
