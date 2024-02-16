@@ -59,6 +59,7 @@ void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEven
     auto game_state = board_->boardState().game_state;
     if (game_state != GameState::Playing) {
         timer_->stop();
+        scene_->stopAnimation();
         auto answer = game_over_dialog_->exec(game_state);
         emit gameOver(answer);
     }
@@ -92,10 +93,6 @@ void MinesWidget::updateFlagsCount()
 void MinesWidget::centerView()
 {
     const auto &scene_rect = scene_->sceneRect();
-    scene_->addRect(scene_rect, QPen {Qt::red});
-    const auto &border = scene_->sceneRect().adjusted(10,10,-10,-10);
-    scene_->addRect(border, QPen { Qt::green });
-    scene_->addEllipse(border, QPen { Qt::green });
 
     if (scene_rect.width() < min_width_ || scene_rect.height() < min_height_) {
         auto min = qMin(scene_rect.width(), scene_rect.height());

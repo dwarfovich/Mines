@@ -4,16 +4,6 @@
 #include <QPainter>
 #include <QGraphicsSceneHoverEvent>
 
-std::unique_ptr<QPixmap>  SpriteCellItem::sprites_         = nullptr;
-int                       SpriteCellItem::size_            = 0;
-QPainterPath              SpriteCellItem::shape_           = {};
-const qreal               SpriteCellItem::hovered_opacity_ = 0.3;
-const QFont               SpriteCellItem::font_ { "Calibri", 20, QFont::Bold };
-const std::vector<QColor> SpriteCellItem::text_colors_ = { Qt::black,        { 48, 115, 221 }, { 124, 43, 76 },
-                                                           { 64, 19, 178 },  { 178, 43, 19 },  { 141, 48, 221 },
-                                                           { 19, 178, 175 }, { 47, 58, 4 },    { 53, 18, 31 },
-                                                           { 43, 29, 26 } };
-
 SpriteCellItem::SpriteCellItem(const Cell *cell) : CellItem { cell }
 {
 }
@@ -27,9 +17,10 @@ void SpriteCellItem::setSprites(const QString &path)
 {
     sprites_ = std::make_unique<QPixmap>(path);
     size_    = sprites_->height();
+    half_size_ = size_ / 2.;
 }
 
-int SpriteCellItem::size()
+qreal SpriteCellItem::size()
 {
     return size_;
 }
@@ -46,7 +37,7 @@ void SpriteCellItem::setShape(const QPainterPath &shape)
 
 QRectF SpriteCellItem::boundingRect() const
 {
-    return { 0, 0, qreal(size_), qreal(size_) };
+    return { -half_size_, -half_size_, size_, size_ };
 }
 
 void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -61,7 +52,7 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
         painter->setFont(font_);
         painter->setPen(textColor(cell_->neighbor_mines));
-        painter->drawText(0., 0., size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
+        painter->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
     }
 
     if (IsHovered()) {
@@ -70,6 +61,9 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->setOpacity(hovered_opacity_);
         painter->drawPath(shape());
     }
+
+    painter->setPen(Qt::red);
+    painter->drawRect(boundingRect());
 }
 
 QRectF SpriteCellItem::spriteRect(CellState type) const

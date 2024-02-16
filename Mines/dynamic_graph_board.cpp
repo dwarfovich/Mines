@@ -35,7 +35,7 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
         auto *node_item = new DynamicGraphCellItem { cellById(id) };
         node_item->setZValue(node_z_value);
         const auto &location = points_[id];
-        node_item->setPos(location.x() - sprite_size / 2., location.y() - sprite_size / 2.);
+        node_item->setPos(location.x(), location.y());
         scene->registerCellItem(node_item);
         id_to_item_map[id] = node_item;
     }

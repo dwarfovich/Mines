@@ -23,11 +23,9 @@ void RectangleBoard::setupScene(BoardScene *scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_square.png");
     const auto          sprite_size = SpriteCellItem::size();
+    const auto sprite_half_size = sprite_size / 2.;
     QPainterPath path;
-    path.moveTo(0., 0.);
-    path.lineTo(sprite_size, 0.);
-    path.lineTo(sprite_size, sprite_size);
-    path.lineTo(0., sprite_size);
+    path.addRect({ -sprite_half_size, -sprite_half_size, sprite_size, sprite_size });
     path.closeSubpath();
     SpriteCellItem::setShape(path);
     for (size_t i = 0; i < height_; ++i) {
@@ -38,7 +36,7 @@ void RectangleBoard::setupScene(BoardScene *scene)
         }
     }
 
-    scene->setSceneRect(0, 0, width_ * sprite_size, height_ * sprite_size);
+    scene->setSceneRect(-sprite_half_size, -sprite_half_size, width_ * sprite_size, height_ * sprite_size);
 }
 
 void RectangleBoard::generate()

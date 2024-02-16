@@ -3,6 +3,8 @@
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 
+#include <numbers>
+
 const QString &HexBoard::id() const
 {
     static const QString id { "Hex" };
@@ -18,32 +20,40 @@ const QString &HexBoard::name() const
 void HexBoard::setupScene(BoardScene *scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_hex.png");
-    int          sprite_size = SpriteCellItem::size();
+    const auto sprite_size      = SpriteCellItem::size();
+    const auto half_sprite_size = sprite_size / 2.;
+    using namespace std::numbers;
     QPainterPath path;
-    path.moveTo(sprite_size / 2., 0);                // Top
-    path.lineTo(sprite_size, sprite_size / 3.);      // Top right
-    path.lineTo(sprite_size, 2. * sprite_size / 3.); // Bottom right
-    path.lineTo(sprite_size / 2., sprite_size);      // Bottom
-    path.lineTo(0., 2. * sprite_size / 3.);          // Bottom left
-    path.lineTo(0, sprite_size / 3.);                // Top left
+    path.moveTo(0., -half_sprite_size); // Top
+    auto t = -half_sprite_size + (half_sprite_size / sqrt3);
+    path.lineTo(half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));  // Top right
+    path.lineTo(half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));   // Bottom right
+    path.lineTo(0, half_sprite_size);                                               // Bottom
+    path.lineTo(-half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));  // Bottom left
+    path.lineTo(-half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3)); // Top left
     path.closeSubpath();
     SpriteCellItem::setShape(path);
     const size_t cols = width_;
     for (size_t i = 0; i < height_; ++i) {
         for (size_t j = 0; j < width_; ++j) {
-            const auto& cell        = cells_[i * width_ + j];
-            auto       *item        = new SpriteCellItem { cell.get() };
-            qreal       row         = cell->id / cols;
-            qreal       col         = cell->id % cols;
-            double      sprite_size = SpriteCellItem::size();
-            qreal       x = (size_t(row) % 2 == 0 ? col * sprite_size : col * sprite_size + sprite_size * 0.5);
-            qreal       y = row * (2 * sprite_size / 3);
+            const auto  &cell = cells_[i * width_ + j];
+            auto        *item = new SpriteCellItem { cell.get() };
+            const size_t row  = cell->id / cols;
+            const size_t col  = cell->id % cols;
+            // qreal       x = (size_t(row) % 2 == 0 ? col * sprite_size : col * sprite_size + sprite_size * 0.5);
+            // qreal       y = row * (2 * sprite_size / 3);
+            const qreal x = (row % 2 == 0 ? static_cast<qreal>(col) * sprite_size
+                                          : static_cast<qreal>(col) * sprite_size + half_sprite_size);
+            const qreal y = static_cast<qreal>(row) * (2. * sprite_size / 3.);
             item->setPos(x, y);
             scene->registerCellItem(item);
         }
     }
 
-     scene->setSceneRect(0, 0, width_ * sprite_size + sprite_size/2, height_ * sprite_size);
+    scene->setSceneRect(-half_sprite_size,
+                        -(3. * half_sprite_size) / sqrt3 - half_sprite_size,
+                        width_ * sprite_size + sprite_size / 2,
+                        height_ * sprite_size);
 }
 
 void HexBoard::generate()
