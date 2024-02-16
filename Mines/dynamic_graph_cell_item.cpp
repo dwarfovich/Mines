@@ -7,6 +7,7 @@
 
 DynamicGraphCellItem::DynamicGraphCellItem(const Cell* cell) : GraphCellItem { cell }
 {
+    angle_ = QRandomGenerator::global()->bounded(constants::two_pi);
 }
 
 void DynamicGraphCellItem::advance(int step)
@@ -15,28 +16,29 @@ void DynamicGraphCellItem::advance(int step)
         return;
     }
 
-    //using namespace constants;
-    //const auto   diameter     = scene()->sceneRect().width() / 2.;
-    //const auto   center       = mapFromScene(scene()->sceneRect().center());
-    //const QLineF lineToCenter = { pos(), center };
-    //if (lineToCenter.length() >= diameter - 200) {
-    //    qreal angleToCenter = std::atan2(lineToCenter.dy(), lineToCenter.dx());
-    //    angleToCenter       = normalizeAngle((pi - angleToCenter) + pi / 2);
-    //    if (angleToCenter < pi && angleToCenter > pi / 4) {
-    //        // Rotate left
-    //        angle_ += (angle_ < -pi / 2) ? 0.25 : -0.25;
-    //    } else if (angleToCenter >= pi && angleToCenter < (pi + pi / 2 + pi / 4)) {
-    //        // Rotate right
-    //        angle_ += (angle_ < pi / 2) ? 0.25 : -0.25;
-    //    }
-    //} else if (::sin(angle_) < 0) {
-    //    angle_ += 0.25;
-    //} else if (::sin(angle_) > 0) {
-    //    angle_ -= 0.25;
-    //}
+    const auto   radius     = scene()->sceneRect().width() / 2.;
+    const auto   center       = (scene()->sceneRect().center());
+    const QLineF lineToCenter = { pos(), center };
+    qreal        dx           = 0;
+    qreal        dy           = 0;
+    qreal        speed        = 2;
+    if (lineToCenter.length() >= radius - 10) {
+        angle_ = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
+        dx     = speed * cos(angle_);
+        dy     = -speed * sin(angle_);
+        if (x() <= center.x() && dx < 0) {
+            dx = -dx;
+        }
+        if (y() <= center.y() && dy < 0) {
+            dy = -dy;
+        }
+        //qDebug() << "OUT" << lineToCenter.length() << diameter;
+        int t = 34;
+    } else {
+        angle_ += QRandomGenerator::global()->bounded(0.4) - 0.2;
+            dx = speed * cos(angle_);
+            dy = -speed * sin(angle_);
+    }
 
-    speed_ += (-50 + QRandomGenerator::global()->bounded(100)) / 100.0;
-    auto dx = cos(speed_) * 0.8;
-    auto dy = sin(speed_) * 0.8;
-    setPos(mapToParent(dx, dy));
+    setPos(pos() + QPointF { dx, dy });
 }
