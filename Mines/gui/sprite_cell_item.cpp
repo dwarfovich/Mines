@@ -61,9 +61,6 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
         painter->setOpacity(hovered_opacity_);
         painter->drawPath(shape());
     }
-
-    painter->setPen(Qt::red);
-    painter->drawRect(boundingRect());
 }
 
 QRectF SpriteCellItem::spriteRect(CellState type) const

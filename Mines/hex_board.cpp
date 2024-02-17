@@ -24,8 +24,7 @@ void HexBoard::setupScene(BoardScene *scene)
     const auto half_sprite_size = sprite_size / 2.;
     using namespace std::numbers;
     QPainterPath path;
-    path.moveTo(0., -half_sprite_size); // Top
-    auto t = -half_sprite_size + (half_sprite_size / sqrt3);
+    path.moveTo(0., -half_sprite_size);                                             // Top
     path.lineTo(half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));  // Top right
     path.lineTo(half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));   // Bottom right
     path.lineTo(0, half_sprite_size);                                               // Bottom
@@ -36,24 +35,20 @@ void HexBoard::setupScene(BoardScene *scene)
     const size_t cols = width_;
     for (size_t i = 0; i < height_; ++i) {
         for (size_t j = 0; j < width_; ++j) {
-            const auto  &cell = cells_[i * width_ + j];
-            auto        *item = new SpriteCellItem { cell.get() };
-            const size_t row  = cell->id / cols;
-            const size_t col  = cell->id % cols;
-            // qreal       x = (size_t(row) % 2 == 0 ? col * sprite_size : col * sprite_size + sprite_size * 0.5);
-            // qreal       y = row * (2 * sprite_size / 3);
-            const qreal x = (row % 2 == 0 ? static_cast<qreal>(col) * sprite_size
-                                          : static_cast<qreal>(col) * sprite_size + half_sprite_size);
-            const qreal y = static_cast<qreal>(row) * (2. * sprite_size / 3.);
+            const auto &cell = cells_[i * width_ + j];
+            auto       *item = new SpriteCellItem { cell.get() };
+            const qreal x    = (i % 2 == 0 ? static_cast<qreal>(j) * sprite_size
+                                           : static_cast<qreal>(j) * sprite_size + half_sprite_size);
+            const qreal y    = static_cast<qreal>(i) * (sprite_size - (half_sprite_size / sqrt3));
             item->setPos(x, y);
             scene->registerCellItem(item);
         }
     }
 
     scene->setSceneRect(-half_sprite_size,
-                        -(3. * half_sprite_size) / sqrt3 - half_sprite_size,
-                        width_ * sprite_size + sprite_size / 2,
-                        height_ * sprite_size);
+                        -half_sprite_size,
+                        width_ * sprite_size + half_sprite_size,
+                        height_ * (sprite_size - (half_sprite_size / sqrt3)) + half_sprite_size / sqrt3);
 }
 
 void HexBoard::generate()
@@ -92,10 +87,12 @@ std::vector<size_t> HexBoard::neighborIds(size_t id) const
     size_t              neighbors_counter = 0;
     size_t              col               = id % width_;
     size_t              row               = id / width_;
-    if (col > 0)
+    if (col > 0) {
         ids[neighbors_counter++] = id - 1;
-    if (col < width_ - 1)
+    }
+    if (col < width_ - 1) {
         ids[neighbors_counter++] = id + 1;
+    }
     if (row % 2 == 0) { // Even row
         if (row > 0 && col > 0) {
             ids[neighbors_counter++] = id - width_ - 1;
