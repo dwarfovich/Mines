@@ -182,6 +182,8 @@ void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
     for (size_t i = 0; i < cells_.size(); ++i) {
         if (!cells_[i]) {
             cells_[i] = std::make_unique<CellType>();
+        } else {
+            *cells_[i] = {};
         }
         if (mines_counter < board_state_.mines) {
             cells_[i]->has_mine = true;
