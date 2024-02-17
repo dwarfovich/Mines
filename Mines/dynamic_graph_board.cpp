@@ -93,7 +93,7 @@ void DynamicGraphBoard::setupScene(BoardScene *scene)
     scene->setSceneRect(bounding_rect_.adjusted(
         -bounding_side_adjustment, -bounding_side_adjustment, bounding_side_adjustment, bounding_side_adjustment));
 
-    scene->setAdvancePeriod(1000 / 33);
+    scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
 }
 
 QWidget *DynamicGraphBoard::parametersWidget() const

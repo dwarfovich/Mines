@@ -8,6 +8,7 @@ namespace graph_board {
 inline const QString    sprites_path                      = QStringLiteral(":/gfx/cells_round.png");
 inline constexpr int    node_z_value                      = 1;
 inline constexpr int    edge_z_value                      = 1;
+inline constexpr qreal  scene_update_delay                = 1000. / 33.;
 inline constexpr size_t grid_step                         = 640.;
 inline constexpr size_t max_attempts_to_find_neighbor     = 50;
 inline constexpr double random_points_bounding_side       = 1000.;
