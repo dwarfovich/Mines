@@ -156,6 +156,9 @@
     <ClCompile Include="dynamic_graph_cell_item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dynamic_graph_parameters_widget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="gui\board_scene.hpp">
@@ -207,6 +210,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="rectangle_board_parameters_widget.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="dynamic_graph_parameters_widget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -298,6 +304,9 @@
     <ClInclude Include="constants.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="graph_boards_parameters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="gui\game_over_dialog.ui">
@@ -325,6 +334,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="rectangle_board_parameters_widget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="dynamic_graph_parameters_widget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

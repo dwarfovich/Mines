@@ -39,13 +39,16 @@ void DelaunayBoard::generate()
         return;
     }
 
+    setupParameters();
+
     board_state_             = {};
     flags_                   = 0;
-    board_state_.mines       = parameters_widget_->minesCount();
-    size_t cells_counter     = parameters_widget_->nodesCount();
-    board_state_.empty_cells = cells_counter - board_state_.mines;
+    board_state_.mines       = parameters_.mines_count;
+    board_state_.empty_cells = parameters_.nodes_count - board_state_.mines;
 
-    initializeCells(cells_counter);
+    board_state_.empty_cells = parameters_.nodes_count - board_state_.mines;
+
+    initializeCells(parameters_.nodes_count);
     randomize();
 
     generatePoints();

@@ -37,12 +37,14 @@ void GraphBoard::generate()
         return;
     }
 
+    setupParameters();
+
     board_state_             = {};
     flags_                   = 0;
-    board_state_.mines       = parameters_widget_->minesCount();
-    board_state_.empty_cells = parameters_widget_->nodesCount() - board_state_.mines;
+    board_state_.mines       = parameters_.mines_count;
+    board_state_.empty_cells = parameters_.nodes_count - board_state_.mines;
 
-    initializeCells(parameters_widget_->nodesCount());
+    initializeCells(parameters_.nodes_count);
     randomize();
 
     generatePoints();
@@ -59,12 +61,10 @@ void GraphBoard::setupScene(BoardScene *scene)
 
     const auto                                  sprite_size = SpriteCellItem::size();
     std::unordered_map<size_t, GraphCellItem *> id_to_item_map;
-    const int                                   node_z_value = 2;
     for (size_t id = 0; id < points_.size(); ++id) {
         auto *node_item = new GraphCellItem { cellById(id) };
-        node_item->setZValue(node_z_value);
-        const auto &location = points_[id];
-        node_item->setPos(location.x() - sprite_size / 2., location.y() - sprite_size / 2.);
+        node_item->setZValue(constants::graph_board::node_z_value);
+        node_item->setPos(points_[id]);
         scene->registerCellItem(node_item);
         id_to_item_map[id] = node_item;
     }
@@ -118,12 +118,10 @@ void GraphBoard::generatePoints()
 
 void GraphBoard::formNeighbors()
 {
-    Q_ASSERT(parameters_widget_);
-
     neighbors_.clear();
     neighbors_.resize(points_.size());
 
-    if (!parameters_widget_->disjointGraphAllowed()) {
+    if (!parameters_.allow_disjoint_graph) {
         for (size_t i = 1; i < points_.size(); ++i) {
             neighbors_[i].push_back(i - 1);
             neighbors_[i - 1].push_back(i);
@@ -131,11 +129,11 @@ void GraphBoard::formNeighbors()
     }
 
     std::uniform_int_distribution<size_t> neighbor_distribution(0, points_.size() - 1);
-    std::uniform_int_distribution<size_t> max_distribution(parameters_widget_->disjointGraphAllowed() ? 0 : 1,
-                                                           parameters_widget_->maximumNeighbors());
+    std::uniform_int_distribution<size_t> max_distribution(parameters_.allow_disjoint_graph ? 0 : 1,
+                                                           parameters_.maximum_neighbors);
     for (size_t i = 0; i < neighbors_.size(); ++i) {
         auto &neighbor_ids  = neighbors_[i];
-        auto  max_neighbors = max_distribution(random_generator_);
+        const auto  max_neighbors = max_distribution(random_generator_);
         while (neighbor_ids.size() <= max_neighbors) {
             const auto &max_attempts = constants::graph_board::max_attempts_to_find_neighbor;
             auto        neighbor_id  = 0;
@@ -158,8 +156,16 @@ void GraphBoard::formNeighbors()
 void GraphBoard::setupCellItems()
 {
     SpriteCellItem::setSprites(constants::graph_board::sprites_path);
-    int          sprite_size = SpriteCellItem::size();
+    const auto   sprite_size = SpriteCellItem::size();
     QPainterPath path;
-    path.addEllipse(0., 0., sprite_size, sprite_size);
+    path.addEllipse(-sprite_size / 2., -sprite_size / 2., sprite_size, sprite_size);
     SpriteCellItem::setShape(path);
+}
+
+void GraphBoard::setupParameters()
+{
+    parameters_.nodes_count          = parameters_widget_->nodesCount();
+    parameters_.mines_count          = parameters_widget_->minesCount();
+    parameters_.maximum_neighbors    = parameters_widget_->maximumNeighbors();
+    parameters_.allow_disjoint_graph = parameters_widget_->disjointGraphAllowed();
 }

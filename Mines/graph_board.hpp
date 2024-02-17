@@ -1,6 +1,7 @@
 #pragma once
 
 #include "id_based_board.hpp"
+#include "graph_boards_parameters.h"
 
 #include <random>
 
@@ -22,6 +23,7 @@ protected: // methods
     virtual void        generatePoints();
     virtual void        formNeighbors();
     virtual void        setupCellItems();
+    virtual void        setupParameters();
 
 protected: // data
     std::vector<QPointF> points_;
@@ -29,4 +31,5 @@ protected: // data
     NeighborsVector                neighbors_;
     QRectF                         bounding_rect_;
     mutable GraphParametersWidget *parameters_widget_ = nullptr;
+    mutable GraphBoardParameters   parameters_;
 };

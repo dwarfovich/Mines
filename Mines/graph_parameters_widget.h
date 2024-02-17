@@ -23,6 +23,9 @@ public:
     size_t maximumNeighbors();
     bool   disjointGraphAllowed();
 
+private slots:
+    void onNodesCountChanged(int count);
+
 private:
     Ui::GraphParametersWidgetClass *ui_;
 };

@@ -50,11 +50,11 @@ void EdgeItem::advance(int step)
     Q_ASSERT(p1_);
     Q_ASSERT(p2_);
 
-    auto x1 = p1_->x() + SpriteCellItem::size() / 2;
-    auto y1 = p1_->y() + SpriteCellItem::size() / 2;
+    auto x1 = p1_->x();
+    auto y1 = p1_->y() ;
     edge_[0] = { x1, y1 };
-    auto x2 = p2_->x() + SpriteCellItem::size() / 2;
-    auto y2 = p2_->y() + SpriteCellItem::size() / 2;
+    auto x2 = p2_->x() ;
+    auto y2 = p2_->y() ;
     edge_[1] = { x2, y2 };
     update();
 }

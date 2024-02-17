@@ -9,11 +9,13 @@ class DynamicGraphCellItem : public GraphCellItem
 public:
     explicit DynamicGraphCellItem(const Cell *cell);
 
+    void setAngle(qreal angle);
+    void setSpeed(qreal speed);
+
 protected:
     void advance(int step) override;
 
 private:
-    qreal max_speed_ = 200.;
-    qreal speed_ = 50.;
+    qreal speed_ = 2.;
     qreal angle_     = 0.;
 };

@@ -117,6 +117,7 @@
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="dynamic_graph_board.cpp" />
     <ClCompile Include="dynamic_graph_cell_item.cpp" />
+    <ClCompile Include="dynamic_graph_parameters_widget.cpp" />
     <ClCompile Include="edge.cpp" />
     <ClCompile Include="edge_item.cpp" />
     <ClCompile Include="graph_board.cpp" />
@@ -163,10 +164,12 @@
     <ClInclude Include="direction.hpp" />
     <ClInclude Include="dynamic_graph_board.hpp" />
     <ClInclude Include="dynamic_graph_cell_item.hpp" />
+    <QtMoc Include="dynamic_graph_parameters_widget.h" />
     <ClInclude Include="edge.hpp" />
     <ClInclude Include="edge_item.hpp" />
     <ClInclude Include="game_state.hpp" />
     <ClInclude Include="graph_boards_constants.hpp" />
+    <ClInclude Include="graph_boards_parameters.h" />
     <ClInclude Include="graph_cell_item.hpp" />
     <ClInclude Include="id_based_board.hpp" />
     <ClInclude Include="mec.hpp" />
@@ -201,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="delaunay_parameters_widget.ui" />
+    <QtUic Include="dynamic_graph_parameters_widget.ui" />
     <QtUic Include="graph_parameters_widget.ui" />
     <QtUic Include="gui\game_over_dialog.ui" />
     <QtUic Include="gui\main_window.ui" />

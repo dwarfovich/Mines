@@ -4,6 +4,14 @@ GraphParametersWidget::GraphParametersWidget(QWidget *parent)
     : QWidget(parent), ui_(new Ui::GraphParametersWidgetClass())
 {
     ui_->setupUi(this);
+
+    connect(ui_->nodesSpinBox, &QSpinBox::valueChanged, this, &GraphParametersWidget::onNodesCountChanged);
+}
+
+void GraphParametersWidget::onNodesCountChanged(int count)
+{
+    ui_->minesSpinBox->setMaximum(count - 1);
+    ui_->maximumNeighborsSpinBox->setMaximum(count - 1);
 }
 
 GraphParametersWidget::~GraphParametersWidget()
@@ -23,7 +31,7 @@ size_t GraphParametersWidget::minesCount() const
 
 size_t GraphParametersWidget::maximumNeighbors()
 {
-    return 3;
+    return ui_->maximumNeighborsSpinBox->value();
 }
 
 bool GraphParametersWidget::disjointGraphAllowed()
