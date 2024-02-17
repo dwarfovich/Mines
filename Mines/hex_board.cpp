@@ -27,7 +27,7 @@ void HexBoard::setupScene(BoardScene *scene)
     path.moveTo(0., -half_sprite_size);                                             // Top
     path.lineTo(half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));  // Top right
     path.lineTo(half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));   // Bottom right
-    path.lineTo(0, half_sprite_size);                                               // Bottom
+    path.lineTo(0., half_sprite_size);                                               // Bottom
     path.lineTo(-half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));  // Bottom left
     path.lineTo(-half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3)); // Top left
     path.closeSubpath();
