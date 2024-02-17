@@ -19,6 +19,8 @@ public:
 protected: // methods
     std::vector<size_t> neighborIds(size_t id) const override;
     void                formNeighbors(const Triangulator &triangulator);
+    void                setupParameters() override;
+
 
 protected: // data
     Triangulator                      triangulator_;

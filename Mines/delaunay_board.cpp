@@ -85,6 +85,12 @@ void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
     }
 }
 
+void DelaunayBoard::setupParameters()
+{
+    parameters_.nodes_count          = parameters_widget_->nodesCount();
+    parameters_.mines_count          = parameters_widget_->minesCount();
+}
+
 std::vector<size_t> DelaunayBoard::neighborIds(size_t id) const
 {
     return neighbors_[id];

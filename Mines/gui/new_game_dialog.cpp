@@ -61,4 +61,6 @@ void NewGameDialog::initializeBoardCombo()
         names << name;
     }
     ui_->boardsComboBox->addItems(names);
+    ui_->boardsComboBox->model()->sort(0);
+    ui_->boardsComboBox->setCurrentIndex(0);
 }

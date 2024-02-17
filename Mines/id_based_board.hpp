@@ -31,16 +31,11 @@ protected: // data
     size_t                                 flags_ = 0;
     std::vector<std::unique_ptr<CellType>> cells_;
     mutable std::random_device             random_device_;
-    mutable std::mt19937 random_generator_;
+    mutable std::mt19937                   random_generator_;
 };
 
 template<typename CellType>
-#ifdef QT_DEBUG
-IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { 1 }
-#else
 IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { random_device_() }
-#endif // QT_DEBUG
-
 {
 }
 
