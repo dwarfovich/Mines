@@ -32,7 +32,7 @@ void DynamicGraphCellItem::advance(int step)
     const QLineF lineToCenter = { pos(), center };
     qreal        dx           = 0;
     qreal        dy           = 0;
-    if (lineToCenter.length() >= radius - 10) {
+    if (lineToCenter.length() >= radius - critical_radius_) {
         angle_ = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
         dx     = speed_ * cos(angle_);
         dy     = -speed_ * sin(angle_);
