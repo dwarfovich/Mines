@@ -17,7 +17,7 @@ public:
     QWidget       *parametersWidget() const override;
 
 protected:
-    std::vector<size_t>                     neighborIds(size_t id) const override;
+    std::vector<std::size_t>                     neighborIds(std::size_t id) const override;
     mutable HexParametersWidget *parameters_widget_ = nullptr;
 };
 

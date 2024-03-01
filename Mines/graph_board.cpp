@@ -60,8 +60,8 @@ void GraphBoard::setupScene(BoardScene *scene)
     setupCellItems();
 
     const auto                                  sprite_size = SpriteCellItem::size();
-    std::unordered_map<size_t, GraphCellItem *> id_to_item_map;
-    for (size_t id = 0; id < points_.size(); ++id) {
+    std::unordered_map<std::size_t, GraphCellItem *> id_to_item_map;
+    for (std::size_t id = 0; id < points_.size(); ++id) {
         auto *node_item = new GraphCellItem { cellById(id) };
         node_item->setZValue(constants::graph_board::node_z_value);
         node_item->setPos(points_[id]);
@@ -93,7 +93,7 @@ void GraphBoard::setupScene(BoardScene *scene)
         -bounding_side_adjustment, -bounding_side_adjustment, bounding_side_adjustment, bounding_side_adjustment));
 }
 
-std::vector<size_t> GraphBoard::neighborIds(size_t id) const
+std::vector<std::size_t> GraphBoard::neighborIds(std::size_t id) const
 {
     return neighbors_[id];
 }
@@ -122,22 +122,22 @@ void GraphBoard::formNeighbors()
     neighbors_.resize(points_.size());
 
     if (!parameters_.allow_disjoint_graph) {
-        for (size_t i = 1; i < points_.size(); ++i) {
+        for (std::size_t i = 1; i < points_.size(); ++i) {
             neighbors_[i].push_back(i - 1);
             neighbors_[i - 1].push_back(i);
         }
     }
 
-    std::uniform_int_distribution<size_t> neighbor_distribution(0, points_.size() - 1);
-    std::uniform_int_distribution<size_t> max_distribution(parameters_.allow_disjoint_graph ? 0 : 1,
+    std::uniform_int_distribution<std::size_t> neighbor_distribution(0, points_.size() - 1);
+    std::uniform_int_distribution<std::size_t> max_distribution(parameters_.allow_disjoint_graph ? 0 : 1,
                                                            parameters_.maximum_neighbors);
-    for (size_t i = 0; i < neighbors_.size(); ++i) {
+    for (std::size_t i = 0; i < neighbors_.size(); ++i) {
         auto &neighbor_ids  = neighbors_[i];
         const auto  max_neighbors = max_distribution(random_generator_);
         while (neighbor_ids.size() <= max_neighbors) {
             const auto &max_attempts = constants::graph_board::max_attempts_to_find_neighbor;
             auto        neighbor_id  = 0;
-            size_t      attempt      = 0;
+            std::size_t      attempt      = 0;
             do {
                 neighbor_id = neighbor_distribution(random_generator_);
             } while (((neighbor_id == i) || ::contains(neighbor_ids, neighbor_id)) && (++attempt < max_attempts));

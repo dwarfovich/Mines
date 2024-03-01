@@ -30,11 +30,11 @@ public:
 
     virtual const QString& id() const                    = 0;
     virtual const QString& name() const                  = 0;
-    virtual size_t         flags() const                 = 0;
+    virtual std::size_t         flags() const                 = 0;
     virtual void           generate()                    = 0;
-    virtual const Cell*    cellById(size_t id) const     = 0;
-    virtual void           openCell(size_t id)           = 0;
-    virtual void           toggleFlag(size_t id)         = 0;
+    virtual const Cell*    cellById(std::size_t id) const     = 0;
+    virtual void           openCell(std::size_t id)           = 0;
+    virtual void           toggleFlag(std::size_t id)         = 0;
     virtual void           setupScene(BoardScene* scene) = 0;
     virtual QWidget*       parametersWidget() const      = 0;
 

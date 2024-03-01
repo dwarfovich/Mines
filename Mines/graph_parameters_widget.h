@@ -18,9 +18,9 @@ public:
     GraphParametersWidget(QWidget *parent = nullptr);
     ~GraphParametersWidget();
 
-    size_t nodesCount() const;
-    size_t minesCount() const;
-    size_t maximumNeighbors();
+    std::size_t nodesCount() const;
+    std::size_t minesCount() const;
+    std::size_t maximumNeighbors();
     bool   disjointGraphAllowed();
 
 private slots:

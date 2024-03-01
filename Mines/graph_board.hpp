@@ -19,7 +19,7 @@ public:
     void           setupScene(BoardScene *scene) override;
 
 protected: // methods
-    std::vector<size_t> neighborIds(size_t id) const override;
+    std::vector<std::size_t> neighborIds(std::size_t id) const override;
     virtual void        generatePoints();
     virtual void        formNeighbors();
     virtual void        setupCellItems();
@@ -27,7 +27,7 @@ protected: // methods
 
 protected: // data
     std::vector<QPointF> points_;
-    using NeighborsVector = std::vector<std::vector<size_t>>;
+    using NeighborsVector = std::vector<std::vector<std::size_t>>;
     NeighborsVector                neighbors_;
     QRectF                         bounding_rect_;
     mutable GraphParametersWidget *parameters_widget_ = nullptr;

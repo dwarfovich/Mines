@@ -28,7 +28,7 @@ public:
 
 protected:
     virtual QRectF       spriteRect(CellState type) const;
-    virtual const QColor textColor(size_t mines) const;
+    virtual const QColor textColor(std::size_t mines) const;
 
 private:
     inline static std::unique_ptr<QPixmap>  sprites_   = nullptr;

@@ -18,7 +18,7 @@ void Triangulator::triangulate(const std::vector<QPointF>& points, const QRectF&
 
     for (const auto& point : points) {
         std::vector<Triangle>                        temp;
-        std::unordered_map<Edge, size_t, EdgeHasher> edges;
+        std::unordered_map<Edge, std::size_t, EdgeHasher> edges;
         for (const auto& triangle : triangulation_) {
             if (triangle.circumcircleContains(point)) {
                 const auto& bad_edges = triangle.edges();

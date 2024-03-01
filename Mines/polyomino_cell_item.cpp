@@ -5,6 +5,7 @@
 #include "utils.hpp"
 #include "qpoint_hasher.hpp"
 
+#include <QPoint>
 #include <QPainter>
 #include <QGraphicsRectItem>
 
@@ -147,7 +148,7 @@ QRect PolyominoCellItem::findCellDescriptionRect(const PolyominoCell& cell) cons
     auto min_distance = std::numeric_limits<qreal>::max();
     auto min_shift    = cell.shifts.front();
     for (const auto& shift : cell.shifts) {
-        const auto distance = euclideanDistance(midShift, shift.toPointF());
+        const auto distance = euclideanDistance(midShift, QPointF{shift});
         if (distance < min_distance) {
             min_distance = distance;
             min_shift    = shift;

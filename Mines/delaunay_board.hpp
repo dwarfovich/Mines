@@ -17,7 +17,7 @@ public:
     void           generate() override;
 
 protected: // methods
-    std::vector<size_t> neighborIds(size_t id) const override;
+    std::vector<std::size_t> neighborIds(std::size_t id) const override;
     void                formNeighbors(const Triangulator &triangulator);
     void                setupParameters() override;
 

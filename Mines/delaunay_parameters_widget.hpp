@@ -15,8 +15,8 @@ public:
     explicit DelaunayParametersWidget(QWidget* parent = nullptr);
     ~DelaunayParametersWidget();
 
-    size_t nodesCount() const;
-    size_t minesCount() const;
+    std::size_t nodesCount() const;
+    std::size_t minesCount() const;
 
 private slots:
     void onNodesCountChanged(int new_value);

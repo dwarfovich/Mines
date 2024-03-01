@@ -32,9 +32,9 @@ void HexBoard::setupScene(BoardScene *scene)
     path.lineTo(-half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3)); // Top left
     path.closeSubpath();
     SpriteCellItem::setShape(path);
-    const size_t cols = width_;
-    for (size_t i = 0; i < height_; ++i) {
-        for (size_t j = 0; j < width_; ++j) {
+    const std::size_t cols = width_;
+    for (std::size_t i = 0; i < height_; ++i) {
+        for (std::size_t j = 0; j < width_; ++j) {
             const auto &cell = cells_[i * width_ + j];
             auto       *item = new SpriteCellItem { cell.get() };
             const qreal x    = (i % 2 == 0 ? static_cast<qreal>(j) * sprite_size
@@ -80,13 +80,13 @@ QWidget *HexBoard::parametersWidget() const
     return parameters_widget_;
 }
 
-std::vector<size_t> HexBoard::neighborIds(size_t id) const
+std::vector<std::size_t> HexBoard::neighborIds(std::size_t id) const
 {
-    const size_t        max_neighbors = 6;
-    std::vector<size_t> ids(max_neighbors);
-    size_t              neighbors_counter = 0;
-    size_t              col               = id % width_;
-    size_t              row               = id / width_;
+    const std::size_t        max_neighbors = 6;
+    std::vector<std::size_t> ids(max_neighbors);
+    std::size_t              neighbors_counter = 0;
+    std::size_t              col               = id % width_;
+    std::size_t              row               = id / width_;
     if (col > 0) {
         ids[neighbors_counter++] = id - 1;
     }

@@ -12,12 +12,31 @@ CONFIG += c++2a
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    board_factory.cpp \
+    board.cpp \
+    board_collection.cpp \
     board_state.cpp \
+    buddy_notificator.cpp \
     cell.cpp \
+    circle.cpp \
+    delaunay_board.cpp \
+    delaunay_parameters_widget.cpp \
+    direction.cpp \
+    dynamic_graph_board.cpp \
+    dynamic_graph_cell_item.cpp \
+    dynamic_graph_parameters_widget.cpp \
     edge.cpp \
+    edge_item.cpp \
     graph_board.cpp \
-    graph_board_parameters_widget.cpp \
+    graph_cell_item.cpp \
+    graph_parameters_widget.cpp \
+    gui/sprite_cell_item.cpp \
+    hex_parameters_widget.cpp \
+    mec.cpp \
+    polyomino_board.cpp \
+    polyomino_cell.cpp \
+    polyomino_cell_item.cpp \
+    polyomino_parameters_widget.cpp \
+    qpoint_hasher.cpp \
     qpointf_hasher.cpp \
     triangle.cpp \
     triangulator.cpp \
@@ -28,22 +47,43 @@ SOURCES += \
     gui/main_window.cpp \
     gui/mines_widget.cpp \
     gui/new_game_dialog.cpp \
-    gui/rectangle_board_parameters_widget.cpp \
-    gui/standard_cell_item.cpp \
+    rectangle_board_parameters_widget.cpp \
     hex_board.cpp \
     main.cpp \
     rectangle_board.cpp \
-    standard_board.cpp \
     utils.cpp
 
 HEADERS += \
-    board_factory.hpp \
+    board.hpp \
+    board_collection.hpp \
     board_state.hpp \
+    buddy_notificator.hpp \
     cell.hpp \
+    circle.hpp \
+    constants.hpp \
+    delaunay_board.hpp \
+    delaunay_parameters_widget.hpp \
+    direction.hpp \
+    dynamic_graph_board.hpp \
+    dynamic_graph_cell_item.hpp \
+    dynamic_graph_parameters_widget.h \
+    edge_item.hpp \
     game_state.hpp \
     edge.hpp \
     graph_board.hpp \
-    graph_board_parameters_widget.hpp \
+    graph_parameters_widget.hpp \
+    graph_boards_constants.hpp \
+    graph_boards_parameters.h \
+    graph_cell_item.hpp \
+    graph_parameters_widget.h \
+    gui/sprite_cell_item.hpp \
+    hex_parameters_widget.hpp \
+    polyomino_board.hpp \
+    polyomino_board_constants.hpp \
+    polyomino_cell.hpp \
+    polyomino_cell_item.hpp \
+    polyomino_parameters_widget.hpp \
+    qpoint_hasher.hpp \
     qpointf_hasher.hpp \
     triangle.hpp \
     triangulator.hpp \
@@ -55,21 +95,24 @@ HEADERS += \
     gui/main_window.hpp \
     gui/mines_widget.hpp \
     gui/new_game_dialog.hpp \
-    gui/rectangle_board_parameters_widget.hpp \
-    gui/standard_cell_item.hpp \
+    rectangle_board_parameters_widget.hpp \
     hex_board.hpp \
     iboard.hpp \
     rectangle_board.hpp \
-    standard_board.hpp \
     utils.hpp
 
 FORMS += \
-    graph_board/graph_board_parameters_widget.ui \
+    delaunay_parameters_widget.ui \
+    dynamic_graph_parameters_widget.ui \
+    graph_parameters_widget.ui \
+    graph_parameters_widget.ui \
     gui/game_over_dialog.ui \
     gui/main_window.ui \
     gui/mines_widget.ui \
     gui/new_game_dialog.ui \
-    gui/rectangle_board_parameters_widget.ui
+    hex_parameters_widget.ui \
+    polyomino_parameters_widget.ui \
+    rectangle_board_parameters_widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

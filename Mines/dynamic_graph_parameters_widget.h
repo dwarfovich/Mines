@@ -11,10 +11,10 @@ class DynamicGraphParametersWidget : public QWidget
 public:
     DynamicGraphParametersWidget(QWidget *parent = nullptr);
 
-    size_t nodesCount() const;
-    size_t minesCount() const;
-    size_t maximumNeighbors() const;
-    size_t speed() const;
+    std::size_t nodesCount() const;
+    std::size_t minesCount() const;
+    std::size_t maximumNeighbors() const;
+    std::size_t speed() const;
     bool   allowDisjointGraph() const;
 
 private slots:

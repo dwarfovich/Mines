@@ -60,16 +60,16 @@ void DelaunayBoard::generate()
 
 void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
 {
-    std::unordered_map<QPointF, size_t, QPointFHasher> map;
-    for (size_t i = 0; i < points_.size(); ++i) {
+    std::unordered_map<QPointF, std::size_t, QPointFHasher> map;
+    for (std::size_t i = 0; i < points_.size(); ++i) {
         map[points_[i]] = i;
     }
-    std::vector<std::unordered_set<size_t>> temp_edges_(points_.size());
+    std::vector<std::unordered_set<std::size_t>> temp_edges_(points_.size());
     for (const auto &triangle : triangulator.triangulation()) {
         const auto &vertices = triangle.vertices();
-        size_t      point1   = map[vertices[0]];
-        size_t      point2   = map[vertices[1]];
-        size_t      point3   = map[vertices[2]];
+        std::size_t      point1   = map[vertices[0]];
+        std::size_t      point2   = map[vertices[1]];
+        std::size_t      point3   = map[vertices[2]];
         temp_edges_[point1].insert(point2);
         temp_edges_[point1].insert(point3);
         temp_edges_[point2].insert(point1);
@@ -80,7 +80,7 @@ void DelaunayBoard::formNeighbors(const Triangulator &triangulator)
 
     neighbors_.clear();
     neighbors_.resize(points_.size());
-    for (size_t i = 0; i < temp_edges_.size(); ++i) {
+    for (std::size_t i = 0; i < temp_edges_.size(); ++i) {
         neighbors_[i].insert(neighbors_[i].cend(), temp_edges_[i].cbegin(), temp_edges_[i].cend());
     }
 }
@@ -91,7 +91,7 @@ void DelaunayBoard::setupParameters()
     parameters_.mines_count          = parameters_widget_->minesCount();
 }
 
-std::vector<size_t> DelaunayBoard::neighborIds(size_t id) const
+std::vector<std::size_t> DelaunayBoard::neighborIds(std::size_t id) const
 {
     return neighbors_[id];
 }

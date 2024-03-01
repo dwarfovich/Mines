@@ -68,7 +68,7 @@ QRectF SpriteCellItem::spriteRect(CellState type) const
     return QRectF { size_ * (qreal(type)), 0., qreal(size_), qreal(size_) };
 }
 
-const QColor SpriteCellItem::textColor(size_t mines) const
+const QColor SpriteCellItem::textColor(std::size_t mines) const
 {
     if (mines < text_colors_.size()) {
         return text_colors_[mines];

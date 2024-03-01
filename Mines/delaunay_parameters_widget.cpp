@@ -17,14 +17,14 @@ DelaunayParametersWidget::~DelaunayParametersWidget()
     delete ui_;
 }
 
-size_t DelaunayParametersWidget::nodesCount() const
+std::size_t DelaunayParametersWidget::nodesCount() const
 {
-    return static_cast<size_t>(ui_->nodesSpinBox->value());
+    return static_cast<std::size_t>(ui_->nodesSpinBox->value());
 }
 
-size_t DelaunayParametersWidget::minesCount() const
+std::size_t DelaunayParametersWidget::minesCount() const
 {
-    return static_cast<size_t>(ui_->minesSpinBox->value());
+    return static_cast<std::size_t>(ui_->minesSpinBox->value());
 }
 
 void DelaunayParametersWidget::onNodesCountChanged(int new_value)

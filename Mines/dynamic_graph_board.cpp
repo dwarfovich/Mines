@@ -56,9 +56,9 @@ void DynamicGraphBoard::setupScene(BoardScene *scene)
     setupCellItems();
 
     const auto                                  sprite_size = SpriteCellItem::size();
-    std::unordered_map<size_t, GraphCellItem *> id_to_item_map;
+    std::unordered_map<std::size_t, GraphCellItem *> id_to_item_map;
     const int                                   node_z_value = 2;
-    for (size_t id = 0; id < points_.size(); ++id) {
+    for (std::size_t id = 0; id < points_.size(); ++id) {
         auto *node_item = new DynamicGraphCellItem { cellById(id) };
         node_item->setAngle(QRandomGenerator::global()->bounded(std::numbers::pi * 2));
         node_item->setSpeed(parameters_.speed);

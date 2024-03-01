@@ -26,7 +26,7 @@ const std::pair<QPointF, QPointF> &Edge::points() const
     return points_;
 }
 
-size_t EdgeHasher::operator()(const Edge &e) const
+std::size_t EdgeHasher::operator()(const Edge &e) const
 {
     return StdPairHasher<QPointF, QPointF, QPointFHasher, QPointFHasher>()(e.points());
 }

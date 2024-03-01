@@ -17,11 +17,11 @@ public:
     QWidget       *parametersWidget() const override;
 
 protected:
-    std::vector<size_t> neighborIds(size_t id) const override;
+    std::vector<std::size_t> neighborIds(std::size_t id) const override;
 
 protected: // data
-    size_t                                  height_            = 0;
-    size_t                                  width_             = 0;
+    std::size_t                                  height_            = 0;
+    std::size_t                                  width_             = 0;
     mutable RectangleBoardParametersWidget *parameters_widget_ = nullptr;
 };
 

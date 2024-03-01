@@ -7,13 +7,15 @@
 #include "delaunay_board.hpp"
 #include "dynamic_graph_board.hpp"
 
+#ifdef win32
 #include "Windows.h"
+#endif
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
-#ifdef QT_DEBUG
+#if defined(QT_DEBUG) && defined(win32)
     if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
         freopen("CONOUT$", "w", stdout);
         freopen("CONOUT$", "w", stderr);

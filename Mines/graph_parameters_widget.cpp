@@ -5,7 +5,7 @@ GraphParametersWidget::GraphParametersWidget(QWidget *parent)
 {
     ui_->setupUi(this);
 
-    connect(ui_->nodesSpinBox, &QSpinBox::valueChanged, this, &GraphParametersWidget::onNodesCountChanged);
+    connect(ui_->nodesSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &GraphParametersWidget::onNodesCountChanged);
 }
 
 void GraphParametersWidget::onNodesCountChanged(int count)
@@ -19,17 +19,17 @@ GraphParametersWidget::~GraphParametersWidget()
     delete ui_;
 }
 
-size_t GraphParametersWidget::nodesCount() const
+std::size_t GraphParametersWidget::nodesCount() const
 {
     return ui_->nodesSpinBox->value();
 }
 
-size_t GraphParametersWidget::minesCount() const
+std::size_t GraphParametersWidget::minesCount() const
 {
     return ui_->minesSpinBox->value();
 }
 
-size_t GraphParametersWidget::maximumNeighbors()
+std::size_t GraphParametersWidget::maximumNeighbors()
 {
     return ui_->maximumNeighborsSpinBox->value();
 }

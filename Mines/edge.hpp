@@ -20,7 +20,7 @@ private:
 
 struct EdgeHasher
 {
-    size_t operator()(const Edge& e) const;
+    std::size_t operator()(const Edge& e) const;
 };
 
 #endif // EDGE_HPP
