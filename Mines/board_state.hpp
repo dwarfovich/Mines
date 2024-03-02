@@ -3,7 +3,7 @@
 
 #include "game_state.hpp"
 
-#include <cinttypes>
+#include <cstddef>
 
 struct BoardState
 {

@@ -1,7 +1,7 @@
 #ifndef QPOINTFHASHER_HPP
 #define QPOINTFHASHER_HPP
 
-#include <cinttypes>
+#include <cstddef>
 
 class QPointF;
 

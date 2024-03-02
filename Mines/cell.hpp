@@ -1,7 +1,7 @@
 #ifndef CELL_HPP
 #define CELL_HPP
 
-#include <cinttypes>
+#include <cstddef>
 
 class Cell
 {
