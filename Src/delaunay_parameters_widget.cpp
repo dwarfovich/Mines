@@ -5,7 +5,6 @@ DelaunayParametersWidget::DelaunayParametersWidget(QWidget *parent)
     : QWidget(parent), ui_(new Ui::DelaunayParametersWidget)
 {
     ui_->setupUi(this);
-
     connect(ui_->nodesSpinBox,
             qOverload<int>(&QSpinBox::valueChanged),
             this,

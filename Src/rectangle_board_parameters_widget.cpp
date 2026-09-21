@@ -8,6 +8,7 @@ RectangleBoardParametersWidget::RectangleBoardParametersWidget(QWidget *parent)
     , ui_(new Ui::RectangleBoardParametersWidget)
 {
     ui_->setupUi(this);
+
     connect(ui_->heightSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &RectangleBoardParametersWidget::updateMinesSpinbox);
     connect(ui_->widthSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &RectangleBoardParametersWidget::updateMinesSpinbox);
 }
