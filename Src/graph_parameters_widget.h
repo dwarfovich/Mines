@@ -10,22 +10,21 @@ class GraphParametersWidgetClass;
 };
 QT_END_NAMESPACE
 
-class GraphParametersWidget : public QWidget
-{
+class GraphParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
-    GraphParametersWidget(QWidget *parent = nullptr);
+    GraphParametersWidget(QWidget* parent = nullptr);
     ~GraphParametersWidget();
 
     std::size_t nodesCount() const;
     std::size_t minesCount() const;
     std::size_t maximumNeighbors();
-    bool   disjointGraphAllowed();
+    bool        disjointGraphAllowed();
 
 private slots:
     void onNodesCountChanged(int count);
 
 private:
-    Ui::GraphParametersWidgetClass *ui_;
+    Ui::GraphParametersWidgetClass* ui_;
 };

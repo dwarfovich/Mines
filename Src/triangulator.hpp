@@ -8,19 +8,18 @@
 
 #include <vector>
 
-class Triangulator
-{
+class Triangulator {
 public:
     void                         triangulate(const std::vector<QPointF>& points, const QRectF& bounding_rect = {});
     const std::vector<Triangle>& triangulation() const;
     Triangle superTriangle(const std::vector<QPointF>& points, const QRectF& bounding_rect = {}) const;
     void     clear();
 
-private: // methods
+private:  // methods
     void cleanTriangulation(const Triangle& super_triangle);
 
-private: // data
+private:  // data
     std::vector<Triangle> triangulation_;
 };
 
-#endif // TRIANGULATOR_HPP
+#endif  // TRIANGULATOR_HPP

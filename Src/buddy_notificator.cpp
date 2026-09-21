@@ -3,9 +3,7 @@
 
 #include <QGraphicsItem>
 
-BuddyNotificator::BuddyNotificator(QGraphicsItem& owner) : owner_ { owner }
-{
-}
+BuddyNotificator::BuddyNotificator(QGraphicsItem& owner) : owner_{owner} {}
 
 void BuddyNotificator::BuddyHoveringStateChanged(bool new_state)
 {

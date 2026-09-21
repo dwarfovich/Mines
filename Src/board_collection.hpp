@@ -5,17 +5,16 @@
 
 #include <QCoreApplication>
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
-class BoardCollection
-{
+class BoardCollection {
 public:
-    BoardCollection()                                  = default;
-    BoardCollection(const BoardCollection&)            = delete;
-    BoardCollection(BoardCollection&&)                 = delete;
+    BoardCollection() = default;
+    BoardCollection(const BoardCollection&) = delete;
+    BoardCollection(BoardCollection&&) = delete;
     BoardCollection& operator=(const BoardCollection&) = delete;
-    BoardCollection& operator=(BoardCollection&&)      = delete;
+    BoardCollection& operator=(BoardCollection&&) = delete;
 
     void                                                       registerBoard(std::unique_ptr<Board> board);
     Board*                                                     get(const QString& boardName);
@@ -25,4 +24,4 @@ private:
     std::unordered_map<QString, std::unique_ptr<Board>> boards_;
 };
 
-#endif // BOARD_COLLECTION_HPP
+#endif  // BOARD_COLLECTION_HPP

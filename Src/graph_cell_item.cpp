@@ -1,13 +1,13 @@
 #include "graph_cell_item.hpp"
 #include "cell.hpp"
 
-#include <QPainter>
 #include <QGraphicsDropShadowEffect>
+#include <QPainter>
 
-const QPen GraphCellItem::hovered_pen_ { Qt::red };
+const QPen GraphCellItem::hovered_pen_{Qt::red};
 
 GraphCellItem::GraphCellItem(const Cell* cell)
-    : BuddyNotificator { static_cast<QGraphicsItem&>(*this) }, SpriteCellItem { cell }
+    : BuddyNotificator{static_cast<QGraphicsItem&>(*this)}, SpriteCellItem{cell}
 {
     effect_ = new QGraphicsDropShadowEffect();
     effect_->setOffset(0, 0);

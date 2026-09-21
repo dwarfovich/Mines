@@ -1,8 +1,8 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include "game_over_dialog_answer.hpp"
 #include "board_collection.hpp"
+#include "game_over_dialog_answer.hpp"
 #include "new_game_dialog.hpp"
 
 #include <QMainWindow>
@@ -19,8 +19,7 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -34,10 +33,10 @@ private slots:
 private:
     Ui::MainWindow*                  ui_;
     MinesWidget*                     mines_widget_;
-    NewGameDialog*                   new_game_dialog_   = nullptr;
+    NewGameDialog*                   new_game_dialog_ = nullptr;
     QHBoxLayout*                     parameters_layout_ = nullptr;
-    Board*                           board_             = nullptr;
+    Board*                           board_ = nullptr;
     std::unique_ptr<BoardCollection> board_collection_;
 };
 
-#endif // MAINWINDOW_HPP
+#endif  // MAINWINDOW_HPP

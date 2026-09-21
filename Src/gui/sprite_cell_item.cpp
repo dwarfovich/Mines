@@ -1,22 +1,20 @@
 #include "sprite_cell_item.hpp"
 #include "cell.hpp"
 
-#include <QPainter>
 #include <QGraphicsSceneHoverEvent>
+#include <QPainter>
 
-SpriteCellItem::SpriteCellItem(const Cell *cell) : CellItem { cell }
-{
-}
+SpriteCellItem::SpriteCellItem(const Cell* cell) : CellItem{cell} {}
 
-const QPixmap &SpriteCellItem::sprites()
+const QPixmap& SpriteCellItem::sprites()
 {
     return *sprites_;
 }
 
-void SpriteCellItem::setSprites(const QString &path)
+void SpriteCellItem::setSprites(const QString& path)
 {
     sprites_ = std::make_unique<QPixmap>(path);
-    size_    = sprites_->height();
+    size_ = sprites_->height();
     half_size_ = size_ / 2.;
 }
 
@@ -30,17 +28,17 @@ QPainterPath SpriteCellItem::shape() const
     return shape_;
 }
 
-void SpriteCellItem::setShape(const QPainterPath &shape)
+void SpriteCellItem::setShape(const QPainterPath& shape)
 {
     shape_ = shape;
 }
 
 QRectF SpriteCellItem::boundingRect() const
 {
-    return { -half_size_, -half_size_, size_, size_ };
+    return {-half_size_, -half_size_, size_, size_};
 }
 
-void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void SpriteCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -52,7 +50,8 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
     if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
         painter->setFont(font_);
         painter->setPen(textColor(cell_->neighbor_mines));
-        painter->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
+        painter
+            ->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
     }
 
     if (IsHovered()) {
@@ -65,7 +64,7 @@ void SpriteCellItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *op
 
 QRectF SpriteCellItem::spriteRect(CellState type) const
 {
-    return QRectF { size_ * (qreal(type)), 0., qreal(size_), qreal(size_) };
+    return QRectF{size_ * (qreal(type)), 0., qreal(size_), qreal(size_)};
 }
 
 const QColor SpriteCellItem::textColor(std::size_t mines) const

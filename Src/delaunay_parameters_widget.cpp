@@ -1,7 +1,7 @@
 #include "delaunay_parameters_widget.hpp"
 #include "ui_delaunay_parameters_widget.h"
 
-DelaunayParametersWidget::DelaunayParametersWidget(QWidget *parent)
+DelaunayParametersWidget::DelaunayParametersWidget(QWidget* parent)
     : QWidget(parent), ui_(new Ui::DelaunayParametersWidget)
 {
     ui_->setupUi(this);

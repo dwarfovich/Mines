@@ -7,4 +7,4 @@ enum class GameState : char {
     Loose
 };
 
-#endif // GAMESTATE_HPP
+#endif  // GAMESTATE_HPP

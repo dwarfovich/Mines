@@ -1,11 +1,17 @@
 #include "dynamic_graph_parameters_widget.h"
 
-DynamicGraphParametersWidget::DynamicGraphParametersWidget(QWidget *parent) : QWidget(parent)
+DynamicGraphParametersWidget::DynamicGraphParametersWidget(QWidget* parent) : QWidget(parent)
 {
     ui_.setupUi(this);
-    connect(ui_.nodesSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &DynamicGraphParametersWidget::onNodesCountChanged);
+    connect(ui_.nodesSpinBox,
+            qOverload<int>(&QSpinBox::valueChanged),
+            this,
+            &DynamicGraphParametersWidget::onNodesCountChanged);
     connect(ui_.speedSlider, &QSlider::valueChanged, this, &DynamicGraphParametersWidget::onSpeedValueChanged);
-    connect(ui_.speedSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &DynamicGraphParametersWidget::onSpeedValueChanged);
+    connect(ui_.speedSpinBox,
+            qOverload<int>(&QSpinBox::valueChanged),
+            this,
+            &DynamicGraphParametersWidget::onSpeedValueChanged);
 }
 
 void DynamicGraphParametersWidget::onNodesCountChanged(int count)
@@ -41,8 +47,8 @@ bool DynamicGraphParametersWidget::allowDisjointGraph() const
 
 void DynamicGraphParametersWidget::onSpeedValueChanged(int speed)
 {
-    const QSignalBlocker sliderBlocker {ui_.speedSlider};
-    const QSignalBlocker spinBoxBlocker { ui_.speedSpinBox };
+    const QSignalBlocker sliderBlocker{ui_.speedSlider};
+    const QSignalBlocker spinBoxBlocker{ui_.speedSpinBox};
     ui_.speedSlider->setValue(speed);
     ui_.speedSpinBox->setValue(speed);
 }

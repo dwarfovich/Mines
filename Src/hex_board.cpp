@@ -1,45 +1,45 @@
 #include "hex_board.hpp"
-#include "hex_parameters_widget.hpp"
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
+#include "hex_parameters_widget.hpp"
 
 #include <numbers>
 
-const QString &HexBoard::id() const
+const QString& HexBoard::id() const
 {
-    static const QString id { "Hex" };
+    static const QString id{"Hex"};
     return id;
 }
 
-const QString &HexBoard::name() const
+const QString& HexBoard::name() const
 {
     static const QString name = tr("Hex");
     return name;
 }
 
-void HexBoard::setupScene(BoardScene *scene)
+void HexBoard::setupScene(BoardScene* scene)
 {
     SpriteCellItem::setSprites(":/gfx/cells_hex.png");
-    const auto sprite_size      = SpriteCellItem::size();
+    const auto sprite_size = SpriteCellItem::size();
     const auto half_sprite_size = sprite_size / 2.;
     using namespace std::numbers;
     QPainterPath path;
-    path.moveTo(0., -half_sprite_size);                                             // Top
-    path.lineTo(half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));  // Top right
-    path.lineTo(half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));   // Bottom right
+    path.moveTo(0., -half_sprite_size);                                              // Top
+    path.lineTo(half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));   // Top right
+    path.lineTo(half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));    // Bottom right
     path.lineTo(0., half_sprite_size);                                               // Bottom
-    path.lineTo(-half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));  // Bottom left
-    path.lineTo(-half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3)); // Top left
+    path.lineTo(-half_sprite_size, half_sprite_size - (half_sprite_size / sqrt3));   // Bottom left
+    path.lineTo(-half_sprite_size, -half_sprite_size + (half_sprite_size / sqrt3));  // Top left
     path.closeSubpath();
     SpriteCellItem::setShape(path);
     const std::size_t cols = width_;
     for (std::size_t i = 0; i < height_; ++i) {
         for (std::size_t j = 0; j < width_; ++j) {
-            const auto &cell = cells_[i * width_ + j];
-            auto       *item = new SpriteCellItem { cell.get() };
-            const qreal x    = (i % 2 == 0 ? static_cast<qreal>(j) * sprite_size
-                                           : static_cast<qreal>(j) * sprite_size + half_sprite_size);
-            const qreal y    = static_cast<qreal>(i) * (sprite_size - (half_sprite_size / sqrt3));
+            const auto& cell = cells_[i * width_ + j];
+            auto*       item = new SpriteCellItem{cell.get()};
+            const qreal x = (i % 2 == 0 ? static_cast<qreal>(j) * sprite_size
+                                        : static_cast<qreal>(j) * sprite_size + half_sprite_size);
+            const qreal y = static_cast<qreal>(i) * (sprite_size - (half_sprite_size / sqrt3));
             item->setPos(x, y);
             scene->registerCellItem(item);
         }
@@ -58,11 +58,11 @@ void HexBoard::generate()
         return;
     }
 
-    width_                   = parameters_widget_->boardWidth();
-    height_                  = parameters_widget_->boardHeight();
-    board_state_             = {};
-    flags_                   = 0;
-    board_state_.mines       = parameters_widget_->mines();
+    width_ = parameters_widget_->boardWidth();
+    height_ = parameters_widget_->boardHeight();
+    board_state_ = {};
+    flags_ = 0;
+    board_state_.mines = parameters_widget_->mines();
     board_state_.empty_cells = width_ * height_ - board_state_.mines;
 
     initializeCells(width_ * height_);
@@ -71,10 +71,10 @@ void HexBoard::generate()
     board_state_.game_state = GameState::Playing;
 }
 
-QWidget *HexBoard::parametersWidget() const
+QWidget* HexBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new HexParametersWidget { &dummy_parent_widget_ };
+        parameters_widget_ = new HexParametersWidget{&dummy_parent_widget_};
     }
 
     return parameters_widget_;
@@ -85,15 +85,15 @@ std::vector<std::size_t> HexBoard::neighborIds(std::size_t id) const
     const std::size_t        max_neighbors = 6;
     std::vector<std::size_t> ids(max_neighbors);
     std::size_t              neighbors_counter = 0;
-    std::size_t              col               = id % width_;
-    std::size_t              row               = id / width_;
+    std::size_t              col = id % width_;
+    std::size_t              row = id / width_;
     if (col > 0) {
         ids[neighbors_counter++] = id - 1;
     }
     if (col < width_ - 1) {
         ids[neighbors_counter++] = id + 1;
     }
-    if (row % 2 == 0) { // Even row
+    if (row % 2 == 0) {  // Even row
         if (row > 0 && col > 0) {
             ids[neighbors_counter++] = id - width_ - 1;
         }
@@ -106,7 +106,7 @@ std::vector<std::size_t> HexBoard::neighborIds(std::size_t id) const
         if (row < height_ - 1) {
             ids[neighbors_counter++] = id + width_;
         }
-    } else { // Odd row
+    } else {  // Odd row
         if (row > 0 && col < width_ - 1) {
             ids[neighbors_counter++] = id - width_ + 1;
         }

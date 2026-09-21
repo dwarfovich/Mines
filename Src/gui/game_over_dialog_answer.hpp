@@ -7,4 +7,4 @@ enum class GameOverDialogAnswer : char {
     Quit
 };
 
-#endif // GAME_OVER_DIALOG_ANSWER_HPP
+#endif  // GAME_OVER_DIALOG_ANSWER_HPP

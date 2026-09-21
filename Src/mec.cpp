@@ -18,7 +18,7 @@ QPointF circleCenter(double x1, double y1, double x2, double y2)
     double b = x2 * x2 + y2 * y2;
     double c = x1 * y2 - y1 * x2;
 
-    return { (y2 * a - y1 * b) / (2. * c), (x1 * b - x2 * a) / (2. * c) };
+    return {(y2 * a - y1 * b) / (2. * c), (x1 * b - x2 * a) / (2. * c)};
 }
 
 Circle minimalEnclosingCircle(const QPointF& p1, const QPointF& p2, const QPointF& p3)
@@ -27,14 +27,14 @@ Circle minimalEnclosingCircle(const QPointF& p1, const QPointF& p2, const QPoint
     center.setX(center.x() + p1.x());
     center.setY(center.y() + p1.y());
 
-    return { center, euclideanDistance(center, p1) };
+    return {center, euclideanDistance(center, p1)};
 }
 
 Circle minimalEnclosingCircle(const QPointF& p1, const QPointF& p2)
 {
-    QPointF center = { (p1.x() + p2.x()) / 2., (p1.y() + p2.y()) / 2. };
+    QPointF center = {(p1.x() + p2.x()) / 2., (p1.y() + p2.y()) / 2.};
 
-    return { center, euclideanDistance(p1, p2) / 2.0 };
+    return {center, euclideanDistance(p1, p2) / 2.0};
 }
 
 Circle trivialMinimalCircle(const std::vector<QPointF>& points)
@@ -42,9 +42,9 @@ Circle trivialMinimalCircle(const std::vector<QPointF>& points)
     Q_ASSERT(points.size() <= 3);
 
     if (points.empty()) {
-        return { { 0, 0 }, 0 };
+        return {{0, 0}, 0};
     } else if (points.size() == 1) {
-        return { points.front(), 0 };
+        return {points.front(), 0};
     } else if (points.size() == 2) {
         return minimalEnclosingCircle(points.front(), points.back());
     }

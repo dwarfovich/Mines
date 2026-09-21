@@ -1,11 +1,14 @@
 #include "graph_parameters_widget.h"
 
-GraphParametersWidget::GraphParametersWidget(QWidget *parent)
+GraphParametersWidget::GraphParametersWidget(QWidget* parent)
     : QWidget(parent), ui_(new Ui::GraphParametersWidgetClass())
 {
     ui_->setupUi(this);
 
-    connect(ui_->nodesSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, &GraphParametersWidget::onNodesCountChanged);
+    connect(ui_->nodesSpinBox,
+            qOverload<int>(&QSpinBox::valueChanged),
+            this,
+            &GraphParametersWidget::onNodesCountChanged);
 }
 
 void GraphParametersWidget::onNodesCountChanged(int count)

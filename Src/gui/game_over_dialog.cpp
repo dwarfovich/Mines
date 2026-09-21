@@ -1,14 +1,21 @@
 #include "game_over_dialog.hpp"
 #include "ui_game_over_dialog.h"
 
-GameOverDialog::GameOverDialog(QWidget *parent)
-    : QDialog{parent}
-    , ui_{new Ui::GameOverDialog}
+GameOverDialog::GameOverDialog(QWidget* parent) : QDialog{parent}, ui_{new Ui::GameOverDialog}
 {
     ui_->setupUi(this);
-    connect(ui_->quitButton, &QPushButton::clicked, [this] { answer_ = GameOverDialogAnswer::Quit; close(); } );
-    connect(ui_->replayButton, &QPushButton::clicked, [this] { answer_ = GameOverDialogAnswer::Replay; close(); } );
-    connect(ui_->newGameButton, &QPushButton::clicked, [this] { answer_ = GameOverDialogAnswer::NewGame; close(); } );
+    connect(ui_->quitButton, &QPushButton::clicked, [this] {
+        answer_ = GameOverDialogAnswer::Quit;
+        close();
+    });
+    connect(ui_->replayButton, &QPushButton::clicked, [this] {
+        answer_ = GameOverDialogAnswer::Replay;
+        close();
+    });
+    connect(ui_->newGameButton, &QPushButton::clicked, [this] {
+        answer_ = GameOverDialogAnswer::NewGame;
+        close();
+    });
 }
 
 GameOverDialog::~GameOverDialog()

@@ -1,13 +1,11 @@
 #include "triangle.hpp"
 #include "mec.hpp"
 
-Triangle::Triangle(const QPointF &p1, const QPointF &p2, const QPointF &p3) : points_ { p1, p2, p3 }
-{
-}
+Triangle::Triangle(const QPointF& p1, const QPointF& p2, const QPointF& p3) : points_{p1, p2, p3} {}
 
-bool Triangle::operator==(const Triangle &rhs) const
+bool Triangle::operator==(const Triangle& rhs) const
 {
-    auto findPointIter = [](const auto &t, const auto &point) {
+    auto findPointIter = [](const auto& t, const auto& point) {
         using namespace std;
         return find(cbegin(t.points_), cend(t.points_), point);
     };
@@ -29,35 +27,35 @@ bool Triangle::operator==(const Triangle &rhs) const
     return a[0] != a[1] && a[0] != a[2] && a[1] != a[2];
 }
 
-const QPointF &Triangle::operator[](int number) const
+const QPointF& Triangle::operator[](int number) const
 {
     return points_[number];
 }
 
 std::array<Edge, 3> Triangle::edges() const
 {
-    return { Edge { points_[0], points_[1] }, Edge { points_[1], points_[2] }, Edge { points_[0], points_[2] } };
+    return {Edge{points_[0], points_[1]}, Edge{points_[1], points_[2]}, Edge{points_[0], points_[2]}};
 }
 
-const std::array<QPointF, 3> &Triangle::vertices() const
+const std::array<QPointF, 3>& Triangle::vertices() const
 {
     return points_;
 }
 
-bool Triangle::circumcircleContains(const QPointF &point) const
+bool Triangle::circumcircleContains(const QPointF& point) const
 {
-    const auto &mec = minimalEnclosingCircle(points_[0], points_[1], points_[2]);
+    const auto& mec = minimalEnclosingCircle(points_[0], points_[1], points_[2]);
 
     return mec.contains(point);
 }
 
-bool Triangle::has(const Edge &edge) const
+bool Triangle::has(const Edge& edge) const
 {
-    return (Edge { points_[0], points_[1] } == edge || Edge { points_[1], points_[2] } == edge
-            || Edge { points_[0], points_[2] } == edge);
+    return (Edge{points_[0], points_[1]} == edge || Edge{points_[1], points_[2]} == edge ||
+            Edge{points_[0], points_[2]} == edge);
 }
 
-bool Triangle::has(const QPointF &point) const
+bool Triangle::has(const QPointF& point) const
 {
     return (points_[0] == point || points_[1] == point || points_[2] == point);
 }

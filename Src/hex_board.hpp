@@ -5,20 +5,19 @@
 
 class HexParametersWidget;
 
-class HexBoard : public RectangleBoard
-{
+class HexBoard : public RectangleBoard {
     Q_OBJECT
 
 public:
-    const QString &id() const override;
-    const QString &name() const override;
-    void           setupScene(BoardScene *scene) override;
+    const QString& id() const override;
+    const QString& name() const override;
+    void           setupScene(BoardScene* scene) override;
     void           generate() override;
-    QWidget       *parametersWidget() const override;
+    QWidget*       parametersWidget() const override;
 
 protected:
-    std::vector<std::size_t>                     neighborIds(std::size_t id) const override;
-    mutable HexParametersWidget *parameters_widget_ = nullptr;
+    std::vector<std::size_t>     neighborIds(std::size_t id) const override;
+    mutable HexParametersWidget* parameters_widget_ = nullptr;
 };
 
-#endif // HEXBOARD_HPP
+#endif  // HEXBOARD_HPP

@@ -8,18 +8,17 @@ CellItem::CellItem()
     setAcceptHoverEvents(true);
 }
 
-CellItem::CellItem(const Cell *cell)
-    : cell_{cell}
+CellItem::CellItem(const Cell* cell) : cell_{cell}
 {
     setAcceptHoverEvents(true);
 }
 
-const Cell *CellItem::cell() const
+const Cell* CellItem::cell() const
 {
     return cell_;
 }
 
-void CellItem::setCell(Cell *cell)
+void CellItem::setCell(Cell* cell)
 {
     cell_ = cell;
 }
@@ -50,14 +49,14 @@ CellItem::CellState CellItem::cellState() const
     }
 }
 
-void CellItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+void CellItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
     is_hovered_ = true;
     update();
     event->ignore();
 }
 
-void CellItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+void CellItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
     is_hovered_ = false;
     update();

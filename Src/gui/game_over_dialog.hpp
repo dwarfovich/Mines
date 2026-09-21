@@ -10,8 +10,7 @@ namespace Ui {
 class GameOverDialog;
 }
 
-class GameOverDialog : public QDialog
-{
+class GameOverDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -24,8 +23,8 @@ private:
     void updateMessage(GameState game_state);
 
 private:
-    Ui::GameOverDialog* ui_;
+    Ui::GameOverDialog*  ui_;
     GameOverDialogAnswer answer_;
 };
 
-#endif // GAME_OVER_DIALOG_HPP
+#endif  // GAME_OVER_DIALOG_HPP

@@ -3,7 +3,6 @@
 
 #include "utils.hpp"
 
-
 #include <QDialog>
 
 class Board;
@@ -14,8 +13,7 @@ namespace Ui {
 class NewGameDialog;
 }
 
-class NewGameDialog : public QDialog
-{
+class NewGameDialog : public QDialog {
     Q_OBJECT
 
 public:
@@ -35,8 +33,8 @@ private:
     Ui::NewGameDialog* ui_;
     QWidget*           parameters_widget_ = nullptr;
     QHBoxLayout*       parameters_layout_ = nullptr;
-    BoardCollection*   collection_        = nullptr;
-    Board* board_             = nullptr;
+    BoardCollection*   collection_ = nullptr;
+    Board*             board_ = nullptr;
 };
 
-#endif // NEW_GAME_DIALOG_HPP
+#endif  // NEW_GAME_DIALOG_HPP

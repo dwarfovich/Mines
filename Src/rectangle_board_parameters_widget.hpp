@@ -7,12 +7,11 @@ namespace Ui {
 class RectangleBoardParametersWidget;
 }
 
-class RectangleBoardParametersWidget : public QWidget
-{
+class RectangleBoardParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit RectangleBoardParametersWidget(QWidget *parent = nullptr);
+    explicit RectangleBoardParametersWidget(QWidget* parent = nullptr);
     ~RectangleBoardParametersWidget();
 
     int boardWidth() const;
@@ -26,4 +25,4 @@ private:
     Ui::RectangleBoardParametersWidget* ui_;
 };
 
-#endif // RECTANGLE_BOARD_PARAMETERS_WIDGET_HPP
+#endif  // RECTANGLE_BOARD_PARAMETERS_WIDGET_HPP

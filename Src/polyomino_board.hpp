@@ -3,13 +3,12 @@
 #include "id_based_board.hpp"
 #include "polyomino_cell.hpp"
 
-#include <random>
 #include <deque>
+#include <random>
 
 class PolyominoParametersWidget;
 
-class PolyominoBoard : public IdBasedBoard<PolyominoCell>
-{
+class PolyominoBoard : public IdBasedBoard<PolyominoCell> {
     Q_OBJECT
 public:
     const QString&      id() const override;
@@ -30,8 +29,8 @@ private:
                                  std::deque<QPoint>&                     neighbors) const;
 
 private:
-    size_t                             width_              = 0;
-    size_t                             height_             = 0;
+    size_t                             width_ = 0;
+    size_t                             height_ = 0;
     size_t                             max_polyomino_size_ = 1;
-    mutable PolyominoParametersWidget* parameters_widget_  = nullptr;
+    mutable PolyominoParametersWidget* parameters_widget_ = nullptr;
 };

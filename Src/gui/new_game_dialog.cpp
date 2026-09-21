@@ -1,14 +1,16 @@
 #include "new_game_dialog.hpp"
-#include "ui_new_game_dialog.h"
 #include "board_collection.hpp"
+#include "ui_new_game_dialog.h"
 
 NewGameDialog::NewGameDialog(BoardCollection* collection, QWidget* parent)
-    : QDialog { parent }, ui_(new Ui::NewGameDialog), collection_ { collection }
+    : QDialog{parent}, ui_(new Ui::NewGameDialog), collection_{collection}
 {
     ui_->setupUi(this);
- 
-    connect(
-        ui_->boardsComboBox, qOverload<int>(&QComboBox::currentIndexChanged), this, &NewGameDialog::onNewBoardSelected);
+
+    connect(ui_->boardsComboBox,
+            qOverload<int>(&QComboBox::currentIndexChanged),
+            this,
+            &NewGameDialog::onNewBoardSelected);
 
     parameters_layout_ = new QHBoxLayout();
     ui_->parametersWidgetGroupBox->setLayout(parameters_layout_);
@@ -26,7 +28,7 @@ NewGameDialog::~NewGameDialog()
 void NewGameDialog::onNewBoardSelected(int index)
 {
     const auto& boardName = ui_->boardsComboBox->itemText(index);
-    auto        board     = collection_->get(boardName);
+    auto        board = collection_->get(boardName);
     if (board) {
         if (parameters_widget_) {
             parameters_layout_->removeWidget(parameters_widget_);
@@ -38,7 +40,7 @@ void NewGameDialog::onNewBoardSelected(int index)
         ui_->parametersWidgetGroupBox->updateGeometry();
         updateGeometry();
         adjustSize();
-        
+
         board_ = board;
     } else {
         Q_ASSERT(false);

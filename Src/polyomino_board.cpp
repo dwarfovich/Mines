@@ -1,11 +1,11 @@
 #include "polyomino_board.hpp"
-#include "polyomino_parameters_widget.hpp"
 #include "direction.hpp"
-#include "qpoint_hasher.hpp"
-#include "polyomino_cell_item.hpp"
-#include "polyomino_board_constants.hpp"
-#include "gui/sprite_cell_item.hpp"
 #include "gui/board_scene.hpp"
+#include "gui/sprite_cell_item.hpp"
+#include "polyomino_board_constants.hpp"
+#include "polyomino_cell_item.hpp"
+#include "polyomino_parameters_widget.hpp"
+#include "qpoint_hasher.hpp"
 
 const QString& PolyominoBoard::id() const
 {
@@ -21,17 +21,17 @@ const QString& PolyominoBoard::name() const
 
 void PolyominoBoard::generate()
 {
-    width_              = parameters_widget_->width();
-    height_             = parameters_widget_->height();
+    width_ = parameters_widget_->width();
+    height_ = parameters_widget_->height();
     max_polyomino_size_ = parameters_widget_->maxPolyominoSize();
 
-    board_state_               = {};
-    board_state_.mines         = parameters_widget_->minesCount();
+    board_state_ = {};
+    board_state_.mines = parameters_widget_->minesCount();
     const size_t cells_counter = cells_.size();
-    board_state_.empty_cells   = cells_counter - board_state_.mines;
+    board_state_.empty_cells = cells_counter - board_state_.mines;
     cells_.clear();
 
-    std::uniform_int_distribution<size_t> size_distribution { 1, max_polyomino_size_ };
+    std::uniform_int_distribution<size_t> size_distribution{1, max_polyomino_size_};
     std::vector<std::vector<size_t>>      matrix;
     matrix.resize(height_, std::vector(width_, constants::polyomino_board::empty_matrix_id));
     size_t id = 0;
@@ -41,19 +41,19 @@ void PolyominoBoard::generate()
                 continue;
             }
 
-            auto cell = std::make_unique<PolyominoCell>(id, QPoint { static_cast<int>(col), static_cast<int>(row) });
+            auto cell = std::make_unique<PolyominoCell>(id, QPoint{static_cast<int>(col), static_cast<int>(row)});
             matrix[cell->center.y()][cell->center.x()] = id;
 
             const auto target_size = size_distribution(random_generator_);
-            cell->shifts.push_back({ 0, 0 });
+            cell->shifts.push_back({0, 0});
             size_t             current_size = 1;
             std::deque<QPoint> empty_neighbors;
             addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
             while (current_size < target_size && !empty_neighbors.empty()) {
-                std::uniform_int_distribution<size_t> distribution { 0, empty_neighbors.size() - 1 };
+                std::uniform_int_distribution<size_t> distribution{0, empty_neighbors.size() - 1};
                 const auto                            neighbor_point = empty_neighbors[distribution(random_generator_)];
-                matrix[neighbor_point.y()][neighbor_point.x()]       = id;
-                const auto neighbor_shift                            = neighbor_point - cell->center;
+                matrix[neighbor_point.y()][neighbor_point.x()] = id;
+                const auto neighbor_shift = neighbor_point - cell->center;
                 if (!::contains(cell->shifts, neighbor_shift)) {
                     cell->shifts.push_back(neighbor_shift);
                     ++current_size;
@@ -85,16 +85,16 @@ void PolyominoBoard::setupScene(BoardScene* scene)
         scene->registerCellItem(item);
     }
 
-    scene->setSceneRect({ 0.,
-                          0.,
-                          static_cast<qreal>(width_ * SpriteCellItem::size()),
-                          static_cast<qreal>(height_ * SpriteCellItem::size()) });
+    scene->setSceneRect({0.,
+                         0.,
+                         static_cast<qreal>(width_ * SpriteCellItem::size()),
+                         static_cast<qreal>(height_ * SpriteCellItem::size())});
 }
 
 QWidget* PolyominoBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new PolyominoParametersWidget { &dummy_parent_widget_ };
+        parameters_widget_ = new PolyominoParametersWidget{&dummy_parent_widget_};
     }
 
     return parameters_widget_;
@@ -158,15 +158,15 @@ QColor PolyominoBoard::generateCellColor() const
     using namespace constants::polyomino_board;
     std::uniform_int_distribution<short> s(min_saturation, max_saturation);
     std::uniform_int_distribution<short> v(min_color_value, max_color_value);
-    QColor                               color { QColor::Hsv };
+    QColor                               color{QColor::Hsv};
     color.setHsv(hue, s(random_generator_), v(random_generator_));
     return color;
 }
 
 bool PolyominoBoard::isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const
 {
-    return isValidMatrixCoordinates(point, matrix[0].size(), matrix.size())
-           && matrix[point.y()][point.x()] == constants::polyomino_board::empty_matrix_id;
+    return isValidMatrixCoordinates(point, matrix[0].size(), matrix.size()) &&
+           matrix[point.y()][point.x()] == constants::polyomino_board::empty_matrix_id;
 }
 
 bool PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
@@ -175,7 +175,7 @@ bool PolyominoBoard::addEmptyNeighborCells(const std::vector<std::vector<size_t>
 {
     bool insertion_happened = false;
     for (const auto direction : directions_array) {
-        const auto shift    = directionToShift(direction);
+        const auto shift = directionToShift(direction);
         const auto neighbor = point + shift;
         if (isEmptyCell(matrix, neighbor)) {
             neighbors.push_back(neighbor);

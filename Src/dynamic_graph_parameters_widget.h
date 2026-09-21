@@ -4,18 +4,17 @@
 
 #include <QWidget>
 
-class DynamicGraphParametersWidget : public QWidget
-{
+class DynamicGraphParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
-    DynamicGraphParametersWidget(QWidget *parent = nullptr);
+    DynamicGraphParametersWidget(QWidget* parent = nullptr);
 
     std::size_t nodesCount() const;
     std::size_t minesCount() const;
     std::size_t maximumNeighbors() const;
     std::size_t speed() const;
-    bool   allowDisjointGraph() const;
+    bool        allowDisjointGraph() const;
 
 private slots:
     void onNodesCountChanged(int count);

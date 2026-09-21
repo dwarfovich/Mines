@@ -2,13 +2,12 @@
 
 #include "cell.hpp"
 
-#include <QPoint>
 #include <QColor>
+#include <QPoint>
 
 #include <vector>
 
-class PolyominoCell : public Cell
-{
+class PolyominoCell : public Cell {
 public:
     PolyominoCell() = default;
     PolyominoCell(size_t new_id);

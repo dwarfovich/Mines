@@ -5,16 +5,13 @@
 
 class Cell;
 
-class CellItem : public QGraphicsItem
-{
+class CellItem : public QGraphicsItem {
 public:
-    enum
-    {
+    enum {
         Type = UserType + 1
     };
 
-        enum CellState
-    {
+    enum CellState {
         Closed,
         ClosedWithFlag,
         OpenedMine,
@@ -30,16 +27,16 @@ public:
     void        setCell(Cell* cell);
     bool        IsHovered() const;
 
-protected: // methods
+protected:  // methods
     CellItem::CellState cellState() const;
-    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+    void                hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    void                hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
 
-protected: // data
+protected:  // data
     const Cell* cell_ = nullptr;
 
 private:
     bool is_hovered_ = false;
 };
 
-#endif // CELLITEM_HPP
+#endif  // CELLITEM_HPP

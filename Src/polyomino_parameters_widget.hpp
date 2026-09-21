@@ -4,12 +4,11 @@
 
 #include <QWidget>
 
-class PolyominoParametersWidget : public QWidget
-{
+class PolyominoParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
-    PolyominoParametersWidget(QWidget *parent = nullptr);
+    PolyominoParametersWidget(QWidget* parent = nullptr);
 
     size_t width() const;
     size_t height() const;
@@ -20,6 +19,6 @@ private slots:
     void updateMaxPolyominoSizeSpinBox();
     void updateMinesSpinbox();
 
-private: // data
+private:  // data
     Ui::PolyominoParametersWidgetClass ui_;
 };

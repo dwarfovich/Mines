@@ -1,35 +1,34 @@
 #pragma once
 
-#include "id_based_board.hpp"
 #include "graph_boards_parameters.h"
+#include "id_based_board.hpp"
 
 #include <random>
 
 class GraphParametersWidget;
 
-class GraphBoard : public IdBasedBoard<Cell>
-{
+class GraphBoard : public IdBasedBoard<Cell> {
     Q_OBJECT
 
 public:
-    const QString &id() const override;
-    const QString &name() const override;
-    QWidget       *parametersWidget() const override;
+    const QString& id() const override;
+    const QString& name() const override;
+    QWidget*       parametersWidget() const override;
     void           generate() override;
-    void           setupScene(BoardScene *scene) override;
+    void           setupScene(BoardScene* scene) override;
 
-protected: // methods
+protected:  // methods
     std::vector<std::size_t> neighborIds(std::size_t id) const override;
-    virtual void        generatePoints();
-    virtual void        formNeighbors();
-    virtual void        setupCellItems();
-    virtual void        setupParameters();
+    virtual void             generatePoints();
+    virtual void             formNeighbors();
+    virtual void             setupCellItems();
+    virtual void             setupParameters();
 
-protected: // data
+protected:  // data
     std::vector<QPointF> points_;
     using NeighborsVector = std::vector<std::vector<std::size_t>>;
     NeighborsVector                neighbors_;
     QRectF                         bounding_rect_;
-    mutable GraphParametersWidget *parameters_widget_ = nullptr;
+    mutable GraphParametersWidget* parameters_widget_ = nullptr;
     mutable GraphBoardParameters   parameters_;
 };

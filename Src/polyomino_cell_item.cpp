@@ -1,13 +1,13 @@
 #include "polyomino_cell_item.hpp"
-#include "polyomino_cell.hpp"
-#include "polyomino_board_constants.hpp"
 #include "direction.hpp"
-#include "utils.hpp"
+#include "polyomino_board_constants.hpp"
+#include "polyomino_cell.hpp"
 #include "qpoint_hasher.hpp"
+#include "utils.hpp"
 
-#include <QPoint>
-#include <QPainter>
 #include <QGraphicsRectItem>
+#include <QPainter>
+#include <QPoint>
 
 #include <unordered_set>
 
@@ -55,14 +55,14 @@ void PolyominoCellItem::initialize(PolyominoCell* cell, const QColor& color)
         sprites_ = std::make_unique<QPixmap>(":/gfx/transparent_images.png");
     }
     setCell(cell);
-    closed_brush_ = { color };
+    closed_brush_ = {color};
 
     using namespace constants::polyomino_board;
     setPos(cell->center.x() * sub_cell_size, cell->center.y() * sub_cell_size);
 
-    painter_path_   = createPainterPath(*cell);
-    polygon_        = painter_path_.toFillPolygon().toPolygon();
-    bounding_rect_  = painter_path_.boundingRect();
+    painter_path_ = createPainterPath(*cell);
+    polygon_ = painter_path_.toFillPolygon().toPolygon();
+    bounding_rect_ = painter_path_.boundingRect();
     cell_info_rect_ = findCellDescriptionRect(*cell);
 }
 
@@ -84,22 +84,27 @@ QPainterPath PolyominoCellItem::createPainterPath(const PolyominoCell& cell) con
             const int                      x = shift.x() * sub_cell_size;
             const int                      y = shift.y() * sub_cell_size;
             switch (direction) {
-                case Direction::Up: r = lines.insert({ { x, y }, { x + sub_cell_size, y } }); break;
+                case Direction::Up:
+                    r = lines.insert({{x, y}, {x + sub_cell_size, y}});
+                    break;
                 case Direction::Right:
-                    r = lines.insert({ { x + sub_cell_size, y }, { x + sub_cell_size, y + sub_cell_size } });
+                    r = lines.insert({{x + sub_cell_size, y}, {x + sub_cell_size, y + sub_cell_size}});
                     break;
                 case Direction::Down:
-                    r = lines.insert({ { x + sub_cell_size, y + sub_cell_size }, { x, y + sub_cell_size } });
+                    r = lines.insert({{x + sub_cell_size, y + sub_cell_size}, {x, y + sub_cell_size}});
                     break;
-                case Direction::Left: r = lines.insert({ { x, y + sub_cell_size }, { x, y } }); break;
-                default: break;
+                case Direction::Left:
+                    r = lines.insert({{x, y + sub_cell_size}, {x, y}});
+                    break;
+                default:
+                    break;
             }
             Q_ASSERT(r.second && "Line wasn't inserted, so there is an error");
         }
     }
 
     QPainterPath path;
-    auto         iter        = lines.cbegin();
+    auto         iter = lines.cbegin();
     const auto   first_point = iter->first;
     path.moveTo(first_point);
     while (iter != lines.cend() && iter->second != first_point) {
@@ -115,16 +120,14 @@ QRect PolyominoCellItem::findCellDescriptionRect(const PolyominoCell& cell) cons
 {
     Q_ASSERT(!cell.shifts.empty());
 
-    const auto min_max_x =
-        std::minmax_element(std::cbegin(cell.shifts), std::cend(cell.shifts), [](const auto& lhs, const auto& rhs) {
-            return lhs.x() < rhs.x();
-        });
+    const auto min_max_x = std::minmax_element(std::cbegin(cell.shifts),
+                                               std::cend(cell.shifts),
+                                               [](const auto& lhs, const auto& rhs) { return lhs.x() < rhs.x(); });
     const auto min_x = min_max_x.first->x();
     const auto max_x = min_max_x.second->x();
-    const auto min_max_y =
-        std::minmax_element(std::cbegin(cell.shifts), std::cend(cell.shifts), [](const auto& lhs, const auto& rhs) {
-            return lhs.y() < rhs.y();
-        });
+    const auto min_max_y = std::minmax_element(std::cbegin(cell.shifts),
+                                               std::cend(cell.shifts),
+                                               [](const auto& lhs, const auto& rhs) { return lhs.y() < rhs.y(); });
     const auto min_y = min_max_x.first->y();
     const auto max_y = min_max_x.second->y();
 
@@ -133,37 +136,37 @@ QRect PolyominoCellItem::findCellDescriptionRect(const PolyominoCell& cell) cons
 
     using namespace constants::polyomino_board;
     if (mid_x == 0 && mid_y == 0) {
-        return { 0, 0, sub_cell_size, sub_cell_size };
+        return {0, 0, sub_cell_size, sub_cell_size};
     }
 
-    if (::contains(cell.shifts, QPoint { mid_x, mid_y })) {
-        return { mid_x * sub_cell_size, mid_y * sub_cell_size, sub_cell_size, sub_cell_size };
+    if (::contains(cell.shifts, QPoint{mid_x, mid_y})) {
+        return {mid_x * sub_cell_size, mid_y * sub_cell_size, sub_cell_size, sub_cell_size};
     }
 
-    const QPointF midShift { static_cast<qreal>(mid_x), static_cast<qreal>(mid_y) };
-    if (midShift == QPointF { 0., 0. }) {
-        return { 0, 0, sub_cell_size, sub_cell_size };
+    const QPointF midShift{static_cast<qreal>(mid_x), static_cast<qreal>(mid_y)};
+    if (midShift == QPointF{0., 0.}) {
+        return {0, 0, sub_cell_size, sub_cell_size};
     }
 
     auto min_distance = std::numeric_limits<qreal>::max();
-    auto min_shift    = cell.shifts.front();
+    auto min_shift = cell.shifts.front();
     for (const auto& shift : cell.shifts) {
         const auto distance = euclideanDistance(midShift, QPointF{shift});
         if (distance < min_distance) {
             min_distance = distance;
-            min_shift    = shift;
+            min_shift = shift;
         }
     }
 
-    return { min_shift.x() * sub_cell_size, min_shift.y() * sub_cell_size, sub_cell_size, sub_cell_size };
+    return {min_shift.x() * sub_cell_size, min_shift.y() * sub_cell_size, sub_cell_size, sub_cell_size};
 }
 
 QRectF PolyominoCellItem::spriteRect(CellState state) const
 {
     using namespace constants::polyomino_board;
-    if (state == CellState::ClosedWithFlag || state == CellState::OpenedMine || state == CellState::MissedFlag
-        || state == CellState::MissedMine) {
-        return QRectF { sprite_size * (qreal(state) - 1), 0., qreal(sprite_size), qreal(sprite_size) };
+    if (state == CellState::ClosedWithFlag || state == CellState::OpenedMine || state == CellState::MissedFlag ||
+        state == CellState::MissedMine) {
+        return QRectF{sprite_size * (qreal(state) - 1), 0., qreal(sprite_size), qreal(sprite_size)};
     } else {
         return {};
     }
@@ -184,6 +187,6 @@ void PolyominoCellItem::paintMinesCount(QPainter* painter)
 
 void PolyominoCellItem::initializeMinesCountAttributes(QPainter* painter)
 {
-    mines_count_                       = QString::number(cell_->neighbor_mines);
+    mines_count_ = QString::number(cell_->neighbor_mines);
     mines_count_attributes_initialized = true;
 }

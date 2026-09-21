@@ -1,14 +1,14 @@
 #include "circle.hpp"
 #include "utils.hpp"
 
-#include <limits>
 #include <cmath>
+#include <limits>
 
 bool Circle::contains(const QPointF& point) const
 {
     static constexpr double tolerance = std::numeric_limits<double>::epsilon();
-    auto                    distance  = euclideanDistance(center, point);
-    double                  diff      = distance - radius;
+    auto                    distance = euclideanDistance(center, point);
+    double                  diff = distance - radius;
     if (diff < tolerance) {
         return true;
     }

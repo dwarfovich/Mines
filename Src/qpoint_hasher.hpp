@@ -4,7 +4,6 @@
 
 class QPoint;
 
-struct QPointHasher
-{
+struct QPointHasher {
     std::size_t operator()(const QPoint& point) const;
 };

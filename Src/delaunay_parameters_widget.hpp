@@ -7,8 +7,7 @@ namespace Ui {
 class DelaunayParametersWidget;
 }
 
-class DelaunayParametersWidget : public QWidget
-{
+class DelaunayParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
@@ -25,4 +24,4 @@ private:
     Ui::DelaunayParametersWidget* ui_;
 };
 
-#endif // DELAUNAY_PARAMETERS_WIDGET_HPP
+#endif  // DELAUNAY_PARAMETERS_WIDGET_HPP

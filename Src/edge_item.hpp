@@ -1,15 +1,13 @@
 #pragma once
 
-#include "edge.hpp"
 #include "buddy_notificator.hpp"
+#include "edge.hpp"
 
 #include <QGraphicsItem>
 
-class EdgeItem : public QGraphicsItem, public BuddyNotificator
-{
+class EdgeItem : public QGraphicsItem, public BuddyNotificator {
 public:
-    enum
-    {
+    enum {
         Type = UserType + 4
     };
 
@@ -21,7 +19,7 @@ public:
     QRectF boundingRect() const override;
     void   paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
-    protected:
+protected:
     void advance(int step) override;
 
 private:

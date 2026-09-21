@@ -6,25 +6,23 @@
 
 class DelaunayParametersWidget;
 
-class DelaunayBoard : public GraphBoard
-{
+class DelaunayBoard : public GraphBoard {
     Q_OBJECT
 
 public:
-    const QString &id() const override;
-    const QString &name() const override;
-    QWidget       *parametersWidget() const override;
+    const QString& id() const override;
+    const QString& name() const override;
+    QWidget*       parametersWidget() const override;
     void           generate() override;
 
-protected: // methods
+protected:  // methods
     std::vector<std::size_t> neighborIds(std::size_t id) const override;
-    void                formNeighbors(const Triangulator &triangulator);
-    void                setupParameters() override;
+    void                     formNeighbors(const Triangulator& triangulator);
+    void                     setupParameters() override;
 
-
-protected: // data
+protected:  // data
     Triangulator                      triangulator_;
-    mutable DelaunayParametersWidget *parameters_widget_ = nullptr;
+    mutable DelaunayParametersWidget* parameters_widget_ = nullptr;
 };
 
-#endif // DELAUNAY_BOARD_HPP
+#endif  // DELAUNAY_BOARD_HPP

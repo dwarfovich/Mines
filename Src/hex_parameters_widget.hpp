@@ -4,12 +4,11 @@
 
 #include <QWidget>
 
-class HexParametersWidget : public QWidget
-{
+class HexParametersWidget : public QWidget {
     Q_OBJECT
 
 public:
-    HexParametersWidget(QWidget *parent = nullptr);
+    HexParametersWidget(QWidget* parent = nullptr);
 
     int boardWidth() const;
     int boardHeight() const;

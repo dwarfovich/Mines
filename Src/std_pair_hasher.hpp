@@ -2,9 +2,8 @@
 
 #include <utility>
 
-template<typename T, typename U, typename THasher = std::hash<T>, typename UHasher = std::hash<U>>
-struct StdPairHasher
-{
+template <typename T, typename U, typename THasher = std::hash<T>, typename UHasher = std::hash<U>>
+struct StdPairHasher {
     size_t operator()(const std::pair<T, U>& pair) const
     {
         const auto& first_hash = THasher()(pair.first);

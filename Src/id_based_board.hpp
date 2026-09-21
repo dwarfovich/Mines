@@ -6,47 +6,46 @@
 
 #include <random>
 
-template<typename CellType>
-class IdBasedBoard : public Board
-{
+template <typename CellType>
+class IdBasedBoard : public Board {
 public:
     IdBasedBoard();
 
     size_t      flags() const override;
-    const Cell *cellById(size_t id) const override;
+    const Cell* cellById(size_t id) const override;
     void        openCell(size_t id) override;
     void        toggleFlag(size_t id) override;
 
-protected: // methods
+protected:  // methods
     virtual std::vector<size_t> neighborIds(size_t id) const = 0;
-    virtual Cell               *cellById(size_t id);
-    virtual void                relocateFirstOpenedMine(Cell *cell);
+    virtual Cell*               cellById(size_t id);
+    virtual void                relocateFirstOpenedMine(Cell* cell);
     virtual void                reveal();
     virtual size_t              countNeighborMines(size_t id) const;
-    virtual void                openAdjacentCells(Cell *cell);
+    virtual void                openAdjacentCells(Cell* cell);
     virtual void                initializeCells(size_t cells_counter);
     virtual void                randomize();
 
-protected: // data
+protected:  // data
     size_t                                 flags_ = 0;
     std::vector<std::unique_ptr<CellType>> cells_;
     mutable std::random_device             random_device_;
     mutable std::mt19937                   random_generator_;
 };
 
-template<typename CellType>
-IdBasedBoard<CellType>::IdBasedBoard() : random_generator_ { random_device_() }
+template <typename CellType>
+IdBasedBoard<CellType>::IdBasedBoard() : random_generator_{random_device_()}
 {
 }
 
-template<typename CellType>
+template <typename CellType>
 size_t IdBasedBoard<CellType>::flags() const
 {
     return flags_;
 }
 
-template<typename CellType>
-const Cell *IdBasedBoard<CellType>::cellById(size_t id) const
+template <typename CellType>
+const Cell* IdBasedBoard<CellType>::cellById(size_t id) const
 {
     if (id >= 0 && id < cells_.size()) {
         return cells_[id].get();
@@ -55,7 +54,7 @@ const Cell *IdBasedBoard<CellType>::cellById(size_t id) const
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 void IdBasedBoard<CellType>::openCell(size_t id)
 {
     auto cell = cellById(id);
@@ -87,7 +86,7 @@ void IdBasedBoard<CellType>::openCell(size_t id)
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 void IdBasedBoard<CellType>::toggleFlag(size_t id)
 {
     auto cell = cellById(id);
@@ -102,8 +101,8 @@ void IdBasedBoard<CellType>::toggleFlag(size_t id)
     }
 }
 
-template<typename CellType>
-Cell *IdBasedBoard<CellType>::cellById(size_t id)
+template <typename CellType>
+Cell* IdBasedBoard<CellType>::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
         return cells_[id].get();
@@ -112,21 +111,21 @@ Cell *IdBasedBoard<CellType>::cellById(size_t id)
     }
 }
 
-template<typename CellType>
-void IdBasedBoard<CellType>::relocateFirstOpenedMine(Cell *cell)
+template <typename CellType>
+void IdBasedBoard<CellType>::relocateFirstOpenedMine(Cell* cell)
 {
     Q_ASSERT(cell);
 
     for (int i = 0; i < static_cast<int>(cells_.size()); ++i) {
         if (cell->id != i && !cellById(i)->has_mine && cellById(i)->is_closed) {
-            cell->has_mine        = false;
+            cell->has_mine = false;
             cellById(i)->has_mine = true;
             return;
         }
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 void IdBasedBoard<CellType>::reveal()
 {
     for (size_t i = 0; i < cells_.size(); ++i) {
@@ -142,13 +141,13 @@ void IdBasedBoard<CellType>::reveal()
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 size_t IdBasedBoard<CellType>::countNeighborMines(size_t id) const
 {
-    const auto &ids   = neighborIds(id);
+    const auto& ids = neighborIds(id);
     size_t      mines = 0;
-    for (const auto &neighborId : ids) {
-        const auto *const cell = cellById(neighborId);
+    for (const auto& neighborId : ids) {
+        const auto* const cell = cellById(neighborId);
         if (cell->has_mine) {
             ++mines;
         }
@@ -157,10 +156,10 @@ size_t IdBasedBoard<CellType>::countNeighborMines(size_t id) const
     return mines;
 }
 
-template<typename CellType>
-void IdBasedBoard<CellType>::openAdjacentCells(Cell *cell)
+template <typename CellType>
+void IdBasedBoard<CellType>::openAdjacentCells(Cell* cell)
 {
-    auto neighbors { neighborIds(cell->id) };
+    auto neighbors{neighborIds(cell->id)};
     for (auto neighborId : neighbors) {
         auto neighborCell = cellById(neighborId);
         if (neighborCell->is_closed && !neighborCell->has_mine && !neighborCell->has_flag) {
@@ -169,7 +168,7 @@ void IdBasedBoard<CellType>::openAdjacentCells(Cell *cell)
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
 {
     cells_.resize(cells_counter);
@@ -189,7 +188,7 @@ void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
     }
 }
 
-template<typename CellType>
+template <typename CellType>
 void IdBasedBoard<CellType>::randomize()
 {
     std::shuffle(cells_.begin(), cells_.end(), random_generator_);
@@ -198,4 +197,4 @@ void IdBasedBoard<CellType>::randomize()
     }
 }
 
-#endif // ID_BASED_BOARD_HPP
+#endif  // ID_BASED_BOARD_HPP

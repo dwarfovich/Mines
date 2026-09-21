@@ -2,7 +2,6 @@
 
 class QLine;
 
-struct QLineHasher
-{
+struct QLineHasher {
     size_t operator()(const QLine& line) const;
 };

@@ -1,21 +1,21 @@
 #include "mines_widget.hpp"
-#include "ui_mines_widget.h"
 #include "board.hpp"
 #include "board_state.hpp"
-#include "game_state.hpp"
+#include "cell.hpp"
 #include "game_over_dialog.hpp"
 #include "game_over_dialog_answer.hpp"
-#include "cell.hpp"
+#include "game_state.hpp"
+#include "ui_mines_widget.h"
 
 #include <QGraphicsScene>
 #include <QTimer>
 
-MinesWidget::MinesWidget(QWidget *parent)
-    : QWidget { parent }
-    , ui_ { new Ui::MinesWidget }
-    , scene_ { new BoardScene { this } }
-    , timer_ { new QTimer { this } }
-    , game_over_dialog_ { new GameOverDialog { this } }
+MinesWidget::MinesWidget(QWidget* parent)
+    : QWidget{parent},
+      ui_{new Ui::MinesWidget},
+      scene_{new BoardScene{this}},
+      timer_{new QTimer{this}},
+      game_over_dialog_{new GameOverDialog{this}}
 {
     ui_->setupUi(this);
 
@@ -29,7 +29,7 @@ MinesWidget::~MinesWidget()
     delete ui_;
 }
 
-void MinesWidget::setBoard(Board *board)
+void MinesWidget::setBoard(Board* board)
 {
     if (board_) {
         disconnect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
@@ -37,7 +37,7 @@ void MinesWidget::setBoard(Board *board)
 
     ui_->timeSpinBox->setValue(0);
     board_ = board;
-    board_->generate(); 
+    board_->generate();
     scene_->clear();
     board->setupScene(scene_);
     connect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
@@ -49,7 +49,7 @@ void MinesWidget::startGame()
     scene_->startAnimation();
 }
 
-void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
+void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
 {
     processCellItemClick(cell_item, event);
 
@@ -66,7 +66,7 @@ void MinesWidget::onCellItemClicked(CellItem *cell_item, QGraphicsSceneMouseEven
     }
 }
 
-void MinesWidget::onCellChanged(Cell *cell)
+void MinesWidget::onCellChanged(Cell* cell)
 {
     scene_->updateCellItemForCell(cell);
 }
@@ -76,7 +76,7 @@ void MinesWidget::onTimerTimeout()
     ui_->timeSpinBox->setValue(ui_->timeSpinBox->value() + 1);
 }
 
-void MinesWidget::processCellItemClick(CellItem *cell_item, QGraphicsSceneMouseEvent *event)
+void MinesWidget::processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
         board_->openCell(cell_item->cell()->id);
@@ -93,7 +93,7 @@ void MinesWidget::updateFlagsCount()
 
 void MinesWidget::centerView()
 {
-    const auto &scene_rect = scene_->sceneRect();
+    const auto& scene_rect = scene_->sceneRect();
 
     if (scene_rect.width() < min_width_ || scene_rect.height() < min_height_) {
         auto min = qMin(scene_rect.width(), scene_rect.height());

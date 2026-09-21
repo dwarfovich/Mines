@@ -9,4 +9,4 @@ struct QPointFHasher {
     std::size_t operator()(const QPointF& point) const;
 };
 
-#endif // QPOINTFHASHER_HPP
+#endif  // QPOINTFHASHER_HPP
