@@ -23,7 +23,7 @@ void CellItem::setCell(Cell* cell)
     cell_ = cell;
 }
 
-bool CellItem::IsHovered() const
+bool CellItem::isHovered() const
 {
     return is_hovered_;
 }

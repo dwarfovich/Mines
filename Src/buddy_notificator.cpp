@@ -5,8 +5,13 @@
 
 BuddyNotificator::BuddyNotificator(QGraphicsItem& owner) : owner_{owner} {}
 
-void BuddyNotificator::BuddyHoveringStateChanged(bool new_state)
+void BuddyNotificator::buddyHoveringStateChanged(bool new_state)
 {
     buddy_is_hovered_ = new_state;
     owner_.update();
+}
+
+bool BuddyNotificator::buddyIsHovered() const
+{
+    return buddy_is_hovered_;
 }

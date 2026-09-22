@@ -9,16 +9,28 @@ const QPen GraphCellItem::hovered_pen_{Qt::red};
 GraphCellItem::GraphCellItem(const Cell* cell)
     : BuddyNotificator{static_cast<QGraphicsItem&>(*this)}, SpriteCellItem{cell}
 {
-    effect_ = new QGraphicsDropShadowEffect();
-    effect_->setOffset(0, 0);
-    effect_->setBlurRadius(size() * 2);
-    effect_->setColor(Qt::red);
-    setGraphicsEffect(effect_);
+}
+
+QRectF GraphCellItem::boundingRect() const
+{
+    return SpriteCellItem::boundingRect().adjusted(-glow_radius_, -glow_radius_, glow_radius_, glow_radius_);
 }
 
 void GraphCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    effect_->setEnabled(BuddyIsHovered());
+    if (isHovered()) {
+        QRadialGradient gradient{boundingRect().center(), boundingRect().width() / 2.0 + glow_radius_};
+        gradient.setColorAt(0.0, QColor(255, 0, 0, 100));
+        gradient.setColorAt(0.6, QColor(255, 0, 0, 40));
+        gradient.setColorAt(1.0, QColor(255, 0, 0, 0));
+
+        painter->save();
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(gradient);
+        painter->drawEllipse(boundingRect());
+        painter->restore();
+    }
+
     SpriteCellItem::paint(painter, option, widget);
 }
 
@@ -32,7 +44,7 @@ void GraphCellItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
     setZValue(zValue() + 1);
     SpriteCellItem::hoverEnterEvent(event);
     for (auto& buddy : buddies_) {
-        buddy->BuddyHoveringStateChanged(IsHovered());
+        buddy->buddyHoveringStateChanged(isHovered());
     }
 }
 
@@ -41,6 +53,6 @@ void GraphCellItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
     setZValue(zValue() - 1);
     SpriteCellItem::hoverLeaveEvent(event);
     for (auto& buddy : buddies_) {
-        buddy->BuddyHoveringStateChanged(IsHovered());
+        buddy->buddyHoveringStateChanged(isHovered());
     }
 }

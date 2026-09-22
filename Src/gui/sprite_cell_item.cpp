@@ -16,6 +16,7 @@ void SpriteCellItem::setSprites(const QString& path)
     sprites_ = std::make_unique<QPixmap>(path);
     size_ = sprites_->height();
     half_size_ = size_ / 2.;
+    sprite_box_ = QRectF{-half_size_, -half_size_, size_, size_};
 }
 
 qreal SpriteCellItem::size()
@@ -35,7 +36,7 @@ void SpriteCellItem::setShape(const QPainterPath& shape)
 
 QRectF SpriteCellItem::boundingRect() const
 {
-    return {-half_size_, -half_size_, size_, size_};
+    return sprite_box_;
 }
 
 void SpriteCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -46,7 +47,7 @@ void SpriteCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     Q_ASSERT(cell_);
 
     auto cell_state = cellState();
-    painter->drawPixmap(boundingRect(), *SpriteCellItem::sprites_, spriteRect(cell_state));
+    painter->drawPixmap(sprite_box_, *SpriteCellItem::sprites_, spriteRect(cell_state));
     if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
         painter->setFont(font_);
         painter->setPen(textColor(cell_->neighbor_mines));
@@ -54,7 +55,7 @@ void SpriteCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
             ->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
     }
 
-    if (IsHovered()) {
+    if (isHovered()) {
         painter->setBrush(Qt::white);
         painter->setPen(Qt::NoPen);
         painter->setOpacity(hovered_opacity_);

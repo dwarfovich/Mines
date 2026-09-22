@@ -1,8 +1,8 @@
 #pragma once
 
+#include <QGraphicsDropShadowEffect>
 #include "buddy_notificator.hpp"
 #include "gui/sprite_cell_item.hpp"
-
 class Cell;
 class QGraphicsDropShadowEffect;
 
@@ -14,6 +14,7 @@ public:
 
     explicit GraphCellItem(const Cell* cell);
 
+    QRectF boundingRect() const;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void addBuddy(BuddyNotificator* buddy);
 
@@ -22,7 +23,8 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
 
 private:
-    static const QPen              hovered_pen_;
+    static const QPen      hovered_pen_;
+    static constexpr qreal glow_radius_ = 15.;
+
     std::vector<BuddyNotificator*> buddies_;
-    QGraphicsDropShadowEffect*     effect_ = nullptr;
 };

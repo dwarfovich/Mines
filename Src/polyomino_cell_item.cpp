@@ -29,7 +29,7 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
     painter->setPen(constants::polyomino_board::border_pen);
 
     if (cell_->is_closed) {
-        if (IsHovered()) {
+        if (isHovered()) {
             painter->setBrush(constants::polyomino_board::hovered_brush);
         } else {
             painter->setBrush(closed_brush_);

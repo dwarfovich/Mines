@@ -31,6 +31,7 @@ private:
     inline static std::unique_ptr<QPixmap>  sprites_ = nullptr;
     inline static qreal                     size_ = 0.;
     inline static qreal                     half_size_ = 0.;
+    inline static QRectF                    sprite_box_;
     inline static QPainterPath              shape_;
     inline static constexpr qreal           hovered_opacity_ = 0.3;
     inline static const std::vector<QColor> text_colors_ = {Qt::black,

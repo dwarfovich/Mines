@@ -24,6 +24,7 @@ protected:
 
 private:
     static const QPen hovered_pen_;
+
     Edge              edge_;
     QGraphicsItem*    p1_ = nullptr;
     QGraphicsItem*    p2_ = nullptr;

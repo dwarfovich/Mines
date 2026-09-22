@@ -32,6 +32,7 @@ void BoardScene::clear()
 void BoardScene::startAnimation()
 {
     if (advance_period_) {
+        //setItemIndexMethod(QGraphicsScene::NoIndex);
         timer_.start(advance_period_);
     }
 }

@@ -27,8 +27,9 @@ void DynamicGraphCellItem::advance(int step)
         return;
     }
 
-    const auto   radius = scene()->sceneRect().width() / 2.;
-    const auto   center = (scene()->sceneRect().center());
+    const auto   sceneRect = scene()->sceneRect();
+    const auto   radius = sceneRect.width() / 2.;
+    const auto   center = sceneRect.center();
     const QLineF lineToCenter = {pos(), center};
     qreal        dx = 0;
     qreal        dy = 0;

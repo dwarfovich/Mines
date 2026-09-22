@@ -24,7 +24,7 @@ public:
 
     const Cell* cell() const;
     void        setCell(Cell* cell);
-    bool        IsHovered() const;
+    bool        isHovered() const;
 
 protected:  // methods
     CellItem::CellState cellState() const;
