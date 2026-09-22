@@ -1,7 +1,7 @@
 #include "dynamic_graph_board.hpp"
 #include "buddy_notificator.hpp"
 #include "dynamic_graph_cell_item.hpp"
-#include "dynamic_graph_parameters_widget.h"
+#include "dynamic_graph_parameters_widget.hpp"
 #include "edge.hpp"
 #include "edge_item.hpp"
 #include "graph_boards_constants.hpp"

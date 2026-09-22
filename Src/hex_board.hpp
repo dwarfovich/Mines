@@ -1,5 +1,4 @@
-#ifndef HEXBOARD_HPP
-#define HEXBOARD_HPP
+#pragma once
 
 #include "rectangle_board.hpp"
 
@@ -22,5 +21,3 @@ protected:
     std::vector<std::size_t>     neighborIds(std::size_t id) const override;
     //mutable HexParametersWidget* parameters_widget_ = nullptr;
 };
-
-#endif  // HEXBOARD_HPP

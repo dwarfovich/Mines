@@ -1,5 +1,4 @@
-#ifndef TRIANGLE_HPP
-#define TRIANGLE_HPP
+#pragma once
 
 #include "edge.hpp"
 
@@ -22,5 +21,3 @@ public:
 private:
     std::array<QPointF, 3> points_;
 };
-
-#endif  // TRIANGLE_HPP

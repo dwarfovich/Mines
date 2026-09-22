@@ -1,5 +1,4 @@
-#ifndef TRIANGULATOR_HPP
-#define TRIANGULATOR_HPP
+#pragma once
 
 #include "edge.hpp"
 #include "triangle.hpp"
@@ -21,5 +20,3 @@ private:  // methods
 private:  // data
     std::vector<Triangle> triangulation_;
 };
-
-#endif  // TRIANGULATOR_HPP

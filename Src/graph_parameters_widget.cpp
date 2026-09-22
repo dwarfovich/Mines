@@ -1,4 +1,4 @@
-#include "graph_parameters_widget.h"
+#include "graph_parameters_widget.hpp"
 
 GraphParametersWidget::GraphParametersWidget(QWidget* parent)
     : QWidget(parent), ui_(new Ui::GraphParametersWidgetClass())

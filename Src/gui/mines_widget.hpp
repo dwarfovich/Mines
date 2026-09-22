@@ -1,5 +1,4 @@
-#ifndef MINES_WIDGET_HPP
-#define MINES_WIDGET_HPP
+#pragma once
 
 #include "board_scene.hpp"
 #include "game_over_dialog_answer.hpp"
@@ -54,5 +53,3 @@ private:  // data
     static constexpr double max_width_ = 1500.;
     static constexpr double max_height_ = 1500.;
 };
-
-#endif  // MINES_WIDGET_HPP

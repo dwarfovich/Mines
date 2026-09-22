@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_HPP
-#define MAINWINDOW_HPP
+#pragma once
 
 #include "board_collection.hpp"
 #include "game_over_dialog_answer.hpp"
@@ -38,5 +37,3 @@ private:
     Board*                           board_ = nullptr;
     std::unique_ptr<BoardCollection> board_collection_;
 };
-
-#endif  // MAINWINDOW_HPP

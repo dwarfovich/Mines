@@ -1,5 +1,4 @@
-#ifndef CELL_HPP
-#define CELL_HPP
+#pragma once
 
 #include <cstddef>
 
@@ -16,4 +15,3 @@ public:
     std::size_t id = 0;
 };
 
-#endif  // CELL_HPP

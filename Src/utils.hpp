@@ -1,5 +1,4 @@
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#pragma once
 
 #include <QPointF>
 #include <QString>
@@ -29,5 +28,3 @@ bool contains(const Container& c, const Element& e)
 }
 
 qreal normalizeAngle(qreal angle);
-
-#endif  // UTILS_HPP

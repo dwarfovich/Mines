@@ -1,5 +1,4 @@
-#ifndef RECTANGLE_BOARD_PARAMETERS_WIDGET_HPP
-#define RECTANGLE_BOARD_PARAMETERS_WIDGET_HPP
+#pragma once
 
 #include <QWidget>
 
@@ -24,5 +23,3 @@ private slots:
 private:
     Ui::RectangleBoardParametersWidget* ui_;
 };
-
-#endif  // RECTANGLE_BOARD_PARAMETERS_WIDGET_HPP

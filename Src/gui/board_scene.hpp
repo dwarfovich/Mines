@@ -1,5 +1,4 @@
-#ifndef BOARDSCENE_HPP
-#define BOARDSCENE_HPP
+#pragma once
 
 #include "cell_item.hpp"
 
@@ -33,5 +32,3 @@ protected:
     QTimer                                     timer_;
     int                                        advance_period_ = 0;
 };
-
-#endif  // BOARDSCENE_HPP

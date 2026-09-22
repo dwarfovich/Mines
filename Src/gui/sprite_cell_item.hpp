@@ -1,5 +1,4 @@
-#ifndef SPRITE_CELL_ITEM_HPP
-#define SPRITE_CELL_ITEM_HPP
+#pragma once
 
 #include "cell_item.hpp"
 
@@ -46,5 +45,3 @@ private:
                                                             {43, 29, 26}};
     inline static const QFont               font_ = {"Calibri", 20, QFont::Bold};
 };
-
-#endif  // SPRITE_CELL_ITEM_HPP

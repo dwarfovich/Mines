@@ -1,4 +1,4 @@
-#include "dynamic_graph_parameters_widget.h"
+#include "dynamic_graph_parameters_widget.hpp"
 
 DynamicGraphParametersWidget::DynamicGraphParametersWidget(QWidget* parent) : QWidget(parent)
 {

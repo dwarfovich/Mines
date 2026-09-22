@@ -1,7 +1,7 @@
 #pragma once
 
 #include "graph_board.hpp"
-#include "dynamic_graph_parameters_widget.h"
+#include "dynamic_graph_parameters_widget.hpp"
 
 class DynamicGraphBoard : public GraphBoard<DynamicGraphParametersWidget> {
 public:

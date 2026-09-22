@@ -1,6 +1,4 @@
-#ifndef BOARDVIEW_HPP
-#define BOARDVIEW_HPP
-
+#pragma once
 #include <QGraphicsView>
 
 class BoardView : public QGraphicsView {
@@ -22,5 +20,3 @@ private:
     QPointF     scene_center_;
     bool        is_scrolling_;
 };
-
-#endif  // BOARDVIEW_HPP

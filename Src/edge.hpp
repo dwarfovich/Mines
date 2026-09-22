@@ -1,5 +1,4 @@
-#ifndef EDGE_HPP
-#define EDGE_HPP
+#pragma once
 
 #include <QPointF>
 
@@ -20,5 +19,3 @@ private:
 struct EdgeHasher {
     std::size_t operator()(const Edge& e) const;
 };
-
-#endif  // EDGE_HPP

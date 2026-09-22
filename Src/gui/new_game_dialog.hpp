@@ -1,5 +1,4 @@
-#ifndef NEW_GAME_DIALOG_HPP
-#define NEW_GAME_DIALOG_HPP
+#pragma once
 
 #include "utils.hpp"
 
@@ -36,5 +35,3 @@ private:
     BoardCollection*   collection_ = nullptr;
     Board*             board_ = nullptr;
 };
-
-#endif  // NEW_GAME_DIALOG_HPP

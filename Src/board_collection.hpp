@@ -1,5 +1,4 @@
-#ifndef BOARD_COLLECTION_HPP
-#define BOARD_COLLECTION_HPP
+#pragma once
 
 #include "board.hpp"
 
@@ -23,5 +22,3 @@ public:
 private:
     BoardsMap boards_;
 };
-
-#endif  // BOARD_COLLECTION_HPP

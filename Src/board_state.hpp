@@ -1,5 +1,4 @@
-#ifndef BOARDSTATE_HPP
-#define BOARDSTATE_HPP
+#pragma once
 
 #include "game_state.hpp"
 
@@ -11,5 +10,3 @@ struct BoardState {
     bool        first_cell_opened = false;
     GameState   game_state = GameState::Playing;
 };
-
-#endif  // BOARDSTATE_HPP

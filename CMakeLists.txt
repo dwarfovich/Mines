@@ -41,10 +41,7 @@ endfunction()
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 qt_standard_project_setup()
 set(PROJECT_SOURCES
-    Src/abstract_board.hpp
-    Src/parameters_widget_holder.hpp
     Src/board_collection.cpp
-    Src/board.hpp
     Src/buddy_notificator.cpp
     Src/cell.cpp
     Src/circle.cpp
@@ -56,7 +53,6 @@ set(PROJECT_SOURCES
     Src/dynamic_graph_parameters_widget.cpp
     Src/edge_item.cpp
     Src/edge.cpp
-    Src/graph_board.cpp
     Src/graph_cell_item.cpp
     Src/graph_parameters_widget.cpp
     Src/hex_board.cpp
@@ -75,11 +71,15 @@ set(PROJECT_SOURCES
     Src/triangle.cpp
     Src/triangulator.cpp
     Src/utils.cpp
-
+        
+    Src/abstract_board.hpp
+    Src/parameters_widget_holder.hpp
     Src/utils.hpp
     Src/game_state.hpp
     Src/board_collection.hpp
     Src/cell.hpp
+    Src/graph_board.hpp
+    Src/board.hpp
 
     Src/gui/board_scene.cpp
     Src/gui/board_view.cpp

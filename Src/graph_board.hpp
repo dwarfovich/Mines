@@ -7,7 +7,7 @@
 #include "graph_boards_constants.hpp"
 #include "graph_boards_parameters.h"
 #include "graph_cell_item.hpp"
-#include "graph_parameters_widget.h"
+#include "graph_parameters_widget.hpp"
 #include "id_based_board.hpp"
 #include "qpointf_hasher.hpp"
 

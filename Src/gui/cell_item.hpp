@@ -1,5 +1,4 @@
-#ifndef CELLITEM_HPP
-#define CELLITEM_HPP
+#pragma once
 
 #include <QGraphicsItem>
 
@@ -38,5 +37,3 @@ protected:  // data
 private:
     bool is_hovered_ = false;
 };
-
-#endif  // CELLITEM_HPP

@@ -1,5 +1,4 @@
-#ifndef MEC_HPP
-#define MEC_HPP
+#pragma once
 
 #include "circle.hpp"
 
@@ -13,5 +12,3 @@ Circle  trivialMinimalCircle(const std::vector<QPointF>& points);
 Circle  minimalEnclosingCircleWelzl(const std::vector<QPointF>& points, std::vector<QPointF> R, size_t firstIndex);
 // Uses Welzl' algorithm.
 Circle minimalEnclosingCircle(const std::vector<QPointF>& points);
-
-#endif

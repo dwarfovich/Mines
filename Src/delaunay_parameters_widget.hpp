@@ -1,5 +1,4 @@
-#ifndef DELAUNAY_PARAMETERS_WIDGET_HPP
-#define DELAUNAY_PARAMETERS_WIDGET_HPP
+#pragma once
 
 #include <QWidget>
 
@@ -23,5 +22,3 @@ private slots:
 private:
     Ui::DelaunayParametersWidget* ui_;
 };
-
-#endif  // DELAUNAY_PARAMETERS_WIDGET_HPP

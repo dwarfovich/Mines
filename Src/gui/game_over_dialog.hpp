@@ -1,5 +1,4 @@
-#ifndef GAME_OVER_DIALOG_HPP
-#define GAME_OVER_DIALOG_HPP
+#pragma once
 
 #include "game_over_dialog_answer.hpp"
 #include "game_state.hpp"
@@ -26,5 +25,3 @@ private:
     Ui::GameOverDialog*  ui_;
     GameOverDialogAnswer answer_;
 };
-
-#endif  // GAME_OVER_DIALOG_HPP
