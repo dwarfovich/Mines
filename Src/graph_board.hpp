@@ -206,8 +206,8 @@ void GraphBoard<ParametersWidgetType>::setupParameters()
 
     parameters_.nodes_count = parameters_widget->nodesCount();
     parameters_.mines_count = parameters_widget->minesCount();
-    // TODO:
-//    parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
-    // TODO:
-   // parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
+    if constexpr (std::is_same_v<decltype(parameters_widget), GraphParametersWidget>) {
+        parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
+        parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
+    }
 }
