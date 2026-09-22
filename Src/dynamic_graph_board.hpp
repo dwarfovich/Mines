@@ -1,20 +1,15 @@
 #pragma once
 
 #include "graph_board.hpp"
+#include "dynamic_graph_parameters_widget.h"
 
-class DynamicGraphParametersWidget;
-
-class DynamicGraphBoard : public GraphBoard {
+class DynamicGraphBoard : public GraphBoard<DynamicGraphParametersWidget> {
 public:
     const QString& id() const override;
     const QString& name() const override;
     void           generate() override;
     void           setupScene(BoardScene* scene) override;
-    QWidget*       parametersWidget() const;
 
-private:
+private: // methods
     void setupParameters() override;
-
-private:
-    mutable DynamicGraphParametersWidget* parameters_widget_ = nullptr;
 };

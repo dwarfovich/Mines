@@ -2,20 +2,18 @@
 
 #include "id_based_board.hpp"
 #include "polyomino_cell.hpp"
+#include "polyomino_parameters_widget.hpp"
 
 #include <deque>
 #include <random>
 
-class PolyominoParametersWidget;
-
-class PolyominoBoard : public IdBasedBoard<PolyominoCell> {
+class PolyominoBoard : public IdBasedBoard<PolyominoCell, PolyominoParametersWidget> {
     Q_OBJECT
 public:
     const QString&      id() const override;
     const QString&      name() const override;
     void                generate() override;
     void                setupScene(BoardScene* scene) override;
-    QWidget*            parametersWidget() const override;
     std::vector<size_t> neighborIds(size_t id) const override;
 
 private:
@@ -32,5 +30,4 @@ private:
     size_t                             width_ = 0;
     size_t                             height_ = 0;
     size_t                             max_polyomino_size_ = 1;
-    mutable PolyominoParametersWidget* parameters_widget_ = nullptr;
 };

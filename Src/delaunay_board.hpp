@@ -1,18 +1,15 @@
-#ifndef DELAUNAY_BOARD_HPP
-#define DELAUNAY_BOARD_HPP
+#pragma once
 
+#include "delaunay_parameters_widget.hpp"
 #include "graph_board.hpp"
 #include "triangulator.hpp"
 
-class DelaunayParametersWidget;
-
-class DelaunayBoard : public GraphBoard {
+class DelaunayBoard : public GraphBoard<DelaunayParametersWidget> {
     Q_OBJECT
 
 public:
     const QString& id() const override;
     const QString& name() const override;
-    QWidget*       parametersWidget() const override;
     void           generate() override;
 
 protected:  // methods
@@ -21,8 +18,5 @@ protected:  // methods
     void                     setupParameters() override;
 
 protected:  // data
-    Triangulator                      triangulator_;
-    mutable DelaunayParametersWidget* parameters_widget_ = nullptr;
+    Triangulator triangulator_;
 };
-
-#endif  // DELAUNAY_BOARD_HPP

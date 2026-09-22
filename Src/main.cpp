@@ -1,11 +1,12 @@
 #include "board_collection.hpp"
+#include "hex_board.hpp"
 #include "delaunay_board.hpp"
 #include "dynamic_graph_board.hpp"
 #include "graph_board.hpp"
-#include "gui/main_window.hpp"
-#include "hex_board.hpp"
 #include "polyomino_board.hpp"
 #include "rectangle_board.hpp"
+
+#include "gui/main_window.hpp"
 
 #ifdef _WIN32
 #include "Windows.h"
@@ -28,7 +29,7 @@ int main(int argc, char* argv[])
     auto collection = std::make_unique<BoardCollection>();
     collection->registerBoard(std::make_unique<RectangleBoard>());
     collection->registerBoard(std::make_unique<HexBoard>());
-    collection->registerBoard(std::make_unique<GraphBoard>());
+    collection->registerBoard(std::make_unique<GraphBoard<>>());
     collection->registerBoard(std::make_unique<DelaunayBoard>());
     collection->registerBoard(std::make_unique<PolyominoBoard>());
     collection->registerBoard(std::make_unique<DynamicGraphBoard>());

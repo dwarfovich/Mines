@@ -41,16 +41,17 @@ void RectangleBoard::setupScene(BoardScene* scene)
 
 void RectangleBoard::generate()
 {
-    if (!parameters_widget_) {
+    auto* parameters_widget = parametersWidget();
+    if (!parameters_widget) {
         Q_ASSERT(false);
         return;
     }
 
-    width_ = parameters_widget_->boardWidth();
-    height_ = parameters_widget_->boardHeight();
+    width_ = parameters_widget->boardWidth();
+    height_ = parameters_widget->boardHeight();
     board_state_ = {};
     flags_ = 0;
-    board_state_.mines = parameters_widget_->mines();
+    board_state_.mines = parameters_widget->mines();
     board_state_.empty_cells = width_ * height_ - board_state_.mines;
 
     initializeCells(width_ * height_);
@@ -59,14 +60,14 @@ void RectangleBoard::generate()
     board_state_.game_state = GameState::Playing;
 }
 
-QWidget* RectangleBoard::parametersWidget() const
-{
-    if (!parameters_widget_) {
-        parameters_widget_ = new RectangleBoardParametersWidget{&settings_widget_holder_};
-    }
-
-    return parameters_widget_;
-}
+//QWidget* RectangleBoard::parametersWidget() const
+//{
+//    if (!parameters_widget_) {
+//        parameters_widget_ = new RectangleBoardParametersWidget{&settings_widget_holder_};
+//    }
+//
+//    return parameters_widget_;
+//}
 
 std::vector<std::size_t> RectangleBoard::neighborIds(std::size_t id) const
 {

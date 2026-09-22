@@ -1,3 +1,4 @@
+
 #include "hex_board.hpp"
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
@@ -53,16 +54,17 @@ void HexBoard::setupScene(BoardScene* scene)
 
 void HexBoard::generate()
 {
-    if (!parameters_widget_) {
+    auto* parameters_widget = parametersWidget();
+    if (!parameters_widget) {
         Q_ASSERT(false);
         return;
     }
 
-    width_ = parameters_widget_->boardWidth();
-    height_ = parameters_widget_->boardHeight();
+    width_ = parameters_widget->boardWidth();
+    height_ = parameters_widget->boardHeight();
     board_state_ = {};
     flags_ = 0;
-    board_state_.mines = parameters_widget_->mines();
+    board_state_.mines = parameters_widget->mines();
     board_state_.empty_cells = width_ * height_ - board_state_.mines;
 
     initializeCells(width_ * height_);
@@ -71,14 +73,14 @@ void HexBoard::generate()
     board_state_.game_state = GameState::Playing;
 }
 
-QWidget* HexBoard::parametersWidget() const
-{
-    if (!parameters_widget_) {
-        parameters_widget_ = new HexParametersWidget{&settings_widget_holder_};
-    }
-
-    return parameters_widget_;
-}
+//QWidget* HexBoard::parametersWidget() const
+//{
+//    if (!parameters_widget_) {
+//        parameters_widget_ = new HexParametersWidget{&settings_widget_holder_};
+//    }
+//
+//    return parameters_widget_;
+//}
 
 std::vector<std::size_t> HexBoard::neighborIds(std::size_t id) const
 {

@@ -21,12 +21,14 @@ const QString& PolyominoBoard::name() const
 
 void PolyominoBoard::generate()
 {
-    width_ = parameters_widget_->width();
-    height_ = parameters_widget_->height();
-    max_polyomino_size_ = parameters_widget_->maxPolyominoSize();
+    auto* parameters_widget = parametersWidget();
+
+    width_ = parameters_widget->width();
+    height_ = parameters_widget->height();
+    max_polyomino_size_ = parameters_widget->maxPolyominoSize();
 
     board_state_ = {};
-    board_state_.mines = parameters_widget_->minesCount();
+    board_state_.mines = parameters_widget->minesCount();
     const size_t cells_counter = cells_.size();
     board_state_.empty_cells = cells_counter - board_state_.mines;
     cells_.clear();
@@ -89,15 +91,6 @@ void PolyominoBoard::setupScene(BoardScene* scene)
                          0.,
                          static_cast<qreal>(width_ * SpriteCellItem::size()),
                          static_cast<qreal>(height_ * SpriteCellItem::size())});
-}
-
-QWidget* PolyominoBoard::parametersWidget() const
-{
-    if (!parameters_widget_) {
-        parameters_widget_ = new PolyominoParametersWidget{&settings_widget_holder_};
-    }
-
-    return parameters_widget_;
 }
 
 std::vector<size_t> PolyominoBoard::neighborIds(size_t id) const

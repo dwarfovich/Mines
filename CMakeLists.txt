@@ -41,9 +41,10 @@ endfunction()
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 qt_standard_project_setup()
 set(PROJECT_SOURCES
+    Src/abstract_board.hpp
+    Src/parameters_widget_holder.hpp
     Src/board_collection.cpp
-    Src/board_state.cpp
-    Src/board.cpp
+    Src/board.hpp
     Src/buddy_notificator.cpp
     Src/cell.cpp
     Src/circle.cpp

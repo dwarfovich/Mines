@@ -28,7 +28,8 @@ const QString& DynamicGraphBoard::name() const
 
 void DynamicGraphBoard::generate()
 {
-    if (!parameters_widget_) {
+    auto* parameters_widget = parametersWidget();
+    if (!parameters_widget) {
         Q_ASSERT(false);
         return;
     }
@@ -98,21 +99,14 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
     scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
 }
 
-QWidget* DynamicGraphBoard::parametersWidget() const
-{
-    if (!parameters_widget_) {
-        parameters_widget_ = new DynamicGraphParametersWidget{&settings_widget_holder_};
-    }
-
-    return parameters_widget_;
-}
-
 void DynamicGraphBoard::setupParameters()
 {
-    parameters_.nodes_count = parameters_widget_->nodesCount();
-    parameters_.mines_count = parameters_widget_->minesCount();
-    parameters_.maximum_neighbors = parameters_widget_->maximumNeighbors();
-    parameters_.allow_disjoint_graph = parameters_widget_->allowDisjointGraph();
-    parameters_.speed = static_cast<double>(parameters_widget_->speed()) *
+    auto* parameters_widget = parametersWidget();
+
+    parameters_.nodes_count = parameters_widget->nodesCount();
+    parameters_.mines_count = parameters_widget->minesCount();
+    parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
+    parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
+    parameters_.speed = static_cast<double>(parameters_widget->speed()) *
                         constants::graph_board::user_speed_conversion_coefficient;
 }

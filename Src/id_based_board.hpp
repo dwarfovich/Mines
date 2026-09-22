@@ -1,13 +1,14 @@
-#ifndef ID_BASED_BOARD_HPP
-#define ID_BASED_BOARD_HPP
+#pragma once
 
+#include "abstract_board.hpp"
 #include "board.hpp"
 #include "cell.hpp"
+#include "board_state.hpp"
 
 #include <random>
 
-template <typename CellType>
-class IdBasedBoard : public Board {
+template <typename CellType, typename ParametersWidgetType>
+class IdBasedBoard : public AbstractBoard<ParametersWidgetType> {
 public:
     IdBasedBoard();
 
@@ -33,19 +34,19 @@ protected:  // data
     mutable std::mt19937                   random_generator_;
 };
 
-template <typename CellType>
-IdBasedBoard<CellType>::IdBasedBoard() : random_generator_{random_device_()}
+template <typename CellType, typename ParametersWidgetType>
+IdBasedBoard<CellType, ParametersWidgetType>::IdBasedBoard() : random_generator_{random_device_()}
 {
 }
 
-template <typename CellType>
-size_t IdBasedBoard<CellType>::flags() const
+template <typename CellType, typename ParametersWidgetType>
+size_t IdBasedBoard<CellType, ParametersWidgetType>::flags() const
 {
     return flags_;
 }
 
-template <typename CellType>
-const Cell* IdBasedBoard<CellType>::cellById(size_t id) const
+template <typename CellType, typename ParametersWidgetType>
+const Cell* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id) const
 {
     if (id >= 0 && id < cells_.size()) {
         return cells_[id].get();
@@ -54,31 +55,31 @@ const Cell* IdBasedBoard<CellType>::cellById(size_t id) const
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::openCell(size_t id)
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::openCell(size_t id)
 {
     auto cell = cellById(id);
     Q_ASSERT(cell);
 
-    if (board_state_.game_state != GameState::Playing || cell->has_flag) {
+    if (this->board_state_.game_state != GameState::Playing || cell->has_flag) {
         return;
     }
 
-    if (!board_state_.first_cell_opened && cell->has_mine) {
+    if (!this->board_state_.first_cell_opened && cell->has_mine) {
         relocateFirstOpenedMine(cell);
     }
-    board_state_.first_cell_opened = true;
+    this->board_state_.first_cell_opened = true;
 
     if (cell->has_mine) {
-        board_state_.game_state = GameState::Loose;
+        this->board_state_.game_state = GameState::Loose;
         reveal();
     } else {
         cell->is_closed = false;
-        emit cellChanged(cell);
-        --board_state_.empty_cells;
+        emit this->cellChanged(cell);
+        --this->board_state_.empty_cells;
         cell->neighbor_mines = countNeighborMines(cell->id);
-        if (board_state_.empty_cells == 0) {
-            board_state_.game_state = GameState::Win;
+        if (this->board_state_.empty_cells == 0) {
+            this->board_state_.game_state = GameState::Win;
             reveal();
         } else if (cell->neighbor_mines == 0) {
             openAdjacentCells(cell);
@@ -86,8 +87,8 @@ void IdBasedBoard<CellType>::openCell(size_t id)
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::toggleFlag(size_t id)
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::toggleFlag(size_t id)
 {
     auto cell = cellById(id);
     if (cell->is_closed) {
@@ -97,12 +98,12 @@ void IdBasedBoard<CellType>::toggleFlag(size_t id)
         } else {
             --flags_;
         }
-        cellChanged(cell);
+        this->cellChanged(cell);
     }
 }
 
-template <typename CellType>
-Cell* IdBasedBoard<CellType>::cellById(size_t id)
+template <typename CellType, typename ParametersWidgetType>
+Cell* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
         return cells_[id].get();
@@ -111,8 +112,8 @@ Cell* IdBasedBoard<CellType>::cellById(size_t id)
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::relocateFirstOpenedMine(Cell* cell)
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::relocateFirstOpenedMine(Cell* cell)
 {
     Q_ASSERT(cell);
 
@@ -125,24 +126,24 @@ void IdBasedBoard<CellType>::relocateFirstOpenedMine(Cell* cell)
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::reveal()
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::reveal()
 {
     for (size_t i = 0; i < cells_.size(); ++i) {
         if (cells_[i]->is_closed) {
             if (!cells_[i]->has_mine) {
                 cells_[i]->neighbor_mines = countNeighborMines(i);
-            } else if (board_state_.game_state == GameState::Win) {
+            } else if (this->board_state_.game_state == GameState::Win) {
                 cells_[i]->has_flag = true;
             }
             cells_[i]->is_closed = false;
-            cellChanged(cells_[i].get());
+            this->cellChanged(cells_[i].get());
         }
     }
 }
 
-template <typename CellType>
-size_t IdBasedBoard<CellType>::countNeighborMines(size_t id) const
+template <typename CellType, typename ParametersWidgetType>
+size_t IdBasedBoard<CellType, ParametersWidgetType>::countNeighborMines(size_t id) const
 {
     const auto& ids = neighborIds(id);
     size_t      mines = 0;
@@ -156,8 +157,8 @@ size_t IdBasedBoard<CellType>::countNeighborMines(size_t id) const
     return mines;
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::openAdjacentCells(Cell* cell)
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::openAdjacentCells(Cell* cell)
 {
     auto neighbors{neighborIds(cell->id)};
     for (auto neighborId : neighbors) {
@@ -168,8 +169,8 @@ void IdBasedBoard<CellType>::openAdjacentCells(Cell* cell)
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::initializeCells(size_t cells_counter)
 {
     cells_.resize(cells_counter);
     size_t mines_counter = 0;
@@ -179,7 +180,7 @@ void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
         } else {
             *cells_[i] = {};
         }
-        if (mines_counter < board_state_.mines) {
+        if (mines_counter < this->board_state_.mines) {
             cells_[i]->has_mine = true;
             ++mines_counter;
         } else {
@@ -188,13 +189,11 @@ void IdBasedBoard<CellType>::initializeCells(size_t cells_counter)
     }
 }
 
-template <typename CellType>
-void IdBasedBoard<CellType>::randomize()
+template <typename CellType, typename ParametersWidgetType>
+void IdBasedBoard<CellType, ParametersWidgetType>::randomize()
 {
     std::shuffle(cells_.begin(), cells_.end(), random_generator_);
     for (size_t i = 0; i < cells_.size(); ++i) {
         cells_[i]->id = i;
     }
 }
-
-#endif  // ID_BASED_BOARD_HPP

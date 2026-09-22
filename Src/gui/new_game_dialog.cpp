@@ -32,7 +32,8 @@ void NewGameDialog::onNewBoardSelected(int index)
     if (board) {
         if (parameters_widget_) {
             parameters_layout_->removeWidget(parameters_widget_);
-            board_->TakeOwnershipOfParametersWidget(parameters_widget_);
+            parameters_widget_->setParent(nullptr);
+            //board_->TakeOwnershipOfParametersWidget(parameters_widget_);
         }
         parameters_widget_ = board->parametersWidget();
         Q_ASSERT(parameters_widget_);

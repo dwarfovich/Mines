@@ -1,5 +1,9 @@
 #pragma once
 
+#include <QtCore>
+
+#include <cstddef>
+
 class GraphBoardParameters {
 public:
     std::size_t nodes_count = 0;

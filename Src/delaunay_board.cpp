@@ -23,18 +23,10 @@ const QString& DelaunayBoard::name() const
     return name;
 }
 
-QWidget* DelaunayBoard::parametersWidget() const
-{
-    if (!parameters_widget_) {
-        parameters_widget_ = new DelaunayParametersWidget{&settings_widget_holder_};
-    }
-
-    return parameters_widget_;
-}
-
 void DelaunayBoard::generate()
 {
-    if (!parameters_widget_) {
+    auto* parameters_widget = parametersWidget();
+    if (!parameters_widget) {
         Q_ASSERT(false);
         return;
     }
@@ -87,8 +79,14 @@ void DelaunayBoard::formNeighbors(const Triangulator& triangulator)
 
 void DelaunayBoard::setupParameters()
 {
-    parameters_.nodes_count = parameters_widget_->nodesCount();
-    parameters_.mines_count = parameters_widget_->minesCount();
+    auto* parameters_widget = parametersWidget();
+    if (!parameters_widget) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    parameters_.nodes_count = parameters_widget->nodesCount();
+    parameters_.mines_count = parameters_widget->minesCount();
 }
 
 std::vector<std::size_t> DelaunayBoard::neighborIds(std::size_t id) const
