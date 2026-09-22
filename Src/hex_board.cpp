@@ -74,7 +74,7 @@ void HexBoard::generate()
 QWidget* HexBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new HexParametersWidget{&dummy_parent_widget_};
+        parameters_widget_ = new HexParametersWidget{&settings_widget_holder_};
     }
 
     return parameters_widget_;

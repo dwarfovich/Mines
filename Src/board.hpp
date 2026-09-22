@@ -1,5 +1,5 @@
-#ifndef IBOARD_HPP
-#define IBOARD_HPP
+#ifndef BOARD_HPP
+#define BOARD_HPP
 
 #include "board_state.hpp"
 #include "utils.hpp"
@@ -42,7 +42,7 @@ signals:
 
 protected:
     BoardState      board_state_;
-    mutable QWidget dummy_parent_widget_;
+    mutable QWidget settings_widget_holder_;
 };
 
-#endif  // IBOARD_HPP
+#endif  // BOARD_HPP

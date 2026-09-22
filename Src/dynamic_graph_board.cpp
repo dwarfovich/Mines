@@ -101,7 +101,7 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
 QWidget* DynamicGraphBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new DynamicGraphParametersWidget{&dummy_parent_widget_};
+        parameters_widget_ = new DynamicGraphParametersWidget{&settings_widget_holder_};
     }
 
     return parameters_widget_;

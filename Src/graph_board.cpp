@@ -24,7 +24,7 @@ const QString& GraphBoard::name() const
 QWidget* GraphBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new GraphParametersWidget{&dummy_parent_widget_};
+        parameters_widget_ = new GraphParametersWidget{&settings_widget_holder_};
     }
 
     return parameters_widget_;

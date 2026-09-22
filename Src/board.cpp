@@ -7,5 +7,5 @@ const BoardState& Board::boardState() const
 
 void Board::TakeOwnershipOfParametersWidget(QWidget* widget)
 {
-    widget->setParent(&dummy_parent_widget_);
+    widget->setParent(&settings_widget_holder_);
 }

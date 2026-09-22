@@ -62,7 +62,7 @@ void RectangleBoard::generate()
 QWidget* RectangleBoard::parametersWidget() const
 {
     if (!parameters_widget_) {
-        parameters_widget_ = new RectangleBoardParametersWidget{&dummy_parent_widget_};
+        parameters_widget_ = new RectangleBoardParametersWidget{&settings_widget_holder_};
     }
 
     return parameters_widget_;
