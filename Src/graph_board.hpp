@@ -13,6 +13,7 @@
 
 #include "gui/board_scene.hpp"
 
+#include <numbers>
 #include <random>
 #include <unordered_set>
 
@@ -86,7 +87,8 @@ void GraphBoard<ParametersWidgetType>::setupScene(BoardScene* scene)
 
     setupCellItems();
 
-    const auto                                      sprite_size = SpriteCellItem::size();
+    const auto sprite_size = SpriteCellItem::size();
+
     std::unordered_map<std::size_t, GraphCellItem*> id_to_item_map;
     for (std::size_t id = 0; id < points_.size(); ++id) {
         auto* node_item = new GraphCellItem{this->cellById(id)};
@@ -128,23 +130,107 @@ std::vector<std::size_t> GraphBoard<ParametersWidgetType>::neighborIds(std::size
     return neighbors_[id];
 }
 
+// template <typename ParametersWidgetType>
+// void GraphBoard<ParametersWidgetType>::generatePoints()
+//{
+//     bounding_rect_.setLeft(std::numeric_limits<double>::max());
+//     bounding_rect_.setRight(std::numeric_limits<double>::lowest());
+//     bounding_rect_.setTop(std::numeric_limits<double>::max());
+//     bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
+//
+//     points_.resize(this->cells_.size());
+//     std::uniform_real_distribution<> distribution(0, constants::graph_board::random_points_bounding_side);
+//     for (auto& candidate : points_) {
+//         candidate = {distribution(this->random_generator_), distribution(this->random_generator_)};
+//         bounding_rect_.setLeft(std::min(candidate.x(), bounding_rect_.left()));
+//         bounding_rect_.setRight(std::max(candidate.x(), bounding_rect_.right()));
+//         bounding_rect_.setTop(std::min(candidate.y(), bounding_rect_.top()));
+//         bounding_rect_.setBottom(std::max(candidate.y(), bounding_rect_.bottom()));
+//     }
+// }
+
 template <typename ParametersWidgetType>
 void GraphBoard<ParametersWidgetType>::generatePoints()
 {
-    bounding_rect_.setLeft(std::numeric_limits<double>::max());
-    bounding_rect_.setRight(std::numeric_limits<double>::lowest());
-    bounding_rect_.setTop(std::numeric_limits<double>::max());
-    bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
+    // Bridson's Poisson disk sampling
+    constexpr double      min_distance = 50;
+    constexpr std::size_t max_attempts = 10;
+    const double          cell_size = min_distance / std::sqrt(2.0);
+    const double          field_side = constants::graph_board::random_points_bounding_side * 10.0 * cell_size;
+    const std::size_t     grid_side = std::ceil(field_side / cell_size);
+    const std::size_t     target_points_count = 30;
 
-    points_.resize(this->cells_.size());
-    std::uniform_real_distribution<> distribution(0, constants::graph_board::random_points_bounding_side);
-    for (auto& point : points_) {
-        point = {distribution(this->random_generator_), distribution(this->random_generator_)};
-        bounding_rect_.setLeft(std::min(point.x(), bounding_rect_.left()));
-        bounding_rect_.setRight(std::max(point.x(), bounding_rect_.right()));
-        bounding_rect_.setTop(std::min(point.y(), bounding_rect_.top()));
-        bounding_rect_.setBottom(std::max(point.y(), bounding_rect_.bottom()));
+    std::vector<QPointF>          samples;
+    std::vector<std::size_t>      active_list;
+    std::vector<std::vector<int>> grid(grid_side, std::vector<int>(grid_side, -1));
+
+    auto gridLocation = [cell_size](const auto& point) -> std::pair<std::size_t, std::size_t> {
+        return {static_cast<std::size_t>(point.x() / cell_size), static_cast<std::size_t>(point.y() / cell_size)};
+    };
+
+    auto isValidCandidate = [&](const QPointF& candidate) -> bool {
+        if (candidate.x() < 0. || candidate.x() >= field_side || candidate.y() < 0.0 || candidate.y() >= field_side) {
+            return false;
+        }
+
+        const auto& [grid_x, grid_y] = gridLocation(candidate);
+        const auto min_grid_x = grid_x >= 2 ? grid_x - 2 : 0;
+        const auto max_grid_x = std::min(grid_x + 3, grid_side);
+        const auto min_grid_y = grid_y >= 2 ? grid_y - 2 : 0;
+        const auto max_grid_y = std::min(grid_y + 3, grid_side);
+
+        for (std::size_t i = min_grid_y; i < max_grid_y; ++i) {
+            for (std::size_t j = min_grid_x; j < max_grid_x; ++j) {
+                const auto& neighbor_index = grid[i][j];
+                if (neighbor_index != -1) {
+                    const auto& neighbor_point = samples[neighbor_index];
+                    const auto& distance = QLineF{candidate, neighbor_point}.length();
+                    if (distance < min_distance) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    };
+
+    std::uniform_real_distribution<double> point_distribution{0., std::nextafter(field_side, 0.)};
+    std::uniform_real_distribution<double> angle_distribution{0., 2. * std::numbers::pi};
+    std::uniform_real_distribution<double> distance_distribution{min_distance, 2. * min_distance};
+
+    auto& generator = this->random_generator_;
+    samples.emplace_back(point_distribution(generator), point_distribution(generator));
+    active_list.push_back(0);
+    auto [cell_x, cell_y] = gridLocation(samples.back());
+    grid[cell_y][cell_x] = 0;
+
+    while (!active_list.empty() && samples.size() < target_points_count) {
+        std::uniform_int_distribution<std::size_t> active_distribution{0, active_list.size() - 1};
+        const auto                                 active_list_index = active_distribution(generator);
+        const auto                                 sample_index = active_list[active_list_index];
+        bool candidate_succeeded = false;
+        for (size_t attempt = 0; attempt < max_attempts; ++attempt) {
+            const auto    angle = angle_distribution(generator);
+            const auto    distance = distance_distribution(generator);
+            const QPointF direction{std::cos(angle), std::sin(angle)};
+            const QPointF candidate = samples[sample_index] + direction * distance;
+            if (isValidCandidate(candidate)) {
+                samples.push_back(candidate);
+                active_list.push_back(samples.size() - 1);
+                auto [candidate_x, candidate_y] = gridLocation(candidate);
+                grid[candidate_y][candidate_x] = samples.size() - 1;
+                candidate_succeeded = true;
+                break;
+            }
+        }
+
+        if(!candidate_succeeded){
+            active_list.erase(active_list.begin() + active_list_index);
+        }
     }
+
+    points_ = std::move(samples);
 }
 
 template <typename ParametersWidgetType>
