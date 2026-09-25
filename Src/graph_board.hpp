@@ -9,13 +9,10 @@
 #include "graph_cell_item.hpp"
 #include "graph_parameters_widget.hpp"
 #include "id_based_board.hpp"
-#include "qpointf_hasher.hpp"
 
 #include "gui/board_scene.hpp"
 
 #include <numbers>
-#include <random>
-#include <unordered_set>
 
 template <typename ParametersWidgetType = GraphParametersWidget>
 class GraphBoard : public IdBasedBoard<Cell, ParametersWidgetType> {
@@ -131,7 +128,7 @@ template <typename ParametersWidgetType>
 void GraphBoard<ParametersWidgetType>::generatePoints()
 {
     // Bridson's Poisson disk sampling
-    constexpr double      min_distance=64.;
+    constexpr double      min_distance = 64.;
     constexpr std::size_t max_attempts = 30;
     const double          cell_size = min_distance / std::sqrt(2.0);
     const std::size_t     target_points_count = parameters_.nodes_count;
@@ -141,6 +138,7 @@ void GraphBoard<ParametersWidgetType>::generatePoints()
     points_.clear();
     points_.reserve(target_points_count);
     std::vector<std::size_t>      active_list;
+    active_list.reserve(target_points_count);
     std::vector<std::vector<int>> grid(grid_side, std::vector<int>(grid_side, -1));
 
     auto gridLocation = [cell_size](const auto& point) -> std::pair<std::size_t, std::size_t> {
@@ -181,7 +179,7 @@ void GraphBoard<ParametersWidgetType>::generatePoints()
     auto& generator = this->random_generator_;
     points_.emplace_back(point_distribution(generator), point_distribution(generator));
     active_list.push_back(0);
-    auto [cell_x, cell_y] = gridLocation(points_.back());
+    const auto [cell_x, cell_y] = gridLocation(points_.back());
     grid[cell_y][cell_x] = 0;
 
     while (!active_list.empty() && points_.size() < target_points_count) {
@@ -287,8 +285,4 @@ void GraphBoard<ParametersWidgetType>::setupParameters()
 
     parameters_.nodes_count = parameters_widget->nodesCount();
     parameters_.mines_count = parameters_widget->minesCount();
-    if constexpr (std::is_same_v<decltype(parameters_widget), GraphParametersWidget>) {
-        parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
-        parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
-    }
 }

@@ -4,12 +4,10 @@
 #include "utils.hpp"
 
 #include <QObject>
-#include <QWidget>
-
-#include <memory>
 
 class Cell;
 class BoardScene;
+class QWidget;
 
 class Board : public QObject {
     Q_OBJECT
