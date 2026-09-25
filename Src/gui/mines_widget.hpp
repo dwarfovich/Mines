@@ -41,15 +41,15 @@ private:  // methods
     void centerView();
 
 private:  // data
+    static constexpr int    update_time_period_ = 1000;
+    static constexpr double min_width_ = 360.;
+    static constexpr double min_height_ = 360.;
+    static constexpr double max_width_ = 400.;
+    static constexpr double max_height_ = 400.;
+
     Ui::MinesWidget*        ui_;
     BoardScene*             scene_ = nullptr;
     Board*                  board_ = nullptr;
     QTimer*                 timer_ = nullptr;
     GameOverDialog*         game_over_dialog_ = nullptr;
-    static constexpr int    timer_period_ = 1000;
-    static constexpr double view_side_ = 50;
-    static constexpr double min_width_ = 560.;
-    static constexpr double min_height_ = 560.;
-    static constexpr double max_width_ = 1500.;
-    static constexpr double max_height_ = 1500.;
 };

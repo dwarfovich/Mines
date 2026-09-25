@@ -54,7 +54,7 @@ void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEven
     processCellItemClick(cell_item, event);
 
     if (!timer_->isActive()) {
-        timer_->start(timer_period_);
+        timer_->start(update_time_period_);
     }
 
     auto game_state = board_->boardState().game_state;
@@ -73,7 +73,12 @@ void MinesWidget::onCellChanged(Cell* cell)
 
 void MinesWidget::onTimerTimeout()
 {
-    ui_->timeSpinBox->setValue(ui_->timeSpinBox->value() + 1);
+    const auto elapsed_time = board_->elapsedTime().count();
+    if (elapsed_time > static_cast<decltype(elapsed_time)>(std::numeric_limits<int>::max())) {
+        ui_->timeSpinBox->setValue(std::numeric_limits<int>::max());
+    } else {
+        ui_->timeSpinBox->setValue(static_cast<int>(elapsed_time));
+    }
 }
 
 void MinesWidget::processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
@@ -94,16 +99,12 @@ void MinesWidget::updateFlagsCount()
 void MinesWidget::centerView()
 {
     const auto& scene_rect = scene_->sceneRect();
-
-    if (scene_rect.width() < min_width_ || scene_rect.height() < min_height_) {
-        auto min = qMin(scene_rect.width(), scene_rect.height());
-        auto x_factor = scene_rect.width() / min_width_;
-        auto y_factor = scene_rect.height() / min_height_;
-        auto min_factor = qMin(x_factor, y_factor);
-        ui_->minesGraphicsView->scale(min_factor, min_factor);
-    } else if (scene_rect.width() > min_width_ || scene_rect.height() > min_height_) {
-        auto max = qMax(max_width_, max_height_);
-        ui_->minesGraphicsView->fitInView(0, 0, max, max, Qt::KeepAspectRatio);
-    }
-    ui_->minesGraphicsView->centerOn(scene_rect.width() / 2., scene_rect.height() / 2.);
+    const auto  view_size = ui_->minesGraphicsView->viewport()->size();
+    const auto scale_x = view_size.width() / scene_rect.width();
+    const auto scale_y = view_size.height() / scene_rect.height();
+    const auto scale_factor = std::min(scale_x, scale_y);
+    ui_->minesGraphicsView->resetTransform();
+    ui_->minesGraphicsView->scale(scale_factor, scale_factor);
+    ui_->minesGraphicsView->centerOn(scene_rect.center());
+   
 }

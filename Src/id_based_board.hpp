@@ -69,6 +69,7 @@ void IdBasedBoard<CellType, ParametersWidgetType>::openCell(size_t id)
         relocateFirstOpenedMine(cell);
     }
     this->board_state_.first_cell_opened = true;
+    this->elapsed_time_ = std::chrono::steady_clock::now();
 
     if (cell->has_mine) {
         this->board_state_.game_state = GameState::Loose;

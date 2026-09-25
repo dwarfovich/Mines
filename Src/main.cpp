@@ -14,6 +14,7 @@
 
 #include <QApplication>
 
+#include <iostream>
 int main(int argc, char* argv[])
 {
 #if defined(QT_DEBUG) && defined(_WIN32)

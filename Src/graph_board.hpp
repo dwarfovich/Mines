@@ -31,6 +31,7 @@ protected:  // methods
     virtual void             formNeighbors();
     virtual void             setupCellItems();
     virtual void             setupParameters();
+    virtual void             updateBoundingRect(double cell_size);
 
 protected:  // data
     std::vector<QPointF> points_;
@@ -117,11 +118,7 @@ void GraphBoard<ParametersWidgetType>::setupScene(BoardScene* scene)
         }
     }
 
-    using namespace constants::graph_board;
-    scene->setSceneRect(bounding_rect_.adjusted(-bounding_side_adjustment,
-                                                -bounding_side_adjustment,
-                                                bounding_side_adjustment,
-                                                bounding_side_adjustment));
+    scene->setSceneRect(bounding_rect_);
 }
 
 template <typename ParametersWidgetType>
@@ -130,37 +127,19 @@ std::vector<std::size_t> GraphBoard<ParametersWidgetType>::neighborIds(std::size
     return neighbors_[id];
 }
 
-// template <typename ParametersWidgetType>
-// void GraphBoard<ParametersWidgetType>::generatePoints()
-//{
-//     bounding_rect_.setLeft(std::numeric_limits<double>::max());
-//     bounding_rect_.setRight(std::numeric_limits<double>::lowest());
-//     bounding_rect_.setTop(std::numeric_limits<double>::max());
-//     bounding_rect_.setBottom(std::numeric_limits<double>::lowest());
-//
-//     points_.resize(this->cells_.size());
-//     std::uniform_real_distribution<> distribution(0, constants::graph_board::random_points_bounding_side);
-//     for (auto& candidate : points_) {
-//         candidate = {distribution(this->random_generator_), distribution(this->random_generator_)};
-//         bounding_rect_.setLeft(std::min(candidate.x(), bounding_rect_.left()));
-//         bounding_rect_.setRight(std::max(candidate.x(), bounding_rect_.right()));
-//         bounding_rect_.setTop(std::min(candidate.y(), bounding_rect_.top()));
-//         bounding_rect_.setBottom(std::max(candidate.y(), bounding_rect_.bottom()));
-//     }
-// }
-
 template <typename ParametersWidgetType>
 void GraphBoard<ParametersWidgetType>::generatePoints()
 {
     // Bridson's Poisson disk sampling
-    constexpr double      min_distance = 50;
-    constexpr std::size_t max_attempts = 10;
+    constexpr double      min_distance=64.;
+    constexpr std::size_t max_attempts = 30;
     const double          cell_size = min_distance / std::sqrt(2.0);
-    const double          field_side = constants::graph_board::random_points_bounding_side * 10.0 * cell_size;
+    const std::size_t     target_points_count = parameters_.nodes_count;
+    const double          field_side = target_points_count * cell_size;
     const std::size_t     grid_side = std::ceil(field_side / cell_size);
-    const std::size_t     target_points_count = 30;
 
-    std::vector<QPointF>          samples;
+    points_.clear();
+    points_.reserve(target_points_count);
     std::vector<std::size_t>      active_list;
     std::vector<std::vector<int>> grid(grid_side, std::vector<int>(grid_side, -1));
 
@@ -183,7 +162,7 @@ void GraphBoard<ParametersWidgetType>::generatePoints()
             for (std::size_t j = min_grid_x; j < max_grid_x; ++j) {
                 const auto& neighbor_index = grid[i][j];
                 if (neighbor_index != -1) {
-                    const auto& neighbor_point = samples[neighbor_index];
+                    const auto& neighbor_point = points_[neighbor_index];
                     const auto& distance = QLineF{candidate, neighbor_point}.length();
                     if (distance < min_distance) {
                         return false;
@@ -200,37 +179,53 @@ void GraphBoard<ParametersWidgetType>::generatePoints()
     std::uniform_real_distribution<double> distance_distribution{min_distance, 2. * min_distance};
 
     auto& generator = this->random_generator_;
-    samples.emplace_back(point_distribution(generator), point_distribution(generator));
+    points_.emplace_back(point_distribution(generator), point_distribution(generator));
     active_list.push_back(0);
-    auto [cell_x, cell_y] = gridLocation(samples.back());
+    auto [cell_x, cell_y] = gridLocation(points_.back());
     grid[cell_y][cell_x] = 0;
 
-    while (!active_list.empty() && samples.size() < target_points_count) {
+    while (!active_list.empty() && points_.size() < target_points_count) {
         std::uniform_int_distribution<std::size_t> active_distribution{0, active_list.size() - 1};
         const auto                                 active_list_index = active_distribution(generator);
         const auto                                 sample_index = active_list[active_list_index];
-        bool candidate_succeeded = false;
+        bool                                       candidate_succeeded = false;
         for (size_t attempt = 0; attempt < max_attempts; ++attempt) {
             const auto    angle = angle_distribution(generator);
             const auto    distance = distance_distribution(generator);
             const QPointF direction{std::cos(angle), std::sin(angle)};
-            const QPointF candidate = samples[sample_index] + direction * distance;
+            const QPointF candidate = points_[sample_index] + direction * distance;
             if (isValidCandidate(candidate)) {
-                samples.push_back(candidate);
-                active_list.push_back(samples.size() - 1);
+                points_.push_back(candidate);
+                active_list.push_back(points_.size() - 1);
                 auto [candidate_x, candidate_y] = gridLocation(candidate);
-                grid[candidate_y][candidate_x] = samples.size() - 1;
+                grid[candidate_y][candidate_x] = points_.size() - 1;
                 candidate_succeeded = true;
+
                 break;
             }
         }
 
-        if(!candidate_succeeded){
+        if (!candidate_succeeded) {
             active_list.erase(active_list.begin() + active_list_index);
         }
     }
 
-    points_ = std::move(samples);
+    updateBoundingRect(min_distance);
+}
+
+template <typename ParametersWidgetType>
+void GraphBoard<ParametersWidgetType>::updateBoundingRect(double cell_size)
+{
+    const auto& [min_x, max_x] = std::minmax_element(points_.begin(),
+                                                     points_.end(),
+                                                     [](const auto& p1, const auto& p2) { return p1.x() < p2.x(); });
+    bounding_rect_.setLeft(min_x->x() - cell_size);
+    bounding_rect_.setRight(max_x->x() + cell_size);
+    const auto& [min_y, max_y] = std::minmax_element(points_.begin(),
+                                                     points_.end(),
+                                                     [](const auto& p1, const auto& p2) { return p1.y() < p2.y(); });
+    bounding_rect_.setTop(min_y->y() - cell_size);
+    bounding_rect_.setBottom(max_y->y() + cell_size);
 }
 
 template <typename ParametersWidgetType>
