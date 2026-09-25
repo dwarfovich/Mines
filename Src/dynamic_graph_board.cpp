@@ -5,6 +5,7 @@
 #include "edge.hpp"
 #include "edge_item.hpp"
 #include "graph_boards_constants.hpp"
+
 #include "gui/board_scene.hpp"
 
 #include <QRandomGenerator>
@@ -90,12 +91,6 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
         }
     }
 
-    using namespace constants::graph_board;
-    scene->setSceneRect(bounding_rect_.adjusted(-bounding_side_adjustment,
-                                                -bounding_side_adjustment,
-                                                bounding_side_adjustment,
-                                                bounding_side_adjustment));
-
     scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
 }
 
@@ -107,6 +102,5 @@ void DynamicGraphBoard::setupParameters()
     parameters_.mines_count = parameters_widget->minesCount();
     parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
     parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
-    parameters_.speed = static_cast<double>(parameters_widget->speed()) *
-                        constants::graph_board::user_speed_conversion_coefficient;
+    parameters_.speed = static_cast<double>(parameters_widget->speed()) * user_speed_conversion_coefficient;
 }

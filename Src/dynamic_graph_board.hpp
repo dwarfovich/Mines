@@ -1,7 +1,7 @@
 #pragma once
 
-#include "graph_board.hpp"
 #include "dynamic_graph_parameters_widget.hpp"
+#include "graph_board.hpp"
 
 class DynamicGraphBoard : public GraphBoard<DynamicGraphParametersWidget> {
 public:
@@ -10,6 +10,10 @@ public:
     void           generate() override;
     void           setupScene(BoardScene* scene) override;
 
-private: // methods
+private:  // methods
     void setupParameters() override;
+
+private:  // data
+    inline static constexpr double user_speed_conversion_coefficient = 2. / 40.;
+    inline static constexpr double random_angle_range = 0.4;
 };
