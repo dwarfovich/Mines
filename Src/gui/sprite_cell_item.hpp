@@ -4,8 +4,6 @@
 
 #include <QFont>
 
-class Cell;
-
 class SpriteCellItem : public CellItem {
 public:
     enum {

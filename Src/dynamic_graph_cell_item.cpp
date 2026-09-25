@@ -6,7 +6,7 @@
 #include <QGraphicsScene>
 #include <QRandomGenerator>
 
-DynamicGraphCellItem::DynamicGraphCellItem(const Cell* cell) : GraphCellItem{cell}
+DynamicGraphCellItem::DynamicGraphCellItem(const GraphCell* cell) : GraphCellItem{cell}
 {
     angle_ = QRandomGenerator::global()->bounded(constants::two_pi);
 }

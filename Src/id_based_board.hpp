@@ -7,19 +7,19 @@
 
 #include <random>
 
-template <typename CellType, typename ParametersWidgetType>
+template <typename CellType = Cell, typename ParametersWidgetType = RectangleBoardParametersWidget>
 class IdBasedBoard : public AbstractBoard<ParametersWidgetType> {
 public:
     IdBasedBoard();
 
     size_t      flags() const override;
-    const Cell* cellById(size_t id) const override;
+    const CellType* cellById(size_t id) const override;
     void        openCell(size_t id) override;
     void        toggleFlag(size_t id) override;
 
 protected:  // methods
     virtual std::vector<size_t> neighborIds(size_t id) const = 0;
-    virtual Cell*               cellById(size_t id);
+    virtual CellType*           cellById(size_t id);
     virtual void                relocateFirstOpenedMine(Cell* cell);
     virtual void                reveal();
     virtual size_t              countNeighborMines(size_t id) const;
@@ -46,7 +46,7 @@ size_t IdBasedBoard<CellType, ParametersWidgetType>::flags() const
 }
 
 template <typename CellType, typename ParametersWidgetType>
-const Cell* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id) const
+const CellType* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id) const
 {
     if (id >= 0 && id < cells_.size()) {
         return cells_[id].get();
@@ -104,7 +104,7 @@ void IdBasedBoard<CellType, ParametersWidgetType>::toggleFlag(size_t id)
 }
 
 template <typename CellType, typename ParametersWidgetType>
-Cell* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id)
+CellType* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
         return cells_[id].get();

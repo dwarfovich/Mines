@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QGraphicsDropShadowEffect>
 #include "buddy_notificator.hpp"
 #include "gui/sprite_cell_item.hpp"
+
+class GraphCell;
 class Cell;
 class QGraphicsDropShadowEffect;
 
@@ -12,15 +13,18 @@ public:
         Type = UserType + 3
     };
 
-    explicit GraphCellItem(const Cell* cell);
+    explicit GraphCellItem(const GraphCell* cell);
 
     QRectF boundingRect() const;
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-    void addBuddy(BuddyNotificator* buddy);
+    void   paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+    void   addBuddy(BuddyNotificator* buddy);
 
-protected:
+protected:  // methods
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+
+protected:  // data
+    const GraphCell* graph_cell_ = nullptr;
 
 private:
     static const QPen      hovered_pen_;

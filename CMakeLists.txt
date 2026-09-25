@@ -48,6 +48,8 @@ set(PROJECT_SOURCES
     Src/delaunay_board.cpp
     Src/delaunay_parameters_widget.cpp
     Src/direction.cpp
+    Src/graph_cell.hpp
+    Src/dynamic_graph_cell.hpp
     Src/dynamic_graph_board.cpp
     Src/dynamic_graph_cell_item.cpp
     Src/dynamic_graph_parameters_widget.cpp

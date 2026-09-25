@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QGraphicsItem>
+#include "../cell.hpp"
 
-class Cell;
+#include <QGraphicsItem>
 
 class CellItem : public QGraphicsItem {
 public:
@@ -24,7 +24,7 @@ public:
 
     const Cell* cell() const;
     void        setCell(Cell* cell);
-    bool        isHovered() const;
+    bool            isHovered() const;
 
 protected:  // methods
     CellItem::CellState cellState() const;
@@ -37,3 +37,4 @@ protected:  // data
 private:
     bool is_hovered_ = false;
 };
+

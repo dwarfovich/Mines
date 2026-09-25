@@ -3,8 +3,9 @@
 #include "delaunay_parameters_widget.hpp"
 #include "graph_board.hpp"
 #include "triangulator.hpp"
+#include "graph_cell.hpp"
 
-class DelaunayBoard : public GraphBoard<DelaunayParametersWidget> {
+class DelaunayBoard : public GraphBoard<GraphCell, DelaunayParametersWidget> {
     Q_OBJECT
 
 public:

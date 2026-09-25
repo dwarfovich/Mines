@@ -3,6 +3,7 @@
 
 #include <QGraphicsSceneHoverEvent>
 
+
 CellItem::CellItem()
 {
     setAcceptHoverEvents(true);

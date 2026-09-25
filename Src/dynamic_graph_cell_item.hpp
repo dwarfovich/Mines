@@ -6,7 +6,7 @@ class Cell;
 
 class DynamicGraphCellItem : public GraphCellItem {
 public:
-    explicit DynamicGraphCellItem(const Cell* cell);
+    explicit DynamicGraphCellItem(const GraphCell* cell);
 
     void setAngle(qreal angle);
     void setSpeed(qreal speed);

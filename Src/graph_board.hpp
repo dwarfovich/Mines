@@ -9,13 +9,14 @@
 #include "graph_cell_item.hpp"
 #include "graph_parameters_widget.hpp"
 #include "id_based_board.hpp"
+#include "graph_cell.hpp"
 
 #include "gui/board_scene.hpp"
 
 #include <numbers>
 
-template <typename ParametersWidgetType = GraphParametersWidget>
-class GraphBoard : public IdBasedBoard<Cell, ParametersWidgetType> {
+template <typename CellType = Cell, typename ParametersWidgetType = GraphParametersWidget>
+class GraphBoard : public IdBasedBoard<CellType, ParametersWidgetType> {
 public:
     const QString& id() const override;
     const QString& name() const override;
@@ -38,22 +39,22 @@ protected:  // data
     mutable GraphBoardParameters parameters_;
 };
 
-template <typename ParametersWidgetType>
-const QString& GraphBoard<ParametersWidgetType>::id() const
+template <typename CellType, typename ParametersWidgetType>
+const QString& GraphBoard<CellType, ParametersWidgetType>::id() const
 {
     static const QString id{QStringLiteral("Graph")};
     return id;
 }
 
-template <typename ParametersWidgetType>
-const QString& GraphBoard<ParametersWidgetType>::name() const
+template <typename CellType, typename ParametersWidgetType>
+const QString& GraphBoard<CellType, ParametersWidgetType>::name() const
 {
     static const QString id{QStringLiteral("Graph")};
     return id;
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::generate()
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::generate()
 {
     auto* parameters_widget = this->parametersWidget();
 
@@ -78,8 +79,8 @@ void GraphBoard<ParametersWidgetType>::generate()
     this->board_state_.game_state = GameState::Playing;
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::setupScene(BoardScene* scene)
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::setupScene(BoardScene* scene)
 {
     Q_ASSERT(scene);
 
@@ -118,14 +119,14 @@ void GraphBoard<ParametersWidgetType>::setupScene(BoardScene* scene)
     scene->setSceneRect(bounding_rect_);
 }
 
-template <typename ParametersWidgetType>
-std::vector<std::size_t> GraphBoard<ParametersWidgetType>::neighborIds(std::size_t id) const
+template <typename CellType, typename ParametersWidgetType>
+std::vector<std::size_t> GraphBoard<CellType, ParametersWidgetType>::neighborIds(std::size_t id) const
 {
     return neighbors_[id];
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::generatePoints()
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
 {
     // Bridson's Poisson disk sampling
     constexpr double      min_distance = 64.;
@@ -211,8 +212,8 @@ void GraphBoard<ParametersWidgetType>::generatePoints()
     updateBoundingRect(min_distance);
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::updateBoundingRect(double cell_size)
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::updateBoundingRect(double cell_size)
 {
     const auto& [min_x, max_x] = std::minmax_element(points_.begin(),
                                                      points_.end(),
@@ -226,8 +227,8 @@ void GraphBoard<ParametersWidgetType>::updateBoundingRect(double cell_size)
     bounding_rect_.setBottom(max_y->y() + cell_size);
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::formNeighbors()
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::formNeighbors()
 {
     neighbors_.clear();
     neighbors_.resize(points_.size());
@@ -264,8 +265,8 @@ void GraphBoard<ParametersWidgetType>::formNeighbors()
     }
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::setupCellItems()
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::setupCellItems()
 {
     SpriteCellItem::setSprites(constants::graph_board::sprites_path);
     const auto   sprite_size = SpriteCellItem::size();
@@ -274,8 +275,8 @@ void GraphBoard<ParametersWidgetType>::setupCellItems()
     SpriteCellItem::setShape(path);
 }
 
-template <typename ParametersWidgetType>
-void GraphBoard<ParametersWidgetType>::setupParameters()
+template <typename CellType, typename ParametersWidgetType>
+void GraphBoard<CellType, ParametersWidgetType>::setupParameters()
 {
     auto* parameters_widget = this->parametersWidget();
     if (!parameters_widget) {
