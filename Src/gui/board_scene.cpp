@@ -7,14 +7,11 @@
 BoardScene::BoardScene(QObject* parent) : QGraphicsScene{parent}
 {
     connect(&timer_, &QTimer::timeout, this, &BoardScene::advance);
-    connect(&timer_, &QTimer::timeout, this, [](){
-        int t = 423;
-        });
 }
 
 void BoardScene::registerCellItem(CellItem* cell_item)
 {
-    cell_items_.insert({cell_item->cell(), cell_item});
+    //cell_items_.insert({cell_item->cell(), cell_item});
     addItem(cell_item);
 }
 
@@ -58,8 +55,8 @@ void BoardScene::setAdvancePeriod(int period)
 
 void BoardScene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    auto cell_item = dynamic_cast<CellItem*>(itemAt(event->scenePos(), QTransform()));
+    auto cell_item = qgraphicsitem_cast<CellItem*>(itemAt(event->scenePos(), QTransform()));
     if (cell_item) {
-        emit cellItemClicked(cell_item, event);
+        emit cellClicked(cell_item->cellId(), event);
     }
 }

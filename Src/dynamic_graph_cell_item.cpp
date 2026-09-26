@@ -24,30 +24,6 @@ void DynamicGraphCellItem::setSpeed(qreal speed)
 void DynamicGraphCellItem::advance(int step)
 {
     if (step == 0) {
-        qDebug() << "Before: " << pos();
-        setPos(QPointF{cell_->x, cell_->y});
-        qDebug() << "After: " << pos();
-    } else{
-        update();
+        setPos(QPointF{cell_->x(), cell_->y()});
     }
-
-    // const auto   sceneRect = scene()->sceneRect();
-    // const auto   radius = sceneRect.width() / 2.;
-    // const auto   center = sceneRect.center();
-    // const QLineF lineToCenter = {pos(), center};
-    // qreal        dx = 0;
-    // qreal        dy = 0;
-    // if (lineToCenter.length() >= radius - critical_radius_) {
-    //     angle_ = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
-    //     dx = speed_ * cos(angle_);
-    //     dy = -speed_ * sin(angle_);
-    // } else {
-    //     //angle_ += QRandomGenerator::global()->bounded(constants::graph_board::random_angle_range) -
-    //     //          constants::graph_board::random_angle_range / 2.;
-    //     //dx = speed_ * cos(angle_);
-    //     //dy = -speed_ * sin(angle_);
-    // }
-
-    // setPos(pos() + QPointF{dx, dy});
-    // setPos(cell_)
 }

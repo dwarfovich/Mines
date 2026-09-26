@@ -10,8 +10,6 @@ public:
         Type = UserType + 2
     };
 
-    explicit SpriteCellItem(const Cell* cell);
-
     QPainterPath shape() const override;
     QRectF       boundingRect() const override;
     void         paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;

@@ -2,6 +2,7 @@
 
 #include "buddy_notificator.hpp"
 #include "gui/sprite_cell_item.hpp"
+#include "graph_cell.hpp"
 
 class GraphCell;
 class Cell;
@@ -14,7 +15,10 @@ public:
     };
 
     explicit GraphCellItem(const GraphCell* cell);
-
+    std::size_t cellId() const override
+    {
+        return graph_cell_->id;
+    }
     QRectF boundingRect() const;
     void   paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void   addBuddy(BuddyNotificator* buddy);

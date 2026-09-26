@@ -2,6 +2,7 @@
 #include "gui/board_scene.hpp"
 #include "gui/sprite_cell_item.hpp"
 #include "rectangle_board_parameters_widget.hpp"
+#include "simple_sprite_item.hpp"
 
 #include <QPainterPath>
 
@@ -30,7 +31,7 @@ void RectangleBoard::setupScene(BoardScene* scene)
     SpriteCellItem::setShape(path);
     for (std::size_t i = 0; i < height_; ++i) {
         for (std::size_t j = 0; j < width_; ++j) {
-            auto* item = new SpriteCellItem{cellById(i * width_ + j)};
+            auto* item = new SimpleSpriteItem{cellById(i * width_ + j)};
             item->setPos(sprite_size * j, sprite_size * i);
             scene->registerCellItem(item);
         }

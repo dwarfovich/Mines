@@ -4,7 +4,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QPainter>
 
-SpriteCellItem::SpriteCellItem(const Cell* cell) : CellItem{cell} {}
+//SpriteCellItem::SpriteCellItem() : CellItem{} {}
 
 const QPixmap& SpriteCellItem::sprites()
 {
@@ -44,16 +44,16 @@ void SpriteCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* op
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    Q_ASSERT(cell_);
+    //Q_ASSERT(cell_);
 
     auto cell_state = cellState();
     painter->drawPixmap(sprite_box_, *SpriteCellItem::sprites_, spriteRect(cell_state));
-    if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
-        painter->setFont(font_);
-        painter->setPen(textColor(cell_->neighbor_mines));
-        painter
-            ->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
-    }
+    //if (cell_state == CellState::Opened && cell_->neighbor_mines > 0) {
+    //    painter->setFont(font_);
+    //    painter->setPen(textColor(cell_->neighbor_mines));
+    //    painter
+    //        ->drawText(-half_size_, -half_size_, size_, size_, Qt::AlignCenter, QString::number(cell_->neighbor_mines));
+    //}
 
     if (isHovered()) {
         painter->setBrush(Qt::white);

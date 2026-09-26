@@ -29,14 +29,14 @@ private:  // methods
             const auto&            field = boundingRect();
             const qreal            field_radius = std::hypot(field.width(), field.height()) / 2.0;
             const auto             center = field.center();
-            const QLineF           lineToCenter = {QPointF{cell->x, cell->y}, center};
+            const QLineF           lineToCenter = {QPointF{cell->x(), cell->y()}, center};
             if (lineToCenter.length() >= field_radius * 0.90) {
                 cell->angle = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
             } else {
                 cell->angle += QRandomGenerator::global()->bounded(random_angle_range) - random_angle_range / 2.;
             }
-            cell->x += cell->speed * std::cos(cell->angle);
-            cell->y += -cell->speed * std::sin(cell->angle);
+            cell->coordinates.setX(cell->x() + cell->speed * std::cos(cell->angle));
+            cell->coordinates.setY(cell->y() - cell->speed * std::sin(cell->angle));
         }
     }
 

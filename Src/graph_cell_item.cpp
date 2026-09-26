@@ -8,7 +8,7 @@
 const QPen GraphCellItem::hovered_pen_{Qt::red};
 
 GraphCellItem::GraphCellItem(const GraphCell* cell)
-    : BuddyNotificator{static_cast<QGraphicsItem&>(*this)}, SpriteCellItem{cell}, graph_cell_{cell}
+    : BuddyNotificator{static_cast<QGraphicsItem&>(*this)}, SpriteCellItem{}, graph_cell_{cell}
 {
 }
 

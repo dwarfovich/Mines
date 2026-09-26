@@ -22,7 +22,7 @@ public:
     void setAdvancePeriod(int period);
 
 signals:
-    void cellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
+    void cellClicked(std::size_t id, QGraphicsSceneMouseEvent* event);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

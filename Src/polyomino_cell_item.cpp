@@ -28,25 +28,25 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
     painter->setPen(constants::polyomino_board::border_pen);
 
-    if (cell_->is_closed) {
-        if (isHovered()) {
-            painter->setBrush(constants::polyomino_board::hovered_brush);
-        } else {
-            painter->setBrush(closed_brush_);
-        }
-        painter->drawPolygon(polygon_);
-    } else {
-        painter->setBrush(constants::polyomino_board::opened_brush);
-        painter->drawPolygon(polygon_);
-    }
-    const auto& rect = spriteRect(cellState());
-    if (rect.isNull()) {
-        if (!cell_->is_closed) {
-            paintMinesCount(painter);
-        }
-    } else {
-        painter->drawPixmap(cell_info_rect_, *sprites_, rect);
-    }
+    //if (cell_->is_closed) {
+    //    if (isHovered()) {
+    //        painter->setBrush(constants::polyomino_board::hovered_brush);
+    //    } else {
+    //        painter->setBrush(closed_brush_);
+    //    }
+    //    painter->drawPolygon(polygon_);
+    //} else {
+    //    painter->setBrush(constants::polyomino_board::opened_brush);
+    //    painter->drawPolygon(polygon_);
+    //}
+    //const auto& rect = spriteRect(cellState());
+    //if (rect.isNull()) {
+    //    if (!cell_->is_closed) {
+    //        paintMinesCount(painter);
+    //    }
+    //} else {
+    //    painter->drawPixmap(cell_info_rect_, *sprites_, rect);
+    //}
 }
 
 void PolyominoCellItem::initialize(PolyominoCell* cell, const QColor& color)
@@ -54,7 +54,7 @@ void PolyominoCellItem::initialize(PolyominoCell* cell, const QColor& color)
     if (!sprites_) {
         sprites_ = std::make_unique<QPixmap>(":/gfx/transparent_images.png");
     }
-    setCell(cell);
+    //setCell(cell);
     closed_brush_ = {color};
 
     using namespace constants::polyomino_board;
@@ -177,16 +177,16 @@ void PolyominoCellItem::paintMinesCount(QPainter* painter)
     if (!mines_count_attributes_initialized) {
         initializeMinesCountAttributes(painter);
     }
-    if (cell_->neighbor_mines != 0) {
-        auto font = painter->font();
-        font.setPixelSize(constants::polyomino_board::font_size);
-        painter->setFont(font);
-        painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
-    }
+    //if (cell_->neighbor_mines != 0) {
+    //    auto font = painter->font();
+    //    font.setPixelSize(constants::polyomino_board::font_size);
+    //    painter->setFont(font);
+    //    painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
+    //}
 }
 
 void PolyominoCellItem::initializeMinesCountAttributes(QPainter* painter)
 {
-    mines_count_ = QString::number(cell_->neighbor_mines);
+    //mines_count_ = QString::number(cell_->neighbor_mines);
     mines_count_attributes_initialized = true;
 }

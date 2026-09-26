@@ -82,9 +82,9 @@ void PolyominoBoard::generate()
 void PolyominoBoard::setupScene(BoardScene* scene)
 {
     for (const auto& cell : cells_) {
-        auto item = new PolyominoCellItem();
-        item->initialize(cell.get(), generateCellColor());
-        scene->registerCellItem(item);
+        //auto item = new PolyominoCellItem();
+        //item->initialize(cell.get(), generateCellColor());
+        //scene->registerCellItem(item);
     }
 
     scene->setSceneRect({0.,

@@ -20,7 +20,10 @@ MinesWidget::MinesWidget(QWidget* parent)
     ui_->setupUi(this);
 
     ui_->minesGraphicsView->setScene(scene_);
-    connect(scene_, &BoardScene::cellItemClicked, this, &MinesWidget::onCellItemClicked);
+    connect(scene_,
+            &BoardScene::cellClicked,
+            this,
+            &MinesWidget::onCellClicked);
     connect(timer_, &QTimer::timeout, this, &MinesWidget::onTimerTimeout);
 }
 
@@ -67,6 +70,22 @@ void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEven
     }
 }
 
+void MinesWidget::onCellClicked(std::size_t id, QGraphicsSceneMouseEvent* event) {
+    processCellItemClick(id, event);
+
+    if (!timer_->isActive()) {
+        timer_->start(update_time_period_);
+    }
+
+    auto game_state = board_->boardState().game_state;
+    if (game_state != GameState::Playing) {
+        timer_->stop();
+        scene_->stopAnimation();
+        auto answer = game_over_dialog_->exec(game_state);
+        emit gameOver(answer);
+    }
+}
+
 void MinesWidget::onCellChanged(Cell* cell)
 {
     scene_->updateCellItemForCell(cell);
@@ -84,10 +103,20 @@ void MinesWidget::onTimerTimeout()
 
 void MinesWidget::processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
 {
+    //if (event->button() == Qt::LeftButton) {
+    //    board_->openCell(cell_item->cell()->id);
+    //} else if (event->button() == Qt::RightButton) {
+    //    board_->toggleFlag(cell_item->cell()->id);
+    //    updateFlagsCount();
+    //}
+}
+
+void MinesWidget::processCellItemClick(std::size_t id, QGraphicsSceneMouseEvent* event)
+{
     if (event->button() == Qt::LeftButton) {
-        board_->openCell(cell_item->cell()->id);
+        board_->openCell(id);
     } else if (event->button() == Qt::RightButton) {
-        board_->toggleFlag(cell_item->cell()->id);
+        board_->toggleFlag(id);
         updateFlagsCount();
     }
 }

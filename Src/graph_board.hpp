@@ -219,8 +219,8 @@ void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
     updateBoundingRect(min_distance);
 
     for (int i = 0; i < this->points_.size(); ++i) {
-        this->cells_[i]->x = points_[i].x();
-        this->cells_[i]->y = points_[i].y();
+        this->cells_[i]->coordinates.setX(points_[i].x());
+        this->cells_[i]->coordinates.setY(points_[i].y());
     }
 }
 

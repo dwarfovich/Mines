@@ -32,11 +32,14 @@ signals:
 
 private slots:
     void onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
+    void onCellClicked(std::size_t id, QGraphicsSceneMouseEvent* event);
+
     void onCellChanged(Cell* cell);
     void onTimerTimeout();
 
 private:  // methods
     void processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event);
+    void processCellItemClick(std::size_t id, QGraphicsSceneMouseEvent* event);
     void updateFlagsCount();
     void centerView();
 

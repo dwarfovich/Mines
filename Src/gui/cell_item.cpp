@@ -9,20 +9,6 @@ CellItem::CellItem()
     setAcceptHoverEvents(true);
 }
 
-CellItem::CellItem(const Cell* cell) : cell_{cell}
-{
-    setAcceptHoverEvents(true);
-}
-
-const Cell* CellItem::cell() const
-{
-    return cell_;
-}
-
-void CellItem::setCell(Cell* cell)
-{
-    cell_ = cell;
-}
 
 bool CellItem::isHovered() const
 {
@@ -31,23 +17,24 @@ bool CellItem::isHovered() const
 
 CellItem::CellState CellItem::cellState() const
 {
-    if (cell_->is_closed) {
-        if (cell_->has_flag) {
-            return CellState::ClosedWithFlag;
-        } else {
-            return CellState::Closed;
-        }
-    } else {
-        if (cell_->has_flag && cell_->has_mine) {
-            return CellState::OpenedMine;
-        } else if (cell_->has_flag && !cell_->has_mine) {
-            return CellState::MissedFlag;
-        } else if (!cell_->has_flag && cell_->has_mine) {
-            return CellState::MissedMine;
-        } else {
-            return CellState::Opened;
-        }
-    }
+    //if (cell_->is_closed) {
+    //    if (cell_->has_flag) {
+    //        return CellState::ClosedWithFlag;
+    //    } else {
+    //        return CellState::Closed;
+    //    }
+    //} else {
+    //    if (cell_->has_flag && cell_->has_mine) {
+    //        return CellState::OpenedMine;
+    //    } else if (cell_->has_flag && !cell_->has_mine) {
+    //        return CellState::MissedFlag;
+    //    } else if (!cell_->has_flag && cell_->has_mine) {
+    //        return CellState::MissedMine;
+    //    } else {
+    //        return CellState::Opened;
+    //    }
+    //}
+    return {};
 }
 
 void CellItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)

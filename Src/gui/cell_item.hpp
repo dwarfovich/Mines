@@ -22,17 +22,13 @@ public:
     CellItem();
     CellItem(const Cell* cell);
 
-    const Cell* cell() const;
-    void        setCell(Cell* cell);
+    virtual std::size_t cellId() const = 0;
     bool            isHovered() const;
 
 protected:  // methods
     CellItem::CellState cellState() const;
     void                hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
     void                hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
-
-protected:  // data
-    const Cell* cell_ = nullptr;
 
 private:
     bool is_hovered_ = false;

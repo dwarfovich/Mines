@@ -82,6 +82,7 @@ set(PROJECT_SOURCES
     Src/cell.hpp
     Src/graph_board.hpp
     Src/board.hpp
+    Src/simple_sprite_item.hpp
 
     Src/gui/board_scene.cpp
     Src/gui/board_view.cpp
