@@ -86,7 +86,7 @@ void MinesWidget::onCellClicked(std::size_t id, QGraphicsSceneMouseEvent* event)
     }
 }
 
-void MinesWidget::onCellChanged(Cell* cell)
+void MinesWidget::onCellChanged(const Cell* cell)
 {
     scene_->updateCellItemForCell(cell);
 }

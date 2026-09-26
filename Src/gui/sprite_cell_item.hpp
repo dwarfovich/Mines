@@ -6,10 +6,6 @@
 
 class SpriteCellItem : public CellItem {
 public:
-    enum {
-        Type = UserType + 2
-    };
-
     QPainterPath shape() const override;
     QRectF       boundingRect() const override;
     void         paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;

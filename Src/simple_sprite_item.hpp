@@ -12,6 +12,10 @@ public:
         return cell_->id;
     }
 
+    const Cell* cell() const override{
+        return cell_;
+    }
+
 private:
     const Cell* cell_ = nullptr;
 };

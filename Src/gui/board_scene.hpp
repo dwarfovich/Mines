@@ -14,7 +14,7 @@ public:
     explicit BoardScene(QObject* parent = nullptr);
 
     void registerCellItem(CellItem* cell_item);
-    void updateCellItemForCell(Cell* cell);
+    void updateCellItemForCell(const Cell* cell);
     void clear();
     void startAnimation();
     void stopAnimation();
@@ -28,7 +28,8 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
 protected:
-    std::unordered_map<const Cell*, CellItem*> cell_items_;
-    QTimer                                     timer_;
-    int                                        advance_period_ = 33;
+    using CellsMap = std::unordered_map<const Cell*, CellItem*>;
+    CellsMap cell_items_;
+    QTimer   timer_;
+    int      advance_period_ = 33;
 };

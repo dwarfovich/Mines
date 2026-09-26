@@ -10,18 +10,23 @@ class QGraphicsDropShadowEffect;
 
 class GraphCellItem : public SpriteCellItem, public BuddyNotificator {
 public:
-    enum {
-        Type = UserType + 3
-    };
-
     explicit GraphCellItem(const GraphCell* cell);
     std::size_t cellId() const override
     {
         return graph_cell_->id;
     }
+    const Cell* cell() const override
+    {
+        return graph_cell_;
+    }
     QRectF boundingRect() const;
     void   paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     void   addBuddy(BuddyNotificator* buddy);
+    void advance(int step) override{
+        if (step == 0) {
+            setPos(QPointF{graph_cell_->x(), graph_cell_->y()});
+        }
+    }
 
 protected:  // methods
     void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;

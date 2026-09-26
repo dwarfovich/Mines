@@ -17,24 +17,23 @@ bool CellItem::isHovered() const
 
 CellItem::CellState CellItem::cellState() const
 {
-    //if (cell_->is_closed) {
-    //    if (cell_->has_flag) {
-    //        return CellState::ClosedWithFlag;
-    //    } else {
-    //        return CellState::Closed;
-    //    }
-    //} else {
-    //    if (cell_->has_flag && cell_->has_mine) {
-    //        return CellState::OpenedMine;
-    //    } else if (cell_->has_flag && !cell_->has_mine) {
-    //        return CellState::MissedFlag;
-    //    } else if (!cell_->has_flag && cell_->has_mine) {
-    //        return CellState::MissedMine;
-    //    } else {
-    //        return CellState::Opened;
-    //    }
-    //}
-    return {};
+    if (cell()->is_closed) {
+        if (cell()->has_flag) {
+            return CellState::ClosedWithFlag;
+        } else {
+            return CellState::Closed;
+        }
+    } else {
+        if (cell()->has_flag && cell()->has_mine) {
+            return CellState::OpenedMine;
+        } else if (cell()->has_flag && !cell()->has_mine) {
+            return CellState::MissedFlag;
+        } else if (!cell()->has_flag && cell()->has_mine) {
+            return CellState::MissedMine;
+        } else {
+            return CellState::Opened;
+        }
+    }
 }
 
 void CellItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)

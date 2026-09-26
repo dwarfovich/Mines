@@ -51,7 +51,6 @@ set(PROJECT_SOURCES
     Src/graph_cell.hpp
     Src/dynamic_graph_cell.hpp
     Src/dynamic_graph_board.cpp
-    Src/dynamic_graph_cell_item.cpp
     Src/dynamic_graph_parameters_widget.cpp
     Src/edge_item.cpp
     Src/edge.cpp

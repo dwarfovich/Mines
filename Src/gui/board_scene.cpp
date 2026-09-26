@@ -1,7 +1,7 @@
 #include "board_scene.hpp"
 #include "cell_item.hpp"
 #include "sprite_cell_item.hpp"
-
+#include "../graph_cell_item.hpp"
 #include <QGraphicsSceneMouseEvent>
 
 BoardScene::BoardScene(QObject* parent) : QGraphicsScene{parent}
@@ -11,11 +11,11 @@ BoardScene::BoardScene(QObject* parent) : QGraphicsScene{parent}
 
 void BoardScene::registerCellItem(CellItem* cell_item)
 {
-    //cell_items_.insert({cell_item->cell(), cell_item});
+    cell_items_.insert({cell_item->cell(), cell_item});
     addItem(cell_item);
 }
 
-void BoardScene::updateCellItemForCell(Cell* cell)
+void BoardScene::updateCellItemForCell(const Cell* cell)
 {
     auto iter = cell_items_.find(cell);
     if (iter != cell_items_.cend()) {
@@ -32,7 +32,7 @@ void BoardScene::clear()
 void BoardScene::startAnimation()
 {
     if (advance_period_) {
-        //setItemIndexMethod(QGraphicsScene::NoIndex);
+        // setItemIndexMethod(QGraphicsScene::NoIndex);
         timer_.start(advance_period_);
     }
 }

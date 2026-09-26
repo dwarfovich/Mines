@@ -15,7 +15,7 @@
 
 #include <numbers>
 
-template <typename CellType = Cell, typename ParametersWidgetType = GraphParametersWidget>
+template <typename CellType = GraphCell, typename ParametersWidgetType = GraphParametersWidget>
 class GraphBoard : public IdBasedBoard<CellType, ParametersWidgetType> {
 public:
     const QString& id() const override;
@@ -96,7 +96,7 @@ void GraphBoard<CellType, ParametersWidgetType>::setupScene(BoardScene* scene)
     for (std::size_t id = 0; id < points_.size(); ++id) {
         auto* node_item = new GraphCellItem{this->cellById(id)};
         node_item->setZValue(constants::graph_board::node_z_value);
-        node_item->setPos(points_[id]);
+        //node_item->setPos(points_[id]);
         scene->registerCellItem(node_item);
         id_to_item_map[id] = node_item;
     }
@@ -113,6 +113,8 @@ void GraphBoard<CellType, ParametersWidgetType>::setupScene(BoardScene* scene)
             if (createdEdges.find(edge) == createdEdges.cend()) {
                 createdEdges.insert(edge);
                 auto* edge_item = new EdgeItem{edge};
+                edge_item->setPointItem1(item);
+                edge_item->setPointItem2(id_to_item_map[buddy_id]);
                 scene->addItem(edge_item);
                 item->addBuddy(edge_item);
                 id_to_item_map[buddy_id]->addBuddy(edge_item);

@@ -1,6 +1,5 @@
 #include "dynamic_graph_board.hpp"
 #include "buddy_notificator.hpp"
-#include "dynamic_graph_cell_item.hpp"
 #include "dynamic_graph_parameters_widget.hpp"
 #include "edge.hpp"
 #include "edge_item.hpp"
@@ -61,11 +60,11 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
     std::unordered_map<std::size_t, GraphCellItem*> id_to_item_map;
     const int                                       node_z_value = 2;
     for (std::size_t id = 0; id < points_.size(); ++id) {
-        auto* node_item = new DynamicGraphCellItem{cellById(id)};
-        node_item->setAngle(QRandomGenerator::global()->bounded(std::numbers::pi * 2));
-        node_item->setSpeed(parameters_.speed);
+        auto* node_item = new GraphCellItem{cellById(id)};
+        //node_item->setAngle(QRandomGenerator::global()->bounded(std::numbers::pi * 2));
+        //node_item->setSpeed(parameters_.speed);
         node_item->setZValue(constants::graph_board::node_z_value);
-        node_item->setPos(points_[id]);
+        //node_item->setPos(points_[id]);
         scene->registerCellItem(node_item);
         id_to_item_map[id] = node_item;
     }
