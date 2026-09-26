@@ -30,5 +30,5 @@ protected:
 protected:
     std::unordered_map<const Cell*, CellItem*> cell_items_;
     QTimer                                     timer_;
-    int                                        advance_period_ = 0;
+    int                                        advance_period_ = 33;
 };

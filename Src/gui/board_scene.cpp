@@ -7,6 +7,9 @@
 BoardScene::BoardScene(QObject* parent) : QGraphicsScene{parent}
 {
     connect(&timer_, &QTimer::timeout, this, &BoardScene::advance);
+    connect(&timer_, &QTimer::timeout, this, [](){
+        int t = 423;
+        });
 }
 
 void BoardScene::registerCellItem(CellItem* cell_item)

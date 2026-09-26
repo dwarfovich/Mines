@@ -47,6 +47,7 @@ void MinesWidget::setBoard(Board* board)
 void MinesWidget::startGame()
 {
     scene_->startAnimation();
+    board_->startGame();
 }
 
 void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event)

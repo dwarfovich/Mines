@@ -31,6 +31,7 @@ public:
     virtual std::chrono::seconds elapsedTime() const = 0;
     virtual void                 setupScene(BoardScene* scene) = 0;
     virtual QWidget*             parametersWidget() const = 0;
+    virtual void startGame(){}
 
 signals:
     void cellChanged(Cell* cell);

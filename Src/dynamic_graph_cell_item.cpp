@@ -1,49 +1,53 @@
 #include "dynamic_graph_cell_item.hpp"
-#include "constants.hpp"
+#include "dynamic_graph_cell.hpp"
 #include "graph_boards_constants.hpp"
 #include "utils.hpp"
 
 #include <QGraphicsScene>
 #include <QRandomGenerator>
 
-DynamicGraphCellItem::DynamicGraphCellItem(const GraphCell* cell) : GraphCellItem{cell}
+DynamicGraphCellItem::DynamicGraphCellItem(const DynamicGraphCell* cell) : GraphCellItem{cell}, cell_{cell}
 {
-    angle_ = QRandomGenerator::global()->bounded(constants::two_pi);
+    // angle_ = QRandomGenerator::global()->bounded(constants::two_pi);
 }
 
 void DynamicGraphCellItem::setAngle(qreal angle)
 {
-    angle_ = angle;
+    // angle_ = angle;
 }
 
 void DynamicGraphCellItem::setSpeed(qreal speed)
 {
-    speed_ = speed;
+    // speed_ = speed;
 }
 
 void DynamicGraphCellItem::advance(int step)
 {
-    if (step != 1) {
-        return;
+    if (step == 0) {
+        qDebug() << "Before: " << pos();
+        setPos(QPointF{cell_->x, cell_->y});
+        qDebug() << "After: " << pos();
+    } else{
+        update();
     }
 
-    //const auto   sceneRect = scene()->sceneRect();
-    //const auto   radius = sceneRect.width() / 2.;
-    //const auto   center = sceneRect.center();
-    //const QLineF lineToCenter = {pos(), center};
-    //qreal        dx = 0;
-    //qreal        dy = 0;
-    //if (lineToCenter.length() >= radius - critical_radius_) {
-    //    angle_ = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
-    //    dx = speed_ * cos(angle_);
-    //    dy = -speed_ * sin(angle_);
-    //} else {
-    //    //angle_ += QRandomGenerator::global()->bounded(constants::graph_board::random_angle_range) -
-    //    //          constants::graph_board::random_angle_range / 2.;
-    //    //dx = speed_ * cos(angle_);
-    //    //dy = -speed_ * sin(angle_);
-    //}
+    // const auto   sceneRect = scene()->sceneRect();
+    // const auto   radius = sceneRect.width() / 2.;
+    // const auto   center = sceneRect.center();
+    // const QLineF lineToCenter = {pos(), center};
+    // qreal        dx = 0;
+    // qreal        dy = 0;
+    // if (lineToCenter.length() >= radius - critical_radius_) {
+    //     angle_ = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
+    //     dx = speed_ * cos(angle_);
+    //     dy = -speed_ * sin(angle_);
+    // } else {
+    //     //angle_ += QRandomGenerator::global()->bounded(constants::graph_board::random_angle_range) -
+    //     //          constants::graph_board::random_angle_range / 2.;
+    //     //dx = speed_ * cos(angle_);
+    //     //dy = -speed_ * sin(angle_);
+    // }
 
-    //setPos(pos() + QPointF{dx, dy});
-    //setPos(cell_)
+    // setPos(pos() + QPointF{dx, dy});
+    // setPos(cell_)
 }

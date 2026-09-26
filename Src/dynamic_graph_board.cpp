@@ -91,7 +91,17 @@ void DynamicGraphBoard::setupScene(BoardScene* scene)
         }
     }
 
-    scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
+    //scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
+    const auto& field = boundingRect();
+    const qreal field_radius = std::hypot(field.width(), field.height()) / 2.0;
+    const auto  center = field.center();
+    scene->addRect(boundingRect(), QPen{Qt::green});
+    scene->addEllipse(center.x(), center.y(), 20,20, QPen{Qt::red});
+    scene->addEllipse(center.x() - field_radius,
+                      center.y() - field_radius,
+                      2 * field_radius,
+                      2 * field_radius,
+                      QPen{Qt::blue});
 }
 
 void DynamicGraphBoard::setupParameters()

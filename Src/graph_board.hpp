@@ -6,10 +6,10 @@
 #include "graph_board.hpp"
 #include "graph_boards_constants.hpp"
 #include "graph_boards_parameters.h"
+#include "graph_cell.hpp"
 #include "graph_cell_item.hpp"
 #include "graph_parameters_widget.hpp"
 #include "id_based_board.hpp"
-#include "graph_cell.hpp"
 
 #include "gui/board_scene.hpp"
 
@@ -30,6 +30,10 @@ protected:  // methods
     virtual void             setupCellItems();
     virtual void             setupParameters();
     virtual void             updateBoundingRect(double cell_size);
+    virtual const QRectF     boundingRect() const
+    {
+        return bounding_rect_;
+    }
 
 protected:  // data
     std::vector<QPointF> points_;
@@ -129,8 +133,8 @@ template <typename CellType, typename ParametersWidgetType>
 void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
 {
     // Bridson's Poisson disk sampling
+    constexpr std::size_t max_attempts_to_find_candidate = 30;
     constexpr double      min_distance = 64.;
-    constexpr std::size_t max_attempts = 30;
     const double          cell_size = min_distance / std::sqrt(2.0);
     const std::size_t     target_points_count = parameters_.nodes_count;
     const double          field_side = target_points_count * cell_size;
@@ -138,7 +142,7 @@ void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
 
     points_.clear();
     points_.reserve(target_points_count);
-    std::vector<std::size_t>      active_list;
+    std::vector<std::size_t> active_list;
     active_list.reserve(target_points_count);
     std::vector<std::vector<int>> grid(grid_side, std::vector<int>(grid_side, -1));
 
@@ -173,9 +177,12 @@ void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
         return true;
     };
 
-    std::uniform_real_distribution<double> point_distribution{0., std::nextafter(field_side, 0.)};
-    std::uniform_real_distribution<double> angle_distribution{0., 2. * std::numbers::pi};
-    std::uniform_real_distribution<double> distance_distribution{min_distance, 2. * min_distance};
+    using RealDistribution = std::uniform_real_distribution<double>;
+    using SizeTDistribution = std::uniform_int_distribution<std::size_t>;
+
+    RealDistribution point_distribution{0., std::nextafter(field_side, 0.)};
+    RealDistribution angle_distribution{0., 2. * std::numbers::pi};
+    RealDistribution distance_distribution{min_distance, 2. * min_distance};
 
     auto& generator = this->random_generator_;
     points_.emplace_back(point_distribution(generator), point_distribution(generator));
@@ -184,11 +191,11 @@ void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
     grid[cell_y][cell_x] = 0;
 
     while (!active_list.empty() && points_.size() < target_points_count) {
-        std::uniform_int_distribution<std::size_t> active_distribution{0, active_list.size() - 1};
-        const auto                                 active_list_index = active_distribution(generator);
-        const auto                                 sample_index = active_list[active_list_index];
-        bool                                       candidate_succeeded = false;
-        for (size_t attempt = 0; attempt < max_attempts; ++attempt) {
+        SizeTDistribution active_distribution{0, active_list.size() - 1};
+        const auto        active_list_index = active_distribution(generator);
+        const auto        sample_index = active_list[active_list_index];
+        bool              candidate_succeeded = false;
+        for (size_t attempt = 0; attempt < max_attempts_to_find_candidate; ++attempt) {
             const auto    angle = angle_distribution(generator);
             const auto    distance = distance_distribution(generator);
             const QPointF direction{std::cos(angle), std::sin(angle)};
@@ -210,6 +217,11 @@ void GraphBoard<CellType, ParametersWidgetType>::generatePoints()
     }
 
     updateBoundingRect(min_distance);
+
+    for (int i = 0; i < this->points_.size(); ++i) {
+        this->cells_[i]->x = points_[i].x();
+        this->cells_[i]->y = points_[i].y();
+    }
 }
 
 template <typename CellType, typename ParametersWidgetType>

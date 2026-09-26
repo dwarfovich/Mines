@@ -1,6 +1,6 @@
 #include "utils.hpp"
-#include "constants.hpp"
 
+#include <numbers>
 #include <string>
 
 std::size_t QStringHasher::operator()(const QString& str) const
@@ -11,10 +11,10 @@ std::size_t QStringHasher::operator()(const QString& str) const
 qreal normalizeAngle(qreal angle)
 {
     while (angle < 0) {
-        angle += constants::two_pi;
+        angle += std::numbers::pi;
     }
-    while (angle > constants::two_pi) {
-        angle -= constants::two_pi;
+    while (angle > 2. * std::numbers::pi) {
+        angle -= 2. * std::numbers::pi;
     }
 
     return angle;
