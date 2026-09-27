@@ -61,25 +61,3 @@ Circle trivialMinimalCircle(const std::vector<QPointF>& points)
     return minimalEnclosingCircle(points.front(), points[1], points.back());
 }
 
-Circle minimalEnclosingCircleWelzl(const std::vector<QPointF>& points,
-                                   std::vector<QPointF>        restPoints,
-                                   size_t                      firstIndex)
-{
-    if (firstIndex == points.size() || restPoints.size() == 3) {
-        return trivialMinimalCircle(restPoints);
-    }
-
-    auto circle = minimalEnclosingCircleWelzl(points, restPoints, firstIndex + 1);
-    if (circle.contains(points[firstIndex])) {
-        return circle;
-    }
-
-    restPoints.push_back(points[firstIndex]);
-
-    return minimalEnclosingCircleWelzl(points, restPoints, firstIndex + 1);
-}
-
-Circle minimalEnclosingCircle(const std::vector<QPointF>& points)
-{
-    return minimalEnclosingCircleWelzl(points, {}, 0);
-}

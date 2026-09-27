@@ -14,7 +14,6 @@ MinesWidget::MinesWidget(QWidget* parent)
     : QWidget{parent},
       ui_{new Ui::MinesWidget},
       scene_{new BoardScene{this}},
-      timer_{new QTimer{this}},
       game_over_dialog_{new GameOverDialog{this}}
 {
     ui_->setupUi(this);
@@ -24,7 +23,7 @@ MinesWidget::MinesWidget(QWidget* parent)
             &BoardScene::cellClicked,
             this,
             &MinesWidget::onCellClicked);
-    connect(timer_, &QTimer::timeout, this, &MinesWidget::onTimerTimeout);
+    //connect(timer_, &QTimer::timeout, this, &MinesWidget::onTimerTimeout);
 }
 
 MinesWidget::~MinesWidget()
@@ -36,6 +35,7 @@ void MinesWidget::setBoard(Board* board)
 {
     if (board_) {
         disconnect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
+        disconnect(board_, &Board::secondPassed, this, &MinesWidget::onTimerTimeout);
     }
 
     ui_->timeSpinBox->setValue(0);
@@ -44,6 +44,7 @@ void MinesWidget::setBoard(Board* board)
     scene_->clear();
     board->setupScene(scene_);
     connect(board_, &Board::cellChanged, this, &MinesWidget::onCellChanged);
+    connect(board_, &Board::secondPassed, this, &MinesWidget::onTimerTimeout);
     centerView();
 }
 
@@ -57,13 +58,13 @@ void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEven
 {
     processCellItemClick(cell_item, event);
 
-    if (!timer_->isActive()) {
-        timer_->start(update_time_period_);
-    }
+    //if (!timer_->isActive()) {
+    //    timer_->start(update_time_period_);
+    //}
 
     auto game_state = board_->boardState().game_state;
     if (game_state != GameState::Playing) {
-        timer_->stop();
+        //timer_->stop();
         scene_->stopAnimation();
         auto answer = game_over_dialog_->exec(game_state);
         emit gameOver(answer);
@@ -73,13 +74,13 @@ void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEven
 void MinesWidget::onCellClicked(std::size_t id, QGraphicsSceneMouseEvent* event) {
     processCellItemClick(id, event);
 
-    if (!timer_->isActive()) {
-        timer_->start(update_time_period_);
-    }
+    //if (!timer_->isActive()) {
+    //    timer_->start(update_time_period_);
+    //}
 
     auto game_state = board_->boardState().game_state;
     if (game_state != GameState::Playing) {
-        timer_->stop();
+        //timer_->stop();
         scene_->stopAnimation();
         auto answer = game_over_dialog_->exec(game_state);
         emit gameOver(answer);

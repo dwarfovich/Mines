@@ -35,4 +35,5 @@ public:
 
 signals:
     void cellChanged(Cell* cell);
+    void secondPassed();
 };
