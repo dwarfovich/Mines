@@ -43,21 +43,21 @@ void PolyominoBoard::generate()
                 continue;
             }
 
-            auto cell = std::make_unique<PolyominoCell>(id, QPoint{static_cast<int>(col), static_cast<int>(row)});
-            matrix[cell->center.y()][cell->center.x()] = id;
+            auto cell = PolyominoCell(id, QPoint{static_cast<int>(col), static_cast<int>(row)});
+            matrix[cell.center.y()][cell.center.x()] = id;
 
             const auto target_size = size_distribution(random_generator_);
-            cell->shifts.push_back({0, 0});
+            cell.shifts.push_back({0, 0});
             size_t             current_size = 1;
             std::deque<QPoint> empty_neighbors;
-            addEmptyNeighborCells(matrix, cell->center, empty_neighbors);
+            addEmptyNeighborCells(matrix, cell.center, empty_neighbors);
             while (current_size < target_size && !empty_neighbors.empty()) {
                 std::uniform_int_distribution<size_t> distribution{0, empty_neighbors.size() - 1};
                 const auto                            neighbor_point = empty_neighbors[distribution(random_generator_)];
                 matrix[neighbor_point.y()][neighbor_point.x()] = id;
-                const auto neighbor_shift = neighbor_point - cell->center;
-                if (!::contains(cell->shifts, neighbor_shift)) {
-                    cell->shifts.push_back(neighbor_shift);
+                const auto neighbor_shift = neighbor_point - cell.center;
+                if (!::contains(cell.shifts, neighbor_shift)) {
+                    cell.shifts.push_back(neighbor_shift);
                     ++current_size;
                     auto insertion_happened = addEmptyNeighborCells(matrix, neighbor_point, empty_neighbors);
                     if (!insertion_happened) {
@@ -70,7 +70,7 @@ void PolyominoBoard::generate()
                                           empty_neighbors.end());
                 }
             }
-            setupNeighbors(matrix, *cell);
+            setupNeighbors(matrix, cell);
             cells_.push_back(std::move(cell));
             ++id;
         }
@@ -96,7 +96,7 @@ void PolyominoBoard::setupScene(BoardScene* scene)
 std::vector<size_t> PolyominoBoard::neighborIds(size_t id) const
 {
     if (id < cells_.size()) {
-        return cells_[id]->neighbor_ids;
+        return cells_[id].neighbor_ids;
     } else {
         Q_ASSERT(false && "Wrong id");
         return {};
@@ -126,8 +126,8 @@ void PolyominoBoard::setupNeighbors(const std::vector<std::vector<size_t>>& matr
                 cell.neighbor_ids.push_back(neighborId);
             }
             auto& neighborCell = cells_[neighborId];
-            if (!::contains(neighborCell->neighbor_ids, currentId)) {
-                neighborCell->neighbor_ids.push_back(currentId);
+            if (!::contains(neighborCell.neighbor_ids, currentId)) {
+                neighborCell.neighbor_ids.push_back(currentId);
             }
         }
     }
@@ -142,7 +142,7 @@ void PolyominoBoard::assignMines(size_t minesCount)
     std::shuffle(mines.begin(), mines.end(), random_generator_);
 
     for (size_t i = 0; i < cells_.size(); ++i) {
-        cells_[i]->has_mine = mines[i];
+        cells_[i].has_mine = mines[i];
     }
 }
 

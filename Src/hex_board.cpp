@@ -38,7 +38,7 @@ void HexBoard::setupScene(BoardScene* scene)
     for (std::size_t i = 0; i < height_; ++i) {
         for (std::size_t j = 0; j < width_; ++j) {
             const auto& cell = cells_[i * width_ + j];
-            auto*       item = new SimpleSpriteItem{cell.get()};
+            auto*       item = new SimpleSpriteItem{&cell};
             const qreal x = (i % 2 == 0 ? static_cast<qreal>(j) * sprite_size
                                         : static_cast<qreal>(j) * sprite_size + half_sprite_size);
             const qreal y = static_cast<qreal>(i) * (sprite_size - (half_sprite_size / sqrt3));

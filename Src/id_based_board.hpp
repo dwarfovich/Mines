@@ -29,10 +29,10 @@ protected:  // methods
     virtual void                randomize();
 
 protected:  // data
-    size_t                                 flags_ = 0;
-    std::vector<std::unique_ptr<CellType>> cells_;
-    mutable std::random_device             random_device_;
-    mutable std::mt19937                   random_generator_;
+    size_t                     flags_ = 0;
+    std::vector<CellType>      cells_;
+    mutable std::random_device random_device_;
+    mutable std::mt19937       random_generator_;
 };
 
 template <typename CellType, typename ParametersWidgetType>
@@ -50,7 +50,7 @@ template <typename CellType, typename ParametersWidgetType>
 const CellType* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id) const
 {
     if (id >= 0 && id < cells_.size()) {
-        return cells_[id].get();
+        return &cells_[id];
     } else {
         return nullptr;
     }
@@ -145,7 +145,7 @@ template <typename CellType, typename ParametersWidgetType>
 CellType* IdBasedBoard<CellType, ParametersWidgetType>::cellById(size_t id)
 {
     if (id >= 0 && id < static_cast<int>(cells_.size())) {
-        return cells_[id].get();
+        return &cells_[id];
     } else {
         return nullptr;
     }
@@ -169,14 +169,14 @@ template <typename CellType, typename ParametersWidgetType>
 void IdBasedBoard<CellType, ParametersWidgetType>::reveal()
 {
     for (size_t i = 0; i < cells_.size(); ++i) {
-        if (cells_[i]->is_closed) {
-            if (!cells_[i]->has_mine) {
-                cells_[i]->neighbor_mines = countNeighborMines(i);
+        if (cells_[i].is_closed) {
+            if (!cells_[i].has_mine) {
+                cells_[i].neighbor_mines = countNeighborMines(i);
             } else if (this->board_state_.game_state == GameState::Win) {
-                cells_[i]->has_flag = true;
+                cells_[i].has_flag = true;
             }
-            cells_[i]->is_closed = false;
-            this->cellChanged(cells_[i].get());
+            cells_[i].is_closed = false;
+            this->cellChanged(&cells_[i]);
         }
     }
 }
@@ -202,16 +202,12 @@ void IdBasedBoard<CellType, ParametersWidgetType>::initializeCells(size_t cells_
     cells_.resize(cells_count);
     size_t mines_counter = 0;
     for (size_t i = 0; i < cells_.size(); ++i) {
-        if (!cells_[i]) {
-            cells_[i] = std::make_unique<CellType>();
-        } else {
-            *cells_[i] = {};
-        }
+        cells_[i] = {};
         if (mines_counter < this->board_state_.mines) {
-            cells_[i]->has_mine = true;
+            cells_[i].has_mine = true;
             ++mines_counter;
         } else {
-            cells_[i]->has_mine = false;
+            cells_[i].has_mine = false;
         }
     }
 }
@@ -221,6 +217,6 @@ void IdBasedBoard<CellType, ParametersWidgetType>::randomize()
 {
     std::shuffle(cells_.begin(), cells_.end(), random_generator_);
     for (size_t i = 0; i < cells_.size(); ++i) {
-        cells_[i]->id = i;
+        cells_[i].id = i;
     }
 }
