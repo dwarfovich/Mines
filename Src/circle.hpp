@@ -2,7 +2,8 @@
 
 #include <QPointF>
 
-struct Circle {
+class Circle {
+public:
     bool contains(const QPointF& point) const;
 
     QPointF center;

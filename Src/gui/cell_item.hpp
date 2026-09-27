@@ -10,6 +10,15 @@ public:
         Type = UserType + 1
     };
 
+    CellItem();
+    CellItem(const Cell* cell);
+
+    int                 type() const override;
+    virtual std::size_t cellId() const = 0;
+    virtual const Cell* cell() const = 0;
+    bool                isHovered() const;
+
+protected:  // methods
     enum CellState {
         Closed,
         ClosedWithFlag,
@@ -19,16 +28,6 @@ public:
         Opened
     };
 
-    int type() const {return Type;}
-
-    CellItem();
-    CellItem(const Cell* cell);
-
-    virtual std::size_t cellId() const = 0;
-    virtual const Cell* cell() const = 0;
-    bool            isHovered() const;
-
-protected:  // methods
     CellItem::CellState cellState() const;
     void                hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
     void                hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
@@ -36,4 +35,3 @@ protected:  // methods
 private:
     bool is_hovered_ = false;
 };
-

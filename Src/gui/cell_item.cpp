@@ -3,6 +3,10 @@
 
 #include <QGraphicsSceneHoverEvent>
 
+int CellItem::type() const
+{
+    return Type;
+}
 
 CellItem::CellItem()
 {

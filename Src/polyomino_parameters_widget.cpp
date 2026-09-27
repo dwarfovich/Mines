@@ -47,9 +47,11 @@ void PolyominoParametersWidget::updateMaxPolyominoSizeSpinBox()
 
 void PolyominoParametersWidget::updateMinesSpinbox()
 {
-    const size_t width = ui_.widthSpinBox->value();
-    const size_t height = ui_.heightSpinBox->value();
-    size_t       averageCellsCount = (width * height) / ((ui_.maxPolyominoSizeSpinBox->value() - 1) / 2);
+    const std::size_t width = ui_.widthSpinBox->value();
+    const std::size_t height = ui_.heightSpinBox->value();
+
+    const std::size_t denominator = (ui_.maxPolyominoSizeSpinBox->value() - 1) / 2;
+    std::size_t       averageCellsCount = (width * height) / (denominator == 0 ? 1 : denominator);
     if (averageCellsCount == 0) {
         averageCellsCount = 1;
     }

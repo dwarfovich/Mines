@@ -1,16 +1,14 @@
 #include "dynamic_graph_board.hpp"
-#include "buddy_notificator.hpp"
 #include "dynamic_graph_parameters_widget.hpp"
-#include "edge.hpp"
-#include "edge_item.hpp"
-#include "graph_boards_constants.hpp"
 
 #include "gui/board_scene.hpp"
 
-#include <QRandomGenerator>
-
 #include <numbers>
-#include <unordered_set>
+
+DynamicGraphBoard::DynamicGraphBoard()
+{
+    connect(&timer_, &QTimer::timeout, this, &DynamicGraphBoard::advanceCells);
+}
 
 const QString& DynamicGraphBoard::id() const
 {
@@ -26,81 +24,42 @@ const QString& DynamicGraphBoard::name() const
     return name;
 }
 
-void DynamicGraphBoard::generate()
-{
-    auto* parameters_widget = parametersWidget();
-    if (!parameters_widget) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    setupParameters();
-
-    board_state_ = {};
-    flags_ = 0;
-    board_state_.mines = parameters_.mines_count;
-    board_state_.empty_cells = parameters_.nodes_count - board_state_.mines;
-
-    initializeCells(parameters_.nodes_count);
-    randomize();
-
-    assignCoordinatesToCells();
-    formNeighbors();
-
-    board_state_.game_state = GameState::Playing;
-}
-
 void DynamicGraphBoard::setupScene(BoardScene* scene)
 {
     Q_ASSERT(scene);
 
-    setupCellItemsSprites();
+    GraphBoard<DynamicGraphCell, DynamicGraphParametersWidget>::setupScene(scene);
 
-    const auto                                      sprite_size = SpriteCellItem::size();
-    std::unordered_map<std::size_t, GraphCellItem*> id_to_item_map;
-    const int                                       node_z_value = 2;
-    for (std::size_t id = 0; id < this->cells_.size(); ++id) {
-        auto* node_item = new GraphCellItem{cellById(id)};
-        //node_item->setAngle(QRandomGenerator::global()->bounded(std::numbers::pi * 2));
-        //node_item->setSpeed(parameters_.speed);
-        node_item->setZValue(constants::graph_board::node_z_value);
-        //node_item->setPos(points_[id]);
-        scene->registerCellItem(node_item);
-        id_to_item_map[id] = node_item;
-    }
-
-    std::unordered_set<Edge, EdgeHasher> createdEdges;
-    for (const auto& [id, item] : id_to_item_map) {
-        const auto& neighbors = neighbors_[id];
-        const auto& point1 = this->cells_[id].coordinates;
-        for (const auto& buddy_id : neighbors) {
-            item->addBuddy(id_to_item_map[buddy_id]);
-            const auto& point2 = this->cells_[buddy_id].coordinates;
-            Edge        edge{point1, point2};
-            auto        iter = createdEdges.find(edge);
-            if (createdEdges.find(edge) == createdEdges.cend()) {
-                createdEdges.insert(edge);
-                auto* edge_item = new EdgeItem{edge};
-                edge_item->setPointItem1(item);
-                edge_item->setPointItem2(id_to_item_map[buddy_id]);
-                scene->addItem(edge_item);
-                item->addBuddy(edge_item);
-                id_to_item_map[buddy_id]->addBuddy(edge_item);
-            }
-        }
-    }
-
-    //scene->setAdvancePeriod(constants::graph_board::scene_update_delay);
     const auto& field = boundingRect();
     const qreal field_radius = std::hypot(field.width(), field.height()) / 2.0;
     const auto  center = field.center();
     scene->addRect(boundingRect(), QPen{Qt::green});
-    scene->addEllipse(center.x(), center.y(), 20,20, QPen{Qt::red});
+    scene->addEllipse(center.x() - 10, center.y() - 10, 20, 20, QPen{Qt::red});
     scene->addEllipse(center.x() - field_radius,
                       center.y() - field_radius,
                       2 * field_radius,
                       2 * field_radius,
                       QPen{Qt::blue});
+    scene->setSceneRect(scene->itemsBoundingRect());
+}
+
+void DynamicGraphBoard::generate()
+{
+    GraphBoard<DynamicGraphCell, DynamicGraphParametersWidget>::generate();
+    std::uniform_real_distribution<qreal> angle_distribution{0., std::numbers::pi * 2.};
+    for (auto& cell : cells_) {
+        cell.angle = angle_distribution(this->random_generator_);
+    }
+}
+
+void DynamicGraphBoard::startGame()
+{
+    timer_.start(advance_period);
+}
+
+void DynamicGraphBoard::stopGame()
+{
+    timer_.stop();
 }
 
 void DynamicGraphBoard::setupParameters()
@@ -111,5 +70,22 @@ void DynamicGraphBoard::setupParameters()
     parameters_.mines_count = parameters_widget->minesCount();
     parameters_.maximum_neighbors = parameters_widget->maximumNeighbors();
     parameters_.allow_disjoint_graph = parameters_widget->allowDisjointGraph();
-    parameters_.speed = static_cast<double>(parameters_widget->speed()) * user_speed_conversion_coefficient;
+    parameters_.speed = static_cast<qreal>(parameters_widget->speed()) * user_speed_conversion_coefficient;
+}
+
+void DynamicGraphBoard::advanceCells()
+{
+    for (auto& cell : cells_) {
+        const auto&  field = boundingRect();
+        const qreal  field_radius = std::hypot(field.width(), field.height()) / 2.0;
+        const auto   center = field.center();
+        const QLineF lineToCenter = {QPointF{cell.x(), cell.y()}, center};
+        if (lineToCenter.length() >= field_radius * critical_radius_coefficient) {
+            cell.angle = std::atan2(-lineToCenter.dy(), lineToCenter.dx());
+        } else {
+            cell.angle += QRandomGenerator::global()->bounded(random_angle_range) - random_angle_range / 2.;
+        }
+        cell.coordinates.setX(cell.x() + cell.speed * std::cos(cell.angle));
+        cell.coordinates.setY(cell.y() - cell.speed * std::sin(cell.angle));
+    }
 }

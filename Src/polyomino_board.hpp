@@ -16,18 +16,21 @@ public:
     void                setupScene(BoardScene* scene) override;
     std::vector<size_t> neighborIds(size_t id) const override;
 
-private:
-    bool   isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const;
-    void   setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyominoCell& cell);
-    void   assignMines(size_t minesCount);
-    QColor generateCellColor() const;
-    bool   isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
-    bool   addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
-                                 const QPoint&                           point,
-                                 std::deque<QPoint>&                     neighbors) const;
+private:  // methods
+    void setupBoard();
+    bool isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const;
+    void setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyominoCell& cell);
+    void assignMines(size_t minesCount);
+    bool isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
+    bool addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
+                               const QPoint&                           point,
+                               std::vector<QPoint>&                    neighbors) const;
+    using IdsMatrix = std::vector<std::vector<size_t>>;
+    void setupNeighbors(const IdsMatrix& ids);
+    void generatePolyomino(PolyominoCell& cell, IdsMatrix& ids);
 
-private:
-    size_t                             width_ = 0;
-    size_t                             height_ = 0;
-    size_t                             max_polyomino_size_ = 1;
+private:  // data
+    size_t width_ = 0;
+    size_t height_ = 0;
+    size_t max_polyomino_size_ = 1;
 };

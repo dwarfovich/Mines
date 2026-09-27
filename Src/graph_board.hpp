@@ -122,7 +122,7 @@ void GraphBoard<CellType, ParametersWidgetType>::setupScene(BoardScene* scene)
         }
     }
 
-    scene->setSceneRect(bounding_rect_);
+    scene->setSceneRect(boundingRect());
 }
 
 template <typename CellType, typename ParametersWidgetType>

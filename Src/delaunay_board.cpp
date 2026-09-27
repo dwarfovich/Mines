@@ -13,7 +13,7 @@
 
 const QString& DelaunayBoard::id() const
 {
-    static const QString id{QStringLiteral("Delaunay")};
+    static const QString id{QStringLiteral("Triangulated")};
     return id;
 }
 
@@ -44,7 +44,7 @@ void DelaunayBoard::generate()
     randomize();
 
     assignCoordinatesToCells();
-    triangulator_.triangulate(this->cells_, bounding_rect_);
+    triangulator_.triangulate(cells_, bounding_rect_);
     formNeighbors(triangulator_);
     triangulator_.clear();
     board_state_.game_state = GameState::Playing;
@@ -52,28 +52,29 @@ void DelaunayBoard::generate()
 
 void DelaunayBoard::formNeighbors(const Triangulator& triangulator)
 {
-    std::unordered_map<QPointF, std::size_t, QPointFHasher> map;
-    for (std::size_t i = 0; i < this->cells_.size(); ++i) {
-        map[this->cells_[i].coordinates] = i;
+    std::unordered_map<QPointF, std::size_t, QPointFHasher> indices;
+    for (std::size_t i = 0; i < cells_.size(); ++i) {
+        indices[cells_[i].coordinates] = i;
     }
-    std::vector<std::unordered_set<std::size_t>> temp_edges_(this->cells_.size());
+    std::vector<std::unordered_set<std::size_t>> temp_neighbors_(cells_.size());
     for (const auto& triangle : triangulator.triangulation()) {
         const auto& vertices = triangle.vertices();
-        std::size_t point1 = map[vertices[0]];
-        std::size_t point2 = map[vertices[1]];
-        std::size_t point3 = map[vertices[2]];
-        temp_edges_[point1].insert(point2);
-        temp_edges_[point1].insert(point3);
-        temp_edges_[point2].insert(point1);
-        temp_edges_[point2].insert(point3);
-        temp_edges_[point3].insert(point1);
-        temp_edges_[point3].insert(point2);
+
+        std::size_t index1 = indices[vertices[0]];
+        std::size_t index2 = indices[vertices[1]];
+        std::size_t index3 = indices[vertices[2]];
+        temp_neighbors_[index1].insert(index2);
+        temp_neighbors_[index1].insert(index3);
+        temp_neighbors_[index2].insert(index1);
+        temp_neighbors_[index2].insert(index3);
+        temp_neighbors_[index3].insert(index1);
+        temp_neighbors_[index3].insert(index2);
     }
 
     neighbors_.clear();
-    neighbors_.resize(this->cells_.size());
-    for (std::size_t i = 0; i < temp_edges_.size(); ++i) {
-        neighbors_[i].insert(neighbors_[i].cend(), temp_edges_[i].cbegin(), temp_edges_[i].cend());
+    neighbors_.resize(cells_.size());
+    for (std::size_t i = 0; i < temp_neighbors_.size(); ++i) {
+        neighbors_[i].insert(neighbors_[i].cend(), temp_neighbors_[i].cbegin(), temp_neighbors_[i].cend());
     }
 }
 
@@ -87,9 +88,4 @@ void DelaunayBoard::setupParameters()
 
     parameters_.nodes_count = parameters_widget->nodesCount();
     parameters_.mines_count = parameters_widget->minesCount();
-}
-
-std::vector<std::size_t> DelaunayBoard::neighborIds(std::size_t id) const
-{
-    return neighbors_[id];
 }

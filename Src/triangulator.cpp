@@ -16,9 +16,9 @@ Triangle Triangulator::superTriangle(const QRectF& bounding_rect) const
         return {};
     }
 
-    const qreal triangle_side = 2.0 * std::sqrt(bounding_rect.width() * bounding_rect.width() +
+    const qreal triangle_side = 2. * std::sqrt(bounding_rect.width() * bounding_rect.width() +
                                                 bounding_rect.height() * bounding_rect.height());
-    const qreal triangle_height = triangle_side * std::sqrt(3.0) / 2.0;
+    const qreal triangle_height = triangle_side * std::sqrt(3.) / 2.;
 
     const auto& cx = bounding_rect.center().x();
     const auto& cy = bounding_rect.center().y();

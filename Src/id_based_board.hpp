@@ -80,6 +80,7 @@ void IdBasedBoard<CellType, ParametersWidgetType>::openCell(size_t id)
     if (cell->has_mine) {
         board_state_.game_state = GameState::Loose;
         this->base_timer_.stop();
+        this->stopGame();
         revealField();
     } else {
         revealCell(cell);
@@ -104,6 +105,7 @@ void IdBasedBoard<CellType, ParametersWidgetType>::revealCell(Cell* cell)
     if (board_state_.empty_cells == 0) {
         board_state_.game_state = GameState::Win;
         this->base_timer_.stop();
+        this->stopGame();
         revealField();
     }
 }

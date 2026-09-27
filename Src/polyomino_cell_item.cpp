@@ -5,11 +5,26 @@
 #include "qpoint_hasher.hpp"
 #include "utils.hpp"
 
-#include <QGraphicsRectItem>
 #include <QPainter>
 #include <QPoint>
+#include <QRandomGenerator>
 
-#include <unordered_set>
+PolyominoCellItem::PolyominoCellItem(const PolyominoCell* cell) : cell_{cell}
+{
+    Q_ASSERT(cell);
+
+    initialize();
+}
+
+std::size_t PolyominoCellItem::cellId() const
+{
+    return cell_->id;
+}
+
+const Cell* PolyominoCellItem::cell() const
+{
+    return cell_;
+}
 
 QPainterPath PolyominoCellItem::shape() const
 {
@@ -28,42 +43,53 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
     painter->setPen(constants::polyomino_board::border_pen);
 
-    //if (cell_->is_closed) {
-    //    if (isHovered()) {
-    //        painter->setBrush(constants::polyomino_board::hovered_brush);
-    //    } else {
-    //        painter->setBrush(closed_brush_);
-    //    }
-    //    painter->drawPolygon(polygon_);
-    //} else {
-    //    painter->setBrush(constants::polyomino_board::opened_brush);
-    //    painter->drawPolygon(polygon_);
-    //}
-    //const auto& rect = spriteRect(cellState());
-    //if (rect.isNull()) {
-    //    if (!cell_->is_closed) {
-    //        paintMinesCount(painter);
-    //    }
-    //} else {
-    //    painter->drawPixmap(cell_info_rect_, *sprites_, rect);
-    //}
+    if (cell_->is_closed) {
+        if (isHovered()) {
+            painter->setBrush(constants::polyomino_board::hovered_brush);
+        } else {
+            painter->setBrush(closed_brush_);
+        }
+        painter->drawPolygon(polygon_);
+    } else {
+        painter->setBrush(constants::polyomino_board::opened_brush);
+        painter->drawPolygon(polygon_);
+    }
+    const auto& rect = spriteRect(cellState());
+    if (rect.isNull()) {
+        if (!cell_->is_closed) {
+            paintMinesCount(painter);
+        }
+    } else {
+        painter->drawPixmap(cell_info_rect_, *sprites_, rect);
+    }
 }
 
-void PolyominoCellItem::initialize(PolyominoCell* cell, const QColor& color)
+void PolyominoCellItem::initialize()
 {
     if (!sprites_) {
         sprites_ = std::make_unique<QPixmap>(":/gfx/transparent_images.png");
     }
-    //setCell(cell);
-    closed_brush_ = {color};
+
+    closed_brush_ = {generateCellColor()};
 
     using namespace constants::polyomino_board;
-    setPos(cell->center.x() * sub_cell_size, cell->center.y() * sub_cell_size);
+    setPos(cell_->center.x() * sub_cell_size, cell_->center.y() * sub_cell_size);
 
-    painter_path_ = createPainterPath(*cell);
+    painter_path_ = createPainterPath(*cell_);
     polygon_ = painter_path_.toFillPolygon().toPolygon();
     bounding_rect_ = painter_path_.boundingRect();
-    cell_info_rect_ = findCellDescriptionRect(*cell);
+    cell_info_rect_ = findCellDescriptionRect(*cell_);
+}
+
+QColor PolyominoCellItem::generateCellColor()
+{
+    using namespace constants::polyomino_board;
+    QColor color{QColor::Hsv};
+    color.setHsv(hue,
+                 QRandomGenerator::global()->bounded(min_saturation, max_saturation),
+                 QRandomGenerator::global()->bounded(min_color_value, max_color_value));
+
+    return color;
 }
 
 QPainterPath PolyominoCellItem::createPainterPath(const PolyominoCell& cell) const
@@ -73,8 +99,8 @@ QPainterPath PolyominoCellItem::createPainterPath(const PolyominoCell& cell) con
     std::unordered_map<QPoint, QPoint, QPointHasher> lines;
     for (const auto& shift : cell.shifts) {
         for (const auto& direction : directions_array) {
-            const auto& neighborShift = shift + directionToShift(direction);
-            if (::contains(cell.shifts, neighborShift)) {
+            const auto& subcell_shift = shift + directionToShift(direction);
+            if (::contains(cell.shifts, subcell_shift)) {
                 continue;
             }
 
@@ -99,7 +125,7 @@ QPainterPath PolyominoCellItem::createPainterPath(const PolyominoCell& cell) con
                 default:
                     break;
             }
-            Q_ASSERT(r.second && "Line wasn't inserted, so there is an error");
+            Q_ASSERT(r.second && "Line wasn't inserted, there is an error");
         }
     }
 
@@ -143,15 +169,15 @@ QRect PolyominoCellItem::findCellDescriptionRect(const PolyominoCell& cell) cons
         return {mid_x * sub_cell_size, mid_y * sub_cell_size, sub_cell_size, sub_cell_size};
     }
 
-    const QPointF midShift{static_cast<qreal>(mid_x), static_cast<qreal>(mid_y)};
-    if (midShift == QPointF{0., 0.}) {
+    const QPointF mid_shift{static_cast<qreal>(mid_x), static_cast<qreal>(mid_y)};
+    if (mid_shift == QPointF{0., 0.}) {
         return {0, 0, sub_cell_size, sub_cell_size};
     }
 
     auto min_distance = std::numeric_limits<qreal>::max();
     auto min_shift = cell.shifts.front();
     for (const auto& shift : cell.shifts) {
-        const auto distance = euclideanDistance(midShift, QPointF{shift});
+        const auto distance = euclideanDistance(mid_shift, QPointF{shift});
         if (distance < min_distance) {
             min_distance = distance;
             min_shift = shift;
@@ -175,18 +201,18 @@ QRectF PolyominoCellItem::spriteRect(CellState state) const
 void PolyominoCellItem::paintMinesCount(QPainter* painter)
 {
     if (!mines_count_attributes_initialized) {
-        initializeMinesCountAttributes(painter);
+        initializeMinesCountAttributes();
     }
-    //if (cell_->neighbor_mines != 0) {
-    //    auto font = painter->font();
-    //    font.setPixelSize(constants::polyomino_board::font_size);
-    //    painter->setFont(font);
-    //    painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
-    //}
+    if (cell_->neighbor_mines != 0) {
+        auto font = painter->font();
+        font.setPixelSize(constants::polyomino_board::font_size);
+        painter->setFont(font);
+        painter->drawText(cell_info_rect_, Qt::AlignCenter, mines_count_);
+    }
 }
 
-void PolyominoCellItem::initializeMinesCountAttributes(QPainter* painter)
+void PolyominoCellItem::initializeMinesCountAttributes()
 {
-    //mines_count_ = QString::number(cell_->neighbor_mines);
+    mines_count_ = QString::number(cell_->neighbor_mines);
     mines_count_attributes_initialized = true;
 }

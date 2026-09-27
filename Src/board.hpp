@@ -32,6 +32,7 @@ public:
     virtual void                 setupScene(BoardScene* scene) = 0;
     virtual QWidget*             parametersWidget() const = 0;
     virtual void                 startGame() {}
+    virtual void                 stopGame() {}
 
 signals:
     void cellChanged(Cell* cell);
