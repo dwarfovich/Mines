@@ -2,8 +2,8 @@
 
 #include "delaunay_parameters_widget.hpp"
 #include "graph_board.hpp"
-#include "triangulator.hpp"
 #include "graph_cell.hpp"
+#include "triangulator.hpp"
 
 class DelaunayBoard : public GraphBoard<GraphCell, DelaunayParametersWidget> {
     Q_OBJECT
@@ -14,8 +14,8 @@ public:
     void           generate() override;
 
 protected:  // methods
-    void                     formNeighbors(const Triangulator& triangulator);
-    void                     setupParameters() override;
+    void formNeighbors(const Triangulator& triangulator);
+    void setupParameters() override;
 
 protected:  // data
     Triangulator triangulator_;

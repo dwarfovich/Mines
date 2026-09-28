@@ -15,6 +15,7 @@ struct BoardState {
             Q_ASSERT(false);
         }
     }
+
     std::size_t mines = 0;
     std::size_t empty_cells = 0;
     bool        first_cell_opened = false;

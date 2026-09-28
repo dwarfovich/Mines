@@ -11,7 +11,6 @@ public:
     const QString& id() const override;
     const QString& name() const override;
     void           generate() override;
-    void           setupScene(BoardScene* scene) override;
     void           startGame() override;
     void           stopGame() override;
 
@@ -20,7 +19,7 @@ private:  // methods
     void advanceCells();
 
 private:  // data
-    inline static constexpr qreal user_speed_conversion_coefficient = 0.5;
+    inline static constexpr qreal user_speed_conversion_coefficient = 0.001;
     inline static constexpr qreal random_angle_range = 0.4;
     inline static constexpr qreal critical_radius_coefficient = 0.9;
     inline static constexpr int   advance_period = 1000 / 60;

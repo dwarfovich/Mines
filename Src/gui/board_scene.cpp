@@ -32,7 +32,6 @@ void BoardScene::clear()
 void BoardScene::startAnimation()
 {
     if (advance_period_) {
-        // setItemIndexMethod(QGraphicsScene::NoIndex);
         timer_.start(advance_period_);
     }
 }
@@ -50,6 +49,8 @@ void BoardScene::setNotAnimated()
 
 void BoardScene::setAdvancePeriod(int period)
 {
+    Q_ASSERT(period >= 0);
+
     advance_period_ = period;
 }
 

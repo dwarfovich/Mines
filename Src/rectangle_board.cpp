@@ -25,10 +25,12 @@ void RectangleBoard::setupScene(BoardScene* scene)
     SpriteCellItem::setSprites(":/gfx/cells_square.png");
     const auto   sprite_size = SpriteCellItem::size();
     const auto   sprite_half_size = sprite_size / 2.;
-    QPainterPath path;
-    path.addRect({-sprite_half_size, -sprite_half_size, sprite_size, sprite_size});
-    path.closeSubpath();
-    SpriteCellItem::setShape(path);
+    
+    QPainterPath shape;
+    shape.addRect({-sprite_half_size, -sprite_half_size, sprite_size, sprite_size});
+    shape.closeSubpath();
+    SpriteCellItem::setShape(std::move(shape));
+
     for (std::size_t i = 0; i < height_; ++i) {
         for (std::size_t j = 0; j < width_; ++j) {
             auto* item = new SimpleSpriteItem{cellById(i * width_ + j)};
@@ -60,15 +62,6 @@ void RectangleBoard::generate()
 
     board_state_.game_state = GameState::Playing;
 }
-
-//QWidget* RectangleBoard::parametersWidget() const
-//{
-//    if (!parameters_widget_) {
-//        parameters_widget_ = new RectangleBoardParametersWidget{&settings_widget_holder_};
-//    }
-//
-//    return parameters_widget_;
-//}
 
 std::vector<std::size_t> RectangleBoard::neighborIds(std::size_t id) const
 {

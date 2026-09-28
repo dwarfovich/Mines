@@ -24,31 +24,13 @@ const QString& DynamicGraphBoard::name() const
     return name;
 }
 
-void DynamicGraphBoard::setupScene(BoardScene* scene)
-{
-    Q_ASSERT(scene);
-
-    GraphBoard<DynamicGraphCell, DynamicGraphParametersWidget>::setupScene(scene);
-
-    const auto& field = boundingRect();
-    const qreal field_radius = std::hypot(field.width(), field.height()) / 2.0;
-    const auto  center = field.center();
-    scene->addRect(boundingRect(), QPen{Qt::green});
-    scene->addEllipse(center.x() - 10, center.y() - 10, 20, 20, QPen{Qt::red});
-    scene->addEllipse(center.x() - field_radius,
-                      center.y() - field_radius,
-                      2 * field_radius,
-                      2 * field_radius,
-                      QPen{Qt::blue});
-    scene->setSceneRect(scene->itemsBoundingRect());
-}
-
 void DynamicGraphBoard::generate()
 {
     GraphBoard<DynamicGraphCell, DynamicGraphParametersWidget>::generate();
     std::uniform_real_distribution<qreal> angle_distribution{0., std::numbers::pi * 2.};
     for (auto& cell : cells_) {
         cell.angle = angle_distribution(this->random_generator_);
+        cell.speed = parameters_.speed;
     }
 }
 
@@ -85,7 +67,7 @@ void DynamicGraphBoard::advanceCells()
         } else {
             cell.angle += QRandomGenerator::global()->bounded(random_angle_range) - random_angle_range / 2.;
         }
-        cell.coordinates.setX(cell.x() + cell.speed * std::cos(cell.angle));
-        cell.coordinates.setY(cell.y() - cell.speed * std::sin(cell.angle));
+        cell.coordinates.setX(cell.x() + cell.speed * std::cos(cell.angle) * advance_period);
+        cell.coordinates.setY(cell.y() - cell.speed * std::sin(cell.angle) * advance_period);
     }
 }

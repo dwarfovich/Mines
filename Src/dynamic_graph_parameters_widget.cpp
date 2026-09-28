@@ -12,6 +12,7 @@ DynamicGraphParametersWidget::DynamicGraphParametersWidget(QWidget* parent) : QW
             qOverload<int>(&QSpinBox::valueChanged),
             this,
             &DynamicGraphParametersWidget::onSpeedValueChanged);
+    ui_.speedSlider->setMinimum(15);
 }
 
 void DynamicGraphParametersWidget::onNodesCountChanged(int count)

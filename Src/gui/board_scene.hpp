@@ -31,5 +31,5 @@ protected:
     using CellsMap = std::unordered_map<const Cell*, CellItem*>;
     CellsMap cell_items_;
     QTimer   timer_;
-    int      advance_period_ = 33;
+    int advance_period_ = 1000 / 60;
 };

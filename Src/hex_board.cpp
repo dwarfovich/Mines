@@ -74,15 +74,6 @@ void HexBoard::generate()
     board_state_.game_state = GameState::Playing;
 }
 
-//QWidget* HexBoard::parametersWidget() const
-//{
-//    if (!parameters_widget_) {
-//        parameters_widget_ = new HexParametersWidget{&settings_widget_holder_};
-//    }
-//
-//    return parameters_widget_;
-//}
-
 std::vector<std::size_t> HexBoard::neighborIds(std::size_t id) const
 {
     const std::size_t        max_neighbors = 6;

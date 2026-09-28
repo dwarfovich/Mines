@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QGraphicsView>
 
 class BoardView : public QGraphicsView {

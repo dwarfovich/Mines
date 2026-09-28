@@ -8,5 +8,5 @@ public:
     DynamicGraphCell(std::size_t id) : GraphCell{id} {};
 
     qreal angle = 30.;
-    qreal speed = 1;
+    qreal speed = 0.05;
 };

@@ -72,6 +72,7 @@ set(PROJECT_SOURCES
     Src/triangle.cpp
     Src/triangulator.cpp
     Src/utils.cpp
+    Src/simple_sprite_item.cpp
         
     Src/abstract_board.hpp
     Src/parameters_widget_holder.hpp
@@ -81,7 +82,6 @@ set(PROJECT_SOURCES
     Src/cell.hpp
     Src/graph_board.hpp
     Src/board.hpp
-    Src/simple_sprite_item.hpp
 
     Src/gui/board_scene.cpp
     Src/gui/board_view.cpp

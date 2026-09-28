@@ -10,30 +10,41 @@
 template <std::derived_from<QWidget> ParametersWidgetType>
 class AbstractBoard : public Board {
 public:
-    AbstractBoard(){
-        base_timer_.setInterval(1000);
-        connect(&base_timer_, &QTimer::timeout, this, &Board::secondPassed);
-    }
+    AbstractBoard();
 
-    const BoardState& boardState() const override
-    {
-        return board_state_;
-    }
-
-    ParametersWidgetType* parametersWidget() const override
-    {
-        return holder_.parametersWidget();
-    }
-
-    std::chrono::seconds elapsedTime() const override
-    {
-        using namespace std::chrono;
-        return duration_cast<seconds>(steady_clock::now() - elapsed_time_);
-    }
+    const BoardState&     boardState() const override;
+    ParametersWidgetType* parametersWidget() const override;
+    std::chrono::seconds  elapsedTime() const override;
 
 protected:
     BoardState                                   board_state_;
     QTimer                                       base_timer_;
     std::chrono::steady_clock::time_point        elapsed_time_;
-    ParametersWidgetHolder<ParametersWidgetType> holder_;
+    ParametersWidgetHolder<ParametersWidgetType> parameters_holder_;
 };
+
+template <std::derived_from<QWidget> ParametersWidgetType>
+AbstractBoard<ParametersWidgetType>::AbstractBoard()
+{
+    base_timer_.setInterval(1000);
+    connect(&base_timer_, &QTimer::timeout, this, &Board::secondPassed);
+}
+
+template <std::derived_from<QWidget> ParametersWidgetType>
+const BoardState& AbstractBoard<ParametersWidgetType>::boardState() const
+{
+    return board_state_;
+}
+
+template <std::derived_from<QWidget> ParametersWidgetType>
+ParametersWidgetType* AbstractBoard<ParametersWidgetType>::parametersWidget() const
+{
+    return parameters_holder_.parametersWidget();
+}
+
+template <std::derived_from<QWidget> ParametersWidgetType>
+std::chrono::seconds AbstractBoard<ParametersWidgetType>::elapsedTime() const
+{
+    using namespace std::chrono;
+    return duration_cast<seconds>(steady_clock::now() - elapsed_time_);
+}

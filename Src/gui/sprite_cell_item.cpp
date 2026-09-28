@@ -17,6 +17,7 @@ void SpriteCellItem::setSprites(const QString& path)
     size_ = sprites_->height();
     half_size_ = size_ / 2.;
     sprite_box_ = QRectF{-half_size_, -half_size_, size_, size_};
+
 }
 
 qreal SpriteCellItem::size()

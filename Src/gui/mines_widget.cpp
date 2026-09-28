@@ -23,7 +23,6 @@ MinesWidget::MinesWidget(QWidget* parent)
             &BoardScene::cellClicked,
             this,
             &MinesWidget::onCellClicked);
-    //connect(timer_, &QTimer::timeout, this, &MinesWidget::onTimerTimeout);
 }
 
 MinesWidget::~MinesWidget()
@@ -38,6 +37,7 @@ void MinesWidget::setBoard(Board* board)
         disconnect(board_, &Board::secondPassed, this, &MinesWidget::onTimerTimeout);
     }
 
+    ui_->minesSpinBox->setValue(0);
     ui_->timeSpinBox->setValue(0);
     board_ = board;
     board_->generate();
@@ -54,33 +54,11 @@ void MinesWidget::startGame()
     board_->startGame();
 }
 
-void MinesWidget::onCellItemClicked(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
-{
-    processCellItemClick(cell_item, event);
-
-    //if (!timer_->isActive()) {
-    //    timer_->start(update_time_period_);
-    //}
-
-    auto game_state = board_->boardState().game_state;
-    if (game_state != GameState::Playing) {
-        //timer_->stop();
-        scene_->stopAnimation();
-        auto answer = game_over_dialog_->exec(game_state);
-        emit gameOver(answer);
-    }
-}
-
 void MinesWidget::onCellClicked(std::size_t id, QGraphicsSceneMouseEvent* event) {
     processCellItemClick(id, event);
 
-    //if (!timer_->isActive()) {
-    //    timer_->start(update_time_period_);
-    //}
-
     auto game_state = board_->boardState().game_state;
     if (game_state != GameState::Playing) {
-        //timer_->stop();
         scene_->stopAnimation();
         auto answer = game_over_dialog_->exec(game_state);
         emit gameOver(answer);
@@ -100,16 +78,6 @@ void MinesWidget::onTimerTimeout()
     } else {
         ui_->timeSpinBox->setValue(static_cast<int>(elapsed_time));
     }
-}
-
-void MinesWidget::processCellItemClick(CellItem* cell_item, QGraphicsSceneMouseEvent* event)
-{
-    //if (event->button() == Qt::LeftButton) {
-    //    board_->openCell(cell_item->cell()->id);
-    //} else if (event->button() == Qt::RightButton) {
-    //    board_->toggleFlag(cell_item->cell()->id);
-    //    updateFlagsCount();
-    //}
 }
 
 void MinesWidget::processCellItemClick(std::size_t id, QGraphicsSceneMouseEvent* event)
