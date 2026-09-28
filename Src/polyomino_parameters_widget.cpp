@@ -15,6 +15,11 @@ PolyominoParametersWidget::PolyominoParametersWidget(QWidget* parent) : QWidget{
             qOverload<int>(&QSpinBox::valueChanged),
             this,
             &PolyominoParametersWidget::updateMaxPolyominoSizeSpinBox);
+
+    ui_.widthSpinBox->setValue(5);
+    ui_.heightSpinBox->setValue(5);
+    ui_.minesSpinBox->setValue(1);
+
     updateMaxPolyominoSizeSpinBox();
 }
 

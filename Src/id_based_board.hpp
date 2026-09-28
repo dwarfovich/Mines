@@ -40,7 +40,8 @@ protected:  // data
 };
 
 template <typename CellType, typename ParametersWidgetType>
-IdBasedBoard<CellType, ParametersWidgetType>::IdBasedBoard() : random_generator_{random_device_()}
+// IdBasedBoard<CellType, ParametersWidgetType>::IdBasedBoard() : random_generator_{random_device_()}
+IdBasedBoard<CellType, ParametersWidgetType>::IdBasedBoard() : random_generator_{0}
 {
 }
 
@@ -90,12 +91,12 @@ void IdBasedBoard<CellType, ParametersWidgetType>::openCell(size_t id)
 template <typename CellType, typename ParametersWidgetType>
 void IdBasedBoard<CellType, ParametersWidgetType>::revealCell(Cell* cell)
 {
-    if (!cell->is_closed){
+    if (!cell->is_closed) {
         return;
     }
 
     cell->is_closed = false;
-    --board_state_.empty_cells;
+    board_state_.decreaseEmptyCells(1);
     auto neighbor_ids = neighborIds(cell->id);
     cell->neighbor_mines = countNeighborMines(neighbor_ids);
     emit this->cellChanged(cell);
@@ -124,7 +125,7 @@ void IdBasedBoard<CellType, ParametersWidgetType>::revealCells(std::vector<size_
         auto* cell = cellById(cell_id);
         if (cell->is_closed && !cell->has_mine && !cell->has_flag) {
             cell->is_closed = false;
-            --board_state_.empty_cells;
+            board_state_.decreaseEmptyCells(1);
             const auto neighbors = neighborIds(cell_id);
             const auto mines = countNeighborMines(neighbors);
             if (mines == 0) {
@@ -195,8 +196,8 @@ void IdBasedBoard<CellType, ParametersWidgetType>::revealField()
 template <typename CellType, typename ParametersWidgetType>
 size_t IdBasedBoard<CellType, ParametersWidgetType>::countNeighborMines(size_t id) const
 {
-    const auto&  ids = neighborIds(id);
-    
+    const auto& ids = neighborIds(id);
+
     return countNeighborMines(ids);
 }
 

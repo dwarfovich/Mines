@@ -49,11 +49,11 @@ void PolyominoCellItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*
         } else {
             painter->setBrush(closed_brush_);
         }
-        painter->drawPolygon(polygon_);
     } else {
         painter->setBrush(constants::polyomino_board::opened_brush);
-        painter->drawPolygon(polygon_);
     }
+    painter->drawPolygon(polygon_);
+
     const auto& rect = spriteRect(cellState());
     if (rect.isNull()) {
         if (!cell_->is_closed) {
@@ -74,7 +74,9 @@ void PolyominoCellItem::initialize()
 
     using namespace constants::polyomino_board;
     setPos(cell_->center.x() * sub_cell_size, cell_->center.y() * sub_cell_size);
-
+    if(cell_->id == 2){
+        int fd=5;
+    }
     painter_path_ = createPainterPath(*cell_);
     polygon_ = painter_path_.toFillPolygon().toPolygon();
     bounding_rect_ = painter_path_.boundingRect();

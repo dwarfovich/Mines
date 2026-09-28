@@ -20,9 +20,9 @@ private:  // methods
     void setupBoard();
     bool isValidMatrixCoordinates(const QPoint& point, size_t width, size_t height) const;
     void setupNeighbors(const std::vector<std::vector<size_t>>& matrix, PolyominoCell& cell);
-    void assignMines(size_t minesCount);
+    void setupMines();
     bool isEmptyCell(const std::vector<std::vector<size_t>>& matrix, const QPoint& point) const;
-    bool addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
+    void addEmptyNeighborCells(const std::vector<std::vector<size_t>>& matrix,
                                const QPoint&                           point,
                                std::vector<QPoint>&                    neighbors) const;
     using IdsMatrix = std::vector<std::vector<size_t>>;

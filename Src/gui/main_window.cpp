@@ -56,7 +56,7 @@ void MainWindow::showNewGameDialog()
     if (result == QDialog::Accepted) {
         auto boardName = new_game_dialog_->selectedBoard();
         board_ = board_collection_->get(boardName);
-        board_->generate();
+        //board_->generate();
         mines_widget_->setBoard(board_);
         mines_widget_->startGame();
     }

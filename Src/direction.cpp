@@ -47,9 +47,8 @@ QPoint directionToShift(ExtendedDirection d)
             return {-1, 0};
         case ExtendedDirection::UpLeft:
             return {-1, -1};
-        default:
-            return {};
     }
+    Q_UNREACHABLE_RETURN({});
 }
 
 Direction nextDirection(ExtendedDirection d)
